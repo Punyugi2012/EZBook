@@ -17,7 +17,7 @@ class CreateCommentsTable extends Migration
             $table->increments('id');
             $table->text('message');
             $table->dateTime('date_comment');
-            $table->double('score');
+            $table->double('score')->nullable();
             $table->integer('book_id')->unsigned();
             $table->integer('member_id')->unsigned();
             $table->foreign('book_id')->references('id')->on('books');
