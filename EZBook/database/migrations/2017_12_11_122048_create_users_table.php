@@ -18,7 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('username');
             $table->string('password');
             $table->string('email');
-            $table->enum('type', ['publisher', 'user']);
+            $table->enum('type', ['publisher', 'user', 'admin']);
         });
     }
 
