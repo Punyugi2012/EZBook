@@ -11,5 +11,14 @@
 |
 */
 Route::get('/home', 'web\HomeController@onHome');
+
 Route::get('/admin-login', 'web\admin\AdminController@onLogin');
-Route::get('/admin-dashboard', 'web\admin\AdminController@onDashboard');
+Route::post('/admin-login', 'web\admin\AdminController@checkLogin');
+Route::get('/admin-dashboard', 'web\admin\AdminController@onDashboard')->middleware('admin-isLogin');
+Route::get('/admin-logout', 'web\admin\AdminController@logout')->middleware('admin-isLogin');
+Route::get('/admin-publishers', 'web\admin\AdminController@onPublishers')->middleware('admin-isLogin');
+Route::get('/admin-uploadbooks', 'web\admin\AdminController@onUploadBooks')->middleware('admin-isLogin');
+Route::get('/admin-members', 'web\admin\AdminController@onMembers')->middleware('admin-isLogin');
+Route::get('/admin-regis-publisher', 'web\admin\AdminController@registerPublisher')->middleware('admin-isLogin');
+Route::post('/admin-create-publisher', 'web\admin\AdminController@createPublisher')->middleware('admin-isLogin');
+

@@ -19,7 +19,8 @@ class CreatePublishersTable extends Migration
             $table->string('address');
             $table->string('phone');
             $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users');;
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->timestamps();
         });
     }
 

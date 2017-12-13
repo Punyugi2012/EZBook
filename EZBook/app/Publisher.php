@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class Publisher extends Model
 {
     protected $table = 'publishers';
-    public $timestamps = false;
     protected $fillable = [
         'name', 
         'address', 
