@@ -10,11 +10,11 @@
             {{ csrf_field() }}
              <div class="form-group">
                 <label for="email">Email:</label>
-                <input type="email" class="form-control" name="email" id="email" placeholder="email">
+                <input type="email" class="form-control" name="email" id="email" placeholder="email" required>
             </div>
             <div class="form-group">
                 <label for="password">Password:</label>
-                <input type="password" class="form-control" name="password" id="password" placeholder="password">
+                <input type="password" class="form-control" name="password" id="password" placeholder="password" required>
             </div>
             <button type="submit" class="btn btn-primary">Login</button>
             <button type="reset" class="btn btn-warning">Clear</button>

@@ -6,11 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class BookType extends Model
 {
-    protected $table = 'bookstypes';
+    protected $table = 'books_types';
     public $timestamps = false;
     protected $fillable = [
-        'pathFile', 
-        'book_id'
+        'name', 
     ];
     public function books() {
         return $this->hasMany('App\Books');

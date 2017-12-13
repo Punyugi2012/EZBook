@@ -4,8 +4,12 @@ namespace App\Http\Controllers\web\admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 use App\User;
 use App\Publisher;
+use App\BookType;
+use App\Book;
+use App\BookImage;
 
 class AdminController extends Controller
 {
@@ -27,7 +31,7 @@ class AdminController extends Controller
         session()->forget('admin');
         return redirect('admin-login');
     }
-    public function onPublishers() {
+    private function getPublishers() {
         $publishers = Publisher::get();
         foreach($publishers as $publisher) {
             $user = User::find($publisher->user_id);
@@ -35,10 +39,16 @@ class AdminController extends Controller
             $publisher->email = $user->email;
             $publisher->password = $user->password;
         }
+        return $publishers;
+    }
+    public function onPublishers() {
+        $publishers = $this->getPublishers();
         return view('web.admin.adminDashboard', ['isPublishers'=>true, 'isUploadBooks'=>false, 'isMembers'=>false, 'publishers'=>$publishers]);
     }
     public function onUploadBooks() {
-        return view('web.admin.adminDashboard', ['isPublishers'=>false, 'isUploadBooks'=>true, 'isMembers'=>false]);
+        $publishers = $this->getPublishers();
+        $bookTypes = BookType::get();
+        return view('web.admin.adminDashboard', ['isPublishers'=>false, 'isUploadBooks'=>true, 'isMembers'=>false, 'publishers'=>$publishers, 'bookTypes'=>$bookTypes]);
     }
     public function onMembers() {
         return view('web.admin.adminDashboard', ['isPublishers'=>false, 'isUploadBooks'=>false, 'isMembers'=>true]);
@@ -87,5 +97,47 @@ class AdminController extends Controller
            'user_id' => User::latest('id')->first()->id
        ]);
        return redirect('/admin-publishers');
+    }
+    public function uploadBook(Request $request){
+        $validatedData = $request->validate([
+            'name' => 'required',
+            'price' => 'required',
+            'file_size' => 'required',
+            'num_page' => 'required',
+            'publish' => 'required',
+            'cover_image' => 'required',
+            'images' => 'required',
+            'file' => 'required'
+        ]);
+
+        $book = new Book();
+        $book->name = $request->input('name');
+        $book->score = 0.0;
+        $book->file_size = $request->input('file_size');
+        $book->num_page = $request->input('num_page');
+        $book->price = $request->input('price');
+        $book->detail = $request->input('detail');
+        $book->status = 'able';
+
+        $fileNamePdf = $request->file('file')->getClientOriginalName();
+        $urlPdf = $request->file('file')->storeAs('public/file/book-pdf', $fileNamePdf);
+        $book->path_file = $urlPdf;
+
+        $book->date_publish = $request->input('publish');
+
+        $fileNameCoverImage = $request->file('cover_image')->getClientOriginalName();
+        $urlCoverImage = $request->file('file')->storeAs('public/file/cover-image', $fileNameCoverImage);
+        $book->cover_image = $urlCoverImage;
+
+        $book->book_type_id = $request->input('type');
+        $book->publisher_id = $request->input('publisher');
+        $book->save();
+        
+        foreach($request->file('images') as $image) {
+            $fileNameImage = $image->getClientOriginalName();
+            $urlImage = $request->file('file')->storeAs('public/file/book-image', $fileNameCoverImage);
+            BookImage::create(['pathFile'=>$urlImage, 'book_id'=>Book::latest('id')->first()->id]);
+        }
+        return redirect('/admin-uploadbooks');
     }
 }

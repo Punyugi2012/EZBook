@@ -21,4 +21,5 @@ Route::get('/admin-uploadbooks', 'web\admin\AdminController@onUploadBooks')->mid
 Route::get('/admin-members', 'web\admin\AdminController@onMembers')->middleware('admin-isLogin');
 Route::get('/admin-regis-publisher', 'web\admin\AdminController@registerPublisher')->middleware('admin-isLogin');
 Route::post('/admin-create-publisher', 'web\admin\AdminController@createPublisher')->middleware('admin-isLogin');
+Route::post('/admin-create-book', 'web\admin\AdminController@uploadBook')->middleware('admin-isLogin');
 

@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class Book extends Model
 {
     protected $table = 'books';
-    public $timestamps = false;
     protected $fillable = [
         'name', 
         'score', 
@@ -17,7 +16,6 @@ class Book extends Model
         'detail', 
         'status', 
         'path_file', 
-        'date_upload', 
         'date_publish', 
         'cover_image', 
         'book_type_id', 
