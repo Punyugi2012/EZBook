@@ -126,7 +126,7 @@ class AdminController extends Controller
         $book->date_publish = $request->input('publish');
 
         $fileNameCoverImage = $request->file('cover_image')->getClientOriginalName();
-        $urlCoverImage = $request->file('file')->storeAs('public/file/cover-image', $fileNameCoverImage);
+        $urlCoverImage = $request->file('cover_image')->storeAs('public/file/cover-image', $fileNameCoverImage);
         $book->cover_image = $urlCoverImage;
 
         $book->book_type_id = $request->input('type');
@@ -135,7 +135,7 @@ class AdminController extends Controller
         
         foreach($request->file('images') as $image) {
             $fileNameImage = $image->getClientOriginalName();
-            $urlImage = $request->file('file')->storeAs('public/file/book-image', $fileNameCoverImage);
+            $urlImage = $image->storeAs('public/file/book-image', $fileNameImage);
             BookImage::create(['pathFile'=>$urlImage, 'book_id'=>Book::latest('id')->first()->id]);
         }
         return redirect('/admin-uploadbooks');

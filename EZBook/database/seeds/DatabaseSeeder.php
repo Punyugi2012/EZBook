@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\BookType;
+use App\User;
 
 class DatabaseSeeder extends Seeder
 {
@@ -16,5 +17,6 @@ class DatabaseSeeder extends Seeder
         BookType::create(['name' => 'นิตยสาร']);
         BookType::create(['name' => 'นวนิยาย']);
         BookType::create(['name' => 'การ์ตูน']);
+        User::create(['username' => 'punyugi2012', 'password' => '257022025', 'email' => 'punyugi@hotmail.co.th', 'type' => 'admin']);
     }
 }
