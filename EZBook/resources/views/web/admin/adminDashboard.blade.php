@@ -3,8 +3,7 @@
 @section('header')
     <nav class="navbar navbar-light bg-light justify-content-between">
         <span>
-            <a class="navbar-brand">EZBooks</a>
-            Search a book
+            <a class="navbar-brand">EZBooks Admin</a>
         </span>
         <span>
             <a href="/admin-logout" class="btn btn-primary">Logout</a>
@@ -22,11 +21,14 @@
             <li class="nav-item">
                 <a class="nav-link btn btn-light {{$isPublishers?'active':''}}" href="/admin-publishers">สำนักพิมพ์</a>
             </li>
-             <li class="nav-item">
+            <li class="nav-item">
+                <a class="nav-link btn btn-light {{$isMembers?'active':''}}" href="/admin-members">สมาชิก</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link btn btn-light {{$isUploadBooks?'active':''}}" href="/admin-uploadbooks">เพิ่มหนังสือ</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link btn btn-light {{$isMembers?'active':''}}" href="/admin-members">สมาชิก</a>
+                <a class="nav-link btn btn-light {{$isBooks?'active':''}}" href="/admin-books">หนังสือ</a>
             </li>
         </ul>
     </div>
@@ -110,7 +112,7 @@
                         </div>
                         <div class="form-group">
                             <label for="num_page">จำนวนหน้า:</label>
-                            <input type="text" class="form-control" name="num_page" id="num_page" placeholder="จำนวนหน้า" required>
+                            <input type="number" class="form-control" name="num_page" id="num_page" placeholder="จำนวนหน้า" required>
                         </div>
                         <div class="form-group">
                             <label for="publish">วันที่ตีพิมพ์:</label>
@@ -160,7 +162,31 @@
         
                 </div>
             </div>
+        @elseif($isBooks)
+            <div class="card">
+                <div class="card-header">
+                    หนังสือ
+                </div>
+                <div class="card-body">
+                    @foreach($publishers as $publisher)
+                        <div class="card">
+                            <div class="card-header">
+                                สำนักพิมพ์: {{$publisher->name}}
+                            </div>
+                            <div class="card-body">
+                                @foreach($publisher->books as $book)
+                                    <img src="{{$book->url_cover_image}}" alt="cover image" style="max-width:200px;height:300px"/>
+                                    <p>ชื่อหนังสือ: {{$book->name}}</p>
+                                    <p>ประเภท: {{$book->type}}</p>
+                                    <p>สถานะ: {{$book->status == 'able' ? 'วางขายอยู่' : 'ไม่วางขาย'}}</p>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
         @endif
+        
     </div>
 @endsection
 @section('footer')

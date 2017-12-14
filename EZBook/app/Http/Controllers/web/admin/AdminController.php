@@ -25,7 +25,12 @@ class AdminController extends Controller
         return redirect('/admin-login');
     }
     public function onDashboard() {
-        return view('web.admin.adminDashboard', ['isPublishers'=>false, 'isUploadBooks'=>false, 'isMembers'=>false]);
+        return view('web.admin.adminDashboard', [
+            'isPublishers'=>false, 
+            'isUploadBooks'=>false, 
+            'isMembers'=>false,
+            'isBooks'=>false
+        ]);
     }
     public function logout() {
         session()->forget('admin');
@@ -43,15 +48,50 @@ class AdminController extends Controller
     }
     public function onPublishers() {
         $publishers = $this->getPublishers();
-        return view('web.admin.adminDashboard', ['isPublishers'=>true, 'isUploadBooks'=>false, 'isMembers'=>false, 'publishers'=>$publishers]);
+        return view('web.admin.adminDashboard', [
+            'isPublishers'=>true,
+            'isUploadBooks'=>false,
+            'isMembers'=>false,
+            'isBooks'=>false,
+            'publishers'=>$publishers
+        ]);
     }
     public function onUploadBooks() {
         $publishers = $this->getPublishers();
         $bookTypes = BookType::get();
-        return view('web.admin.adminDashboard', ['isPublishers'=>false, 'isUploadBooks'=>true, 'isMembers'=>false, 'publishers'=>$publishers, 'bookTypes'=>$bookTypes]);
+        return view('web.admin.adminDashboard', [
+            'isPublishers'=>false, 
+            'isUploadBooks'=>true, 
+            'isMembers'=>false,
+            'isBooks'=>false, 
+            'publishers'=>$publishers, 
+            'bookTypes'=>$bookTypes
+        ]);
     }
     public function onMembers() {
-        return view('web.admin.adminDashboard', ['isPublishers'=>false, 'isUploadBooks'=>false, 'isMembers'=>true]);
+        return view('web.admin.adminDashboard', [
+            'isPublishers'=>false, 
+            'isUploadBooks'=>false, 
+            'isMembers'=>true,
+            'isBooks'=>false,
+        ]);
+    }
+    public function onBooks() {
+        $publishers = Publisher::get();
+        foreach($publishers as $publisher) {
+            $books = Book::where('publisher_id', $publisher->id)->get();
+            $publisher->$books = $books;
+            foreach($publisher->books as $book) {
+                $book->type = BookType::find($book->book_type_id)->name;
+            }
+        }
+        return view('web.admin.adminDashboard', [
+            'isPublishers'=>false, 
+            'isUploadBooks'=>false, 
+            'isMembers'=>false,
+            'isBooks'=>true,
+            'publishers'=>$publishers
+        ]);
     }
     public function registerPublisher() {
         return view('web.admin.publisherRegister');
@@ -123,18 +163,24 @@ class AdminController extends Controller
         $fileNamePdf = md5(uniqid(rand(), true)).'.'.$request->file('file')->getClientOriginalName();
         $urlPdf = $request->file('file')->storeAs('public/file/book-pdf', $fileNamePdf);
         $book->path_file = $urlPdf;
+        $book->url_file = Storage::url($urlPdf);
 
         $fileNameCoverImage = md5(uniqid(rand(), true)).'.'.$request->file('cover_image')->getClientOriginalName();
         $urlCoverImage = $request->file('cover_image')->storeAs('public/file/cover-image', $fileNameCoverImage);
         $book->cover_image = $urlCoverImage;
+        $book->url_cover_image = Storage::url($urlCoverImage);
 
         $book->save();
         
         foreach($request->file('images') as $image) {
             $fileNameImage = md5(uniqid(rand(), true)).'.'.$image->getClientOriginalName();
             $urlImage = $image->storeAs('public/file/book-image', $fileNameImage);
-            BookImage::create(['pathFile'=>$urlImage, 'book_id'=>Book::latest('id')->first()->id]);
+            BookImage::create([
+                'pathFile'=>$urlImage, 
+                'url_image'=>Storage::url($urlImage), 
+                'book_id'=>Book::latest('id')->first()->id
+            ]);
         }
-        return redirect('/admin-uploadbooks');
+        return redirect('/admin-books');
     }
 }

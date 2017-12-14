@@ -10,6 +10,7 @@ class BookImage extends Model
     public $timestamps = false;
     protected $fillable = [
         'pathFile', 
+        'url_image',
         'book_id'
     ];
     public function book() {

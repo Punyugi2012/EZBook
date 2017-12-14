@@ -16,6 +16,7 @@ class CreateBooksImagesTable extends Migration
         Schema::create('books_images', function (Blueprint $table) {
             $table->increments('id');
             $table->string('pathFile');
+            $table->string('url_image');
             $table->integer('book_id')->unsigned();
             $table->foreign('book_id')->references('id')->on('books');
         });

@@ -23,8 +23,10 @@ class CreateBooksTable extends Migration
             $table->text('detail')->nullable();
             $table->enum('status', ['able', 'unable']);
             $table->string('path_file');
+            $table->string('url_file');
             $table->date('date_publish');
             $table->string('cover_image');
+            $table->string('url_cover_image');
             $table->integer('book_type_id')->unsigned();
             $table->integer('publisher_id')->unsigned();
             $table->foreign('book_type_id')->references('id')->on('books_types');
