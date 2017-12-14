@@ -9,8 +9,8 @@
         <form action="admin-login" method="POST">
             {{ csrf_field() }}
              <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="email" class="form-control" name="email" id="email" placeholder="email" required>
+                <label for="username">Username:</label>
+                <input type="text" class="form-control" name="username" id="username" placeholder="username" required>
             </div>
             <div class="form-group">
                 <label for="password">Password:</label>

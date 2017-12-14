@@ -17,7 +17,7 @@ class AdminController extends Controller
         return view('web.admin.adminLogin');
     }
     public function checkLogin(Request $request) {
-        $user = User::where('email', $request->input('email'))->where('password', $request->input('password'))->first();
+        $user = User::where('username', $request->input('username'))->where('password', $request->input('password'))->first();
         if($user) {
             session()->put('admin', $user);
             return redirect('/admin-dashboard');
@@ -120,18 +120,18 @@ class AdminController extends Controller
         $book->book_type_id = $request->input('type');
         $book->publisher_id = $request->input('publisher');
 
-        $fileNamePdf = $request->file('file')->getClientOriginalName();
+        $fileNamePdf = md5(uniqid(rand(), true)).'.'.$request->file('file')->getClientOriginalName();
         $urlPdf = $request->file('file')->storeAs('public/file/book-pdf', $fileNamePdf);
         $book->path_file = $urlPdf;
 
-        $fileNameCoverImage = $request->file('cover_image')->getClientOriginalName();
+        $fileNameCoverImage = md5(uniqid(rand(), true)).'.'.$request->file('cover_image')->getClientOriginalName();
         $urlCoverImage = $request->file('cover_image')->storeAs('public/file/cover-image', $fileNameCoverImage);
         $book->cover_image = $urlCoverImage;
 
         $book->save();
         
         foreach($request->file('images') as $image) {
-            $fileNameImage = $image->getClientOriginalName();
+            $fileNameImage = md5(uniqid(rand(), true)).'.'.$image->getClientOriginalName();
             $urlImage = $image->storeAs('public/file/book-image', $fileNameImage);
             BookImage::create(['pathFile'=>$urlImage, 'book_id'=>Book::latest('id')->first()->id]);
         }
