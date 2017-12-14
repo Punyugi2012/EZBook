@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class Comment extends Model
 {
     protected $table = 'comments';
-    public $timestamps = false;
     protected $fillable = [
         'message', 
         'date_comment', 

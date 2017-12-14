@@ -7,20 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Book extends Model
 {
     protected $table = 'books';
-    protected $fillable = [
-        'name', 
-        'score', 
-        'file_size', 
-        'num_page', 
-        'price', 
-        'detail', 
-        'status', 
-        'path_file', 
-        'date_publish', 
-        'cover_image', 
-        'book_type_id', 
-        'publisher_id'
-    ];
+    
     public function bookType() {
         return $this->belongsTo('App\BookType', 'book_type_id', 'id');
     }

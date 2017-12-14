@@ -112,25 +112,22 @@ class AdminController extends Controller
 
         $book = new Book();
         $book->name = $request->input('name');
-        $book->score = 0.0;
         $book->file_size = $request->input('file_size');
         $book->num_page = $request->input('num_page');
         $book->price = $request->input('price');
         $book->detail = $request->input('detail');
-        $book->status = 'able';
+        $book->date_publish = $request->input('publish');
+        $book->book_type_id = $request->input('type');
+        $book->publisher_id = $request->input('publisher');
 
         $fileNamePdf = $request->file('file')->getClientOriginalName();
         $urlPdf = $request->file('file')->storeAs('public/file/book-pdf', $fileNamePdf);
         $book->path_file = $urlPdf;
 
-        $book->date_publish = $request->input('publish');
-
         $fileNameCoverImage = $request->file('cover_image')->getClientOriginalName();
         $urlCoverImage = $request->file('cover_image')->storeAs('public/file/cover-image', $fileNameCoverImage);
         $book->cover_image = $urlCoverImage;
 
-        $book->book_type_id = $request->input('type');
-        $book->publisher_id = $request->input('publisher');
         $book->save();
         
         foreach($request->file('images') as $image) {

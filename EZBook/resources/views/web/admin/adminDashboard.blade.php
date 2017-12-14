@@ -132,8 +132,22 @@
                            <label for="file">file:</label>
                            <input type="file" class="form-control" id="file" name="file" accept=".pdf" required>
                         </div>
-                        <button type="submit" class="btn btn-success">เพิ่ม</button>
-                        <button type="resert" class="btn btn-warning">clear</button>
+                        <div class="form-check form-check-inline">
+                            <label class="form-check-label">
+                                <input class="form-check-input" type="radio" name="status"  value="able" checked>
+                                วางขาย
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <label class="form-check-label">
+                                <input class="form-check-input" type="radio" name="status" value="unable">
+                                ไม่วางขาย
+                            </label>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-success">เพิ่ม</button>
+                            <button type="resert" class="btn btn-warning">clear</button>
+                        </div>
                     </form>
                 </div>
             </div>
