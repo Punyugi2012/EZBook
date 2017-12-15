@@ -171,14 +171,19 @@
                     @foreach($publishers as $publisher)
                         <div class="card">
                             <div class="card-header">
-                                สำนักพิมพ์: {{$publisher->name}}
+                                <span>สำนักพิมพ์: {{$publisher->name}}</span>  <span>จำนวน: {{count($publisher->books)}} เล่ม</span>
                             </div>
-                            <div class="card-body">
+                            <div class="card-body row">
                                 @foreach($publisher->books as $book)
-                                    <img src="{{$book->url_cover_image}}" alt="cover image" style="max-width:200px;height:300px"/>
-                                    <p>ชื่อหนังสือ: {{$book->name}}</p>
-                                    <p>ประเภท: {{$book->type}}</p>
-                                    <p>สถานะ: {{$book->status == 'able' ? 'วางขายอยู่' : 'ไม่วางขาย'}}</p>
+                                    <div  class="col-md-3">
+                                        <a href="#">
+                                            <img class="border border-secondary rounded" src="{{$book->url_cover_image}}" alt="cover image" style="width:150px;height:200px"/>
+                                        </a>
+                                        <p style="margin-top:10px">ชื่อหนังสือ: {{$book->name}}</p>
+                                        <p>ราคา: {{$book->price == 0 ? 'ฟรี' : $book->price.'บาท'}}</p>
+                                        <p>ประเภท: {{$book->type}}</p>
+                                        <p>สถานะ: <span class="{{$book->status == 'able' ? 'text-success' : 'text-danger'}}">{{$book->status == 'able' ? 'วางขายอยู่' : 'ไม่วางขาย'}}</span></p>
+                                    </div>
                                 @endforeach
                             </div>
                         </div>
