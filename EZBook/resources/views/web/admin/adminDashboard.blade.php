@@ -165,29 +165,37 @@
         @elseif($isBooks)
             <div class="card">
                 <div class="card-header">
-                    หนังสือ
+                    มีทั้งหมด {{$numOfBook}} เล่ม
                 </div>
                 <div class="card-body">
-                    @foreach($publishers as $publisher)
-                        <div class="card">
-                            <div class="card-header">
-                                <span>สำนักพิมพ์: {{$publisher->name}}</span>  <span>จำนวน: {{count($publisher->books)}} เล่ม</span>
-                            </div>
-                            <div class="card-body row">
-                                @foreach($publisher->books as $book)
-                                    <div  class="col-md-3">
-                                        <a href="#">
-                                            <img class="border border-secondary rounded" src="{{$book->url_cover_image}}" alt="cover image" style="width:150px;height:200px"/>
-                                        </a>
-                                        <p style="margin-top:10px">ชื่อหนังสือ: {{$book->name}}</p>
-                                        <p>ราคา: {{$book->price == 0 ? 'ฟรี' : $book->price.'บาท'}}</p>
-                                        <p>ประเภท: {{$book->type}}</p>
-                                        <p>สถานะ: <span class="{{$book->status == 'able' ? 'text-success' : 'text-danger'}}">{{$book->status == 'able' ? 'วางขายอยู่' : 'ไม่วางขาย'}}</span></p>
+                    <div id="accordion" role="tablist">
+                        @foreach($publishers as $publisher)
+                            <div class="card">
+                                <div class="card-header" role="tab" id="heading{{$loop->index}}">
+                                    <a data-toggle="collapse" href="#collapse{{$loop->index}}" aria-expanded="true" aria-controls="collapse{{$loop->index}}">
+                                        สำนักพิมพ์: {{$publisher->name}}, มีหนังสือจำนวน {{count($publisher->books)}} เล่ม
+                                    </a>
+                                </div>
+                                <div id="collapse{{$loop->index}}" class="collapse" role="tabpanel" aria-labelledby="heading{{$loop->index}}" data-parent="#accordion">
+                                    <div class="card-body">
+                                        <div class="card-body row">
+                                            @foreach($publisher->books as $book)
+                                                <div  class="col-md-3">
+                                                    <a href="/admin-book/{{$book->id}}/publisher/{{$publisher->id}}">
+                                                        <img class="border border-secondary rounded" src="{{$book->url_cover_image}}" alt="cover image" style="width:150px;height:200px"/>
+                                                    </a>
+                                                    <p style="margin-top:10px">ชื่อหนังสือ: {{$book->name}}</p>
+                                                    <p>ราคา: {{$book->price == 0 ? 'ฟรี' : $book->price.'บาท'}}</p>
+                                                    <p>ประเภท: {{$book->type}}</p>
+                                                    <p>สถานะ: <span class="{{$book->status == 'able' ? 'text-success' : 'text-danger'}}">{{$book->status == 'able' ? 'วางขายอยู่' : 'ไม่วางขาย'}}</span></p>
+                                                </div>
+                                            @endforeach
+                                        </div>
                                     </div>
-                                @endforeach
+                                </div>
                             </div>
-                        </div>
-                    @endforeach
+                        @endforeach
+                    </div>
                 </div>
             </div>
         @endif

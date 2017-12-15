@@ -85,12 +85,14 @@ class AdminController extends Controller
                 $book->type = BookType::find($book->book_type_id)->name;
             }
         }
+        $numOfBook = Book::count();
         return view('web.admin.adminDashboard', [
             'isPublishers'=>false, 
             'isUploadBooks'=>false, 
             'isMembers'=>false,
             'isBooks'=>true,
-            'publishers'=>$publishers
+            'publishers'=>$publishers,
+            'numOfBook'=>$numOfBook
         ]);
     }
     public function registerPublisher() {
@@ -182,5 +184,12 @@ class AdminController extends Controller
             ]);
         }
         return redirect('/admin-books');
+    }
+    public function onBook($bookId, $publisherId) {
+        $book = Book::find($bookId);
+        $book->type = BookType::find($book->book_type_id)->name;
+        $book->publisher = Publisher::find($publisherId)->name;
+        $book->images = BookImage::where('book_id', $bookId)->get();
+        return view('web.admin.bookProfile', ['book'=>$book]);
     }
 }
