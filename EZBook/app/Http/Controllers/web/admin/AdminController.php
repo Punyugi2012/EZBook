@@ -10,6 +10,7 @@ use App\Publisher;
 use App\BookType;
 use App\Book;
 use App\BookImage;
+use App\Author;
 
 class AdminController extends Controller
 {
@@ -29,7 +30,8 @@ class AdminController extends Controller
             'isPublishers'=>false, 
             'isUploadBooks'=>false, 
             'isMembers'=>false,
-            'isBooks'=>false
+            'isBooks'=>false,
+            'isAuthors'=>false,
         ]);
     }
     public function logout() {
@@ -53,19 +55,23 @@ class AdminController extends Controller
             'isUploadBooks'=>false,
             'isMembers'=>false,
             'isBooks'=>false,
+            'isAuthors'=>false,
             'publishers'=>$publishers
         ]);
     }
     public function onUploadBooks() {
         $publishers = $this->getPublishers();
         $bookTypes = BookType::get();
+        $authors = Author::get();
         return view('web.admin.adminDashboard', [
             'isPublishers'=>false, 
             'isUploadBooks'=>true, 
             'isMembers'=>false,
             'isBooks'=>false, 
+            'isAuthors'=>false,
             'publishers'=>$publishers, 
-            'bookTypes'=>$bookTypes
+            'bookTypes'=>$bookTypes,
+            'authors'=>$authors
         ]);
     }
     public function onMembers() {
@@ -74,6 +80,7 @@ class AdminController extends Controller
             'isUploadBooks'=>false, 
             'isMembers'=>true,
             'isBooks'=>false,
+            'isAuthors'=>false,
         ]);
     }
     public function onBooks() {
@@ -91,12 +98,27 @@ class AdminController extends Controller
             'isUploadBooks'=>false, 
             'isMembers'=>false,
             'isBooks'=>true,
+            'isAuthors'=>false,
             'publishers'=>$publishers,
             'numOfBook'=>$numOfBook
         ]);
     }
+    public function onAuthors() {
+        $authors = Author::get();
+        return view('web.admin.adminDashboard', [
+            'isPublishers'=>false, 
+            'isUploadBooks'=>false, 
+            'isMembers'=>false,
+            'isBooks'=>false,
+            'isAuthors'=>true,
+            'authors'=>$authors
+        ]);
+    }
     public function registerPublisher() {
         return view('web.admin.publisherRegister');
+    }
+    public function registerAuthor() {
+        return view('web.admin.authorRegister');
     }
     private function randomPassword() {
         $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
@@ -118,14 +140,14 @@ class AdminController extends Controller
         return $randomString;
     }
     public function createPublisher(Request $request) {
-       $username = $this->generateRandomString();
-       $password = $this->randomPassword();
        $validatedData = $request->validate([
         'name' => 'required',
         'address' => 'required',
-        'phone' => 'required',
+        'phone' => 'required|regex:/(0)[0-9]{9}/',
         'email' => 'required|unique:users'
        ]);
+       $username = $this->generateRandomString();
+       $password = $this->randomPassword();
        User::create([
         'username' => $username,
         'password' => $password,
@@ -140,9 +162,23 @@ class AdminController extends Controller
        ]);
        return redirect('/admin-publishers');
     }
+    public function createAuthor(Request $request) {
+        $validatedData = $request->validate([
+            'name' => 'required',
+            'email' => 'required|unique:authors',
+            'phone' => 'required|regex:/(0)[0-9]{9}/'
+        ]);
+        Author::create([
+            'name'=>$request->input('name'), 
+            'email'=>$request->input('email'), 
+            'phone'=>$request->input('phone')
+        ]);
+        return redirect('/admin-authors');
+    }
     public function uploadBook(Request $request){
         $validatedData = $request->validate([
             'name' => 'required',
+            'authors' => 'required',
             'price' => 'required',
             'file_size' => 'required',
             'num_page' => 'required',
@@ -182,6 +218,10 @@ class AdminController extends Controller
                 'url_image'=>Storage::url($urlImage), 
                 'book_id'=>Book::latest('id')->first()->id
             ]);
+        }
+        $bookLatest = Book::latest('id')->first();
+        foreach($request->input('authors') as $author) {
+            $bookLatest->authors()->attach($author);
         }
         return redirect('/admin-books');
     }

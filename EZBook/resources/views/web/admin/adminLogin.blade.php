@@ -5,7 +5,7 @@
 @endsection
 @section('content')
     <div class="border border-secondary rounded" style="padding: 50px; margin-top: 50px">
-        <h1>Admin Login</h1>
+        <h1>Admin เข้าสู่ระบบ</h1>
         <form action="admin-login" method="POST">
             {{ csrf_field() }}
              <div class="form-group">
@@ -16,12 +16,9 @@
                 <label for="password">Password:</label>
                 <input type="password" class="form-control" name="password" id="password" placeholder="password" required>
             </div>
-            <button type="submit" class="btn btn-primary">Login</button>
-            <button type="reset" class="btn btn-warning">Clear</button>
+            <button type="submit" class="btn btn-primary">เข้าสู่ระบบ</button>
         </form>
     </div>
 @endsection
-@section('footer')
-    @include('web.components.footer')
-@endsection
+
     

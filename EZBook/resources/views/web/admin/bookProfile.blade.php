@@ -11,7 +11,8 @@
     </nav>
 @endsection
 @section('content')
-    <div class="card">
+    <a href='/admin-books' class="btn btn-primary" style="margin-top: 10px">ย้อนกลับ</a>
+    <div class="card" style="margin-top:20px">
         <div class="card-header">
             หนังสือ: {{$book->name}}
         </div>
@@ -40,7 +41,13 @@
                     <p>ขนาดไฟล์: {{$book->file_size}}</p>
                     <p>จำนวนหน้า: {{$book->num_page}} หน้า</p>
                     <p>คะแนน: {{$book->score}}</p>
-                    <p>ผู้แต่ง:</p>
+                    ผู้แต่ง:
+                    <div style="padding-left:20px">
+                        @foreach($book->authors as $author)
+                            <a href="javascript:void(0)" class="d-block">{{$author->name}}</a>
+                        @endforeach
+                    </div>
+                    <br>
                     <p>สำนักพิมพ์: {{$book->publisher}}</p>
                     <p>วันที่ตีพิมพ์: {{$book->date_publish}}</p>
                     <p>รายละเอียด: {{$book->detail}}</p>

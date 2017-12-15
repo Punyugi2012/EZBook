@@ -24,6 +24,9 @@
             <li class="nav-item">
                 <a class="nav-link btn btn-light {{$isMembers?'active':''}}" href="/admin-members">สมาชิก</a>
             </li>
+             <li class="nav-item">
+                <a class="nav-link btn btn-light {{$isAuthors?'active':''}}" href="/admin-authors">ผู้แต่ง</a>
+            </li>
             <li class="nav-item">
                 <a class="nav-link btn btn-light {{$isUploadBooks?'active':''}}" href="/admin-uploadbooks">เพิ่มหนังสือ</a>
             </li>
@@ -102,6 +105,18 @@
                             <label for="detail">รายละเอียด:</label>
                             <textarea class="form-control" id="detail" name="detail" rows="3" placeholder="รายละเอียด"></textarea>
                         </div>
+                        เลือกผู้แต่ง:
+                        <div style="overflow:auto;height:100px;padding:10px;border:1px solid #ced4da" class="rounded">
+                            @foreach($authors as $author)
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="checkbox" name="authors[]" class="form-check-input"  value="{{$author->id}}">
+                                        {{$author->name}}
+                                    </label>
+                                </div>
+                            @endforeach
+                        </div>
+                        <br>
                         <div class="form-group">
                             <label for="detail">ราคา:</label>
                             <input type="number" class="form-control" name="price" id="price" value="0" placeholder="ราคา" required>
@@ -198,12 +213,37 @@
                     </div>
                 </div>
             </div>
+        @elseif($isAuthors)
+             <div class="card">
+                <div class="card-header">
+                    ผู้แต่ง
+                </div>
+                <div class="card-body">
+                    <a href="/admin-regis-author" class="btn btn-info">เพิ่มผู้แต่ง</a>
+                    <table class="table table-striped" style="margin-top:10px">
+                        <thead>
+                            <tr>
+                                <th>ชื่อ</th>
+                                <th>อีเมลล์</th>
+                                <th>เบอร์โทรศัพท์</th>
+                                <th>created_at</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($authors as $author)
+                                <tr>
+                                    <td>{{$author->name}}</td>
+                                    <td>{{$author->email}}</td>
+                                    <td>{{$author->phone}}</td>
+                                    <td>{{$author->created_at}}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         @endif
-        
     </div>
-@endsection
-@section('footer')
-    @include('web.components.footer')
 @endsection
 @section('javascript')
     @if($isUploadBooks)
