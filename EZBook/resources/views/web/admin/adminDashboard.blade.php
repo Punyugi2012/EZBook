@@ -72,7 +72,7 @@
                 </div>
             </div>
         @elseif($isUploadBooks)
-             <div class="card">
+            <div class="card">
                 <div class="card-header">
                     เพิ่มหนังสือ
                 </div>
@@ -158,12 +158,12 @@
                         <div class="form-check form-check-inline">
                             <label class="form-check-label">
                                 <input class="form-check-input" type="radio" name="status" value="unable">
-                                ไม่วางขาย
+                                ยังไม่วางขาย
                             </label>
                         </div>
                         <div class="text-center">
                             <button type="submit" class="btn btn-success">เพิ่ม</button>
-                            <button type="resert" class="btn btn-warning">clear</button>
+                            <button type="reset" class="btn btn-warning">clear</button>
                         </div>
                     </form>
                 </div>
@@ -202,7 +202,7 @@
                                                     <p style="margin-top:10px">ชื่อหนังสือ: {{$book->name}}</p>
                                                     <p>ราคา: {{$book->price == 0 ? 'ฟรี' : $book->price.'บาท'}}</p>
                                                     <p>ประเภท: {{$book->type}}</p>
-                                                    <p>สถานะ: <span class="{{$book->status == 'able' ? 'text-success' : 'text-danger'}}">{{$book->status == 'able' ? 'วางขายอยู่' : 'ไม่วางขาย'}}</span></p>
+                                                    <p>สถานะ: <span class="{{$book->status == 'able' ? 'text-success' : 'text-danger'}}">{{$book->status == 'able' ? 'วางขายอยู่' : 'ยังไม่วางขาย'}}</span></p>
                                                 </div>
                                             @endforeach
                                         </div>
