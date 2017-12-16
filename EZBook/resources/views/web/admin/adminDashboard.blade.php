@@ -302,7 +302,6 @@
                 }
             }
             $("#cover_image").on('change', function() {
-				console.log('kuy');
                 readURL(this);
             });   
             var imagesPreview = function(input, placeToInsertImagePreview) {
