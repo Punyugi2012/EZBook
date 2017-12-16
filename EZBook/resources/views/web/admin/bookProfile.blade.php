@@ -24,21 +24,18 @@
 								<img src="{{$image->url_image}}" alt="image" style="width:100px;height:100px" />
 								<a>
 						</div>
-						<br>
-						@endforeach
+						<br> @endforeach
 					</div>
-					<div class="col-md-4">
+					<div class="col-md-7">
 						<img class="border border-secondary rounded" src="{{$book->url_cover_image}}" alt="cover image" style="width:250px;height:300px"
 						/>
-						<div style="margin-top:20px">
-							<a href="#editBook" class="btn btn-warning">แก้ไขหนังสือ</a>
-						</div>
 					</div>
 				</div>
 			</div>
 			<div class="cold-md-6">
 				<p>ชื่อหนังสือ: {{$book->name}}</p>
-				<p>ราคา: {{$book->price}}</p>
+				<p>ราคา: {{$book->price}} บาท</p>
+				<p>ส่วนลด: {{$book->discount_percent}} %</p>
 				<p>ประเภท: {{$book->type}}</p>
 				<p>ขนาดไฟล์: {{$book->file_size}}</p>
 				<p>จำนวนหน้า: {{$book->num_page}} หน้า</p>
@@ -51,7 +48,9 @@
 					@endforeach
 				</div>
 				<br>
-				<p>สำนักพิมพ์: {{$book->publisher->name}}</p>
+				<p>สำนักพิมพ์:
+					<a href="javascript:void(0)">{{$book->publisher->name}}</a>
+				</p>
 				<p>วันที่ตีพิมพ์: {{$book->date_publish}}</p>
 				<p>สถานะ:
 					<span class="{{$book->status == 'able' ? 'text-success' : 'text-danger'}}">{{$book->status == 'able' ? 'วางขาย' : 'ยังไม่วางขาย'}}</span>
@@ -63,84 +62,46 @@
 				<p>รายละเอียด: {{$book->detail}}</p>
 			</div>
 		</div>
-	</div>
-</div>
-<div class="card" style="margin-top:10px;margin-bottom:20px" id="editBook">
-	<div class="card-header">
-		แก้ไขหนังสือ
-	</div>
-	<div class="card-body">
-		<form action="/admin-update-book/{{$book->id}}/publisher/{{$book->publisher->id}}" enctype="multipart/form-data" method="POST">
-			{{ csrf_field() }}
-            {{ method_field('PUT') }}
-			<div class="form-group">
-				<label for="publisher">สำนักพิมพ์:</label>
-				<select class="form-control" id="publisher" name="publisher" required>
-					<option value="">เลือกสำนักพิมพ์</option>
-					@foreach($publishers as $publisher)
-					<option value="{{$publisher->id}}">{{$publisher->name}}</option>
-					@endforeach
-				</select>
-			</div>
-			<div class="form-group">
-				<label for="type">ประเภทหนังสือ:</label>
-				<select class="form-control" id="type" name="type" required>
-					<option value="">เลือกประเภทหนังสือ</option>
-					@foreach($bookTypes as $type)
-					<option value="{{$type->id}}">{{$type->name}}</option>
-					@endforeach
-				</select>
-			</div>
-			<div class="form-group">
-				<label for="name">ชื่อหนังสือ:</label>
-				<input type="text" class="form-control" name="name" id="name" placeholder="ชื่อหนังสือ" required>
-			</div>
-			<div class="form-group">
-				<label for="detail">รายละเอียด:</label>
-				<textarea class="form-control" id="detail" name="detail" rows="3" placeholder="รายละเอียด"></textarea>
-			</div>
-			เลือกผู้แต่ง:
-			<div style="overflow:auto;height:100px;padding:10px;border:1px solid #ced4da" class="rounded">
-				@foreach($authors as $author)
-				<div class="form-check">
-					<label class="form-check-label">
-						<input type="checkbox" name="authors[]" class="form-check-input" value="{{$author->id}}"> {{$author->name}}
-					</label>
+		<div class="row">
+			<div class="col-md-12">
+				comments:
+				<div style="overflow:auto;height:150px;padding:10px;border:1px solid #ced4da" class="rounded">
+					
 				</div>
-				@endforeach
 			</div>
-			<br>
-			<div class="form-group">
-				<label for="detail">ราคา:</label>
-				<input type="number" class="form-control" name="price" id="price" value="0" placeholder="ราคา" required>
+		</div>
+		<div class="row" style="margin-top:30px">
+			<div class="col-md-12">
+				แก้ไขสถานะ:
+				<form action="/admin-update-book/{{$book->id}}/publisher/{{$book->publisher->id}}" method="POST">
+					<div class="form-check form-check-inline">
+						<label class="form-check-label text-success">
+							{{ csrf_field() }}
+            				{{ method_field('PUT') }}
+							<input class="form-check-input" type="radio" name="status" value="able" {{$book->status == 'able' ? 'checked' : ''}}> วางขาย
+						</label>
+					</div>
+					<div class="form-check form-check-inline">
+						<label class="form-check-label text-danger">
+							<input class="form-check-input" type="radio" name="status" value="unable" {{$book->status == 'unable' ? 'checked' : ''}}> ไม่วางขาย
+						</label>
+					</div>
+					<div class="form-group">
+						<lable for="price">แก้ไขราคา:</label>
+						<input type="number" class="form-control" name="price" value="{{$book->price}}" id="price">
+					</div>
+					<div class="form-group">
+						<lable for="discount">แก้ไข % ส่วนลด:</label>
+						<input type="number" class="form-control" name="discount" value="{{$book->discount_percent}}" id="discount">
+					</div>
+					<div class="form-group">
+						  <label for="detail">แก้ไขรายละเอียด:</label>
+						<textarea class="form-control" id="detail" name="detail" rows="3">{{$book->detail}}</textarea>
+					</div>
+					<button type="submit" class="btn btn-primary">บันทึก</button>
+				</form>
 			</div>
-			<div class="form-group">
-				<label for="file_size">ขนาดไฟล์:</label>
-				<input type="text" class="form-control" name="file_size" id="file_size" placeholder="ขนาดไฟล์" required>
-			</div>
-			<div class="form-group">
-				<label for="num_page">จำนวนหน้า:</label>
-				<input type="number" class="form-control" name="num_page" id="num_page" placeholder="จำนวนหน้า" required>
-			</div>
-			<div class="form-group">
-				<label for="publish">วันที่ตีพิมพ์:</label>
-				<input type="date" class="form-control" name="publish" id="publish" required>
-			</div>
-			<div class="form-check form-check-inline">
-				<label class="form-check-label">
-					<input class="form-check-input" type="radio" name="status" value="able" checked> วางขาย
-				</label>
-			</div>
-			<div class="form-check form-check-inline">
-				<label class="form-check-label">
-					<input class="form-check-input" type="radio" name="status" value="unable"> ยังไม่วางขาย
-				</label>
-			</div>
-			<div class="text-center">
-				<button type="submit" class="btn btn-success">แก้ไข</button>
-				<button type="reset" class="btn btn-warning">ล้าง</button>
-			</div>
-		</form>
+		</div>
 	</div>
 </div>
 @endsection

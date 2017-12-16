@@ -121,6 +121,10 @@
                             <label for="detail">ราคา:</label>
                             <input type="number" class="form-control" name="price" id="price" value="0" placeholder="ราคา" required>
                         </div>
+                           <div class="form-group">
+                            <label for="discount">% ส่วนลด:</label>
+                            <input type="number" class="form-control" name="discount" id="discount" value="0" placeholder="%ส่วนลด" required>
+                        </div>
                         <div class="form-group">
                             <label for="file_size">ขนาดไฟล์:</label>
                             <input type="text" class="form-control" name="file_size" id="file_size" placeholder="ขนาดไฟล์" required>

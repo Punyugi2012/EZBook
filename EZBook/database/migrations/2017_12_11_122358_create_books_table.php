@@ -20,6 +20,7 @@ class CreateBooksTable extends Migration
             $table->string('file_size');
             $table->integer('num_page');
             $table->double('price');
+            $table->integer('discount_percent')->default(0);
             $table->text('detail')->nullable();
             $table->enum('status', ['able', 'unable']);
             $table->string('path_file');

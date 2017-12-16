@@ -181,6 +181,7 @@ class AdminController extends Controller
             'name' => 'required',
             'authors' => 'required',
             'price' => 'required',
+            'discount' => 'required',
             'file_size' => 'required',
             'num_page' => 'required',
             'publish' => 'required',
@@ -195,6 +196,7 @@ class AdminController extends Controller
         $book->file_size = $request->input('file_size');
         $book->num_page = $request->input('num_page');
         $book->price = $request->input('price');
+        $book->discount_percent = $request->input('discount');
         $book->detail = $request->input('detail');
         $book->date_publish = $request->input('publish');
         $book->book_type_id = $request->input('type');
@@ -232,44 +234,20 @@ class AdminController extends Controller
         $book->type = BookType::find($book->book_type_id)->name;
         $book->publisher = Publisher::find($publisherId);
         $book->images = BookImage::where('book_id', $bookId)->get();
-        $publishers = Publisher::get();
-        $bookTypes = BookType::get();
-        $authors = Author::get();
-        return view('web.admin.bookProfile', [
-            'book'=>$book, 
-            'publishers'=>$publishers,
-            'bookTypes'=>$bookTypes,
-            'authors'=>$authors
-        ]);
+        return view('web.admin.bookProfile', ['book'=>$book]);
     }
     public function updateBook(Request $request, $bookId, $publisherId) {
         $validatedData = $request->validate([
-            'publisher'=>'required',
-            'name' => 'required',
-            'authors' => 'required',
+            'status'=>'required',
             'price' => 'required',
-            'file_size' => 'required',
-            'num_page' => 'required',
-            'publish' => 'required',
-            'status' => 'required'
+            'discount' => 'required',
         ]);
         $book = Book::find($bookId);
-        $book->name = $request->input('name');
-        $book->publisher_id = $request->input('publisher');
-        $book->file_size = $request->input('file_size');
-        $book->num_page = $request->input('num_page');
-        $book->date_publish = $request->input('publish');
-        $book->detail = $request->input('detail');
-        $book->price = $request->input('price');
         $book->status = $request->input('status');
+        $book->price = $request->input('price');
+        $book->detail = $request->input('detail');
+        $book->discount_percent = $request->input('discount');
         $book->save();
-        $oldAuthors = $book->authors;
-        foreach($oldAuthors as $author) {
-            $book->authors()->detach($author->id);
-        }     
-        foreach($request->input('authors') as $author) {
-            $book->authors()->attach($author);
-        }  
         return redirect('/admin-book/'.$bookId.'/publisher/'.$publisherId);
     }
 }
