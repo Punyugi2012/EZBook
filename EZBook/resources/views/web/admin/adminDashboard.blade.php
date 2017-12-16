@@ -46,13 +46,16 @@
                     <table class="table table-striped" style="margin-top:10px">
                         <thead>
                             <tr>
-                            <th>ชื่อ</th>
-                            <th>ที่อยู่</th>
-                            <th>เบอร์โทรศัพท์</th>
-                            <th>อีเมลล์</th>
-                            <th>Username</th>
-                            <th>Password</th>
-                            <th>created_at</th>
+                                <th>ชื่อ</th>
+                                <th>ที่อยู่</th>
+                                <th>เบอร์โทรศัพท์</th>
+                                <th>อีเมลล์</th>
+                                <th>สถานะ</th>
+                                <th>Username</th>
+                                <th>Password</th>
+                                <th>created_at</th>
+                                <th>updated_at</th>
+                                <th>เครื่องมือ</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -62,9 +65,21 @@
                                     <td>{{$publisher->address}}</td>
                                     <td>{{$publisher->phone}}</td>
                                     <td>{{$publisher->email}}</td>
+                                    <td>
+                                        @if($publisher->status == 'able')
+                                            <span class="text-success">สัญญายังไม่หมด</span>
+                                        @else
+                                            <span class="text-danger">หมดสัญญา</span>
+                                        @endif
+                                    </td>
                                     <td>{{$publisher->username}}</td>
                                     <td>{{$publisher->password}}</td>
                                     <td>{{$publisher->created_at}}</td>
+                                    <td>{{$publisher->updated_at}}</td>
+                                    <td>
+                                        <a href="/admin-edit-publisher/{{$publisher->id}}" class="btn btn-warning">แก้ไข</a>
+                                        <a href="#" class="btn btn-info">ดูหนังสือ</a>
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -188,24 +203,25 @@
                 </div>
                 <div class="card-body">
                     <div id="accordion" role="tablist">
-                        @foreach($publishers as $publisher)
+                        @foreach($bookTypes as $type)
                             <div class="card">
                                 <div class="card-header" role="tab" id="heading{{$loop->index}}">
                                     <a data-toggle="collapse" href="#collapse{{$loop->index}}" aria-expanded="true" aria-controls="collapse{{$loop->index}}">
-                                        สำนักพิมพ์: {{$publisher->name}}, มีหนังสือจำนวน {{count($publisher->books)}} เล่ม
+                                        ประเภท: {{$type->name}}, มีหนังสือจำนวน {{count($type->books)}} เล่ม
                                     </a>
                                 </div>
-                                <div id="collapse{{$loop->index}}" class="collapse" role="tabpanel" aria-labelledby="heading{{$loop->index}}" data-parent="#accordion">
+                                <div id="collapse{{$loop->index}}" class="collapse show" role="tabpanel" aria-labelledby="heading{{$loop->index}}" data-parent="#accordion">
                                     <div class="card-body">
                                         <div class="card-body row">
-                                            @foreach($publisher->books as $book)
+                                            @foreach($type->books as $book)
                                                 <div  class="col-md-3">
                                                     <a href="/admin-book/{{$book->id}}/publisher/{{$publisher->id}}">
                                                         <img class="border border-secondary rounded" src="{{$book->url_cover_image}}" alt="cover image" style="width:150px;height:200px"/>
                                                     </a>
                                                     <p style="margin-top:10px">ชื่อหนังสือ: {{$book->name}}</p>
-                                                    <p>ราคา: {{$book->price == 0 ? 'ฟรี' : $book->price.'บาท'}}</p>
-                                                    <p>ประเภท: {{$book->type}}</p>
+                                                    <p>ราคา: {{$book->price == 0 ? 'ฟรี' : $book->price.' บาท'}}</p>
+                                                    <p>%ส่วนลด: {{$book->discount_percent}} %</p>
+                                                    <p>ราคาสุทธิ: {{$book->price - ($book->price * ($book->discount_percent / 100))}} บาท</p>
                                                     <p>สถานะ: <span class="{{$book->status == 'able' ? 'text-success' : 'text-danger'}}">{{$book->status == 'able' ? 'วางขายอยู่' : 'ยังไม่วางขาย'}}</span></p>
                                                 </div>
                                             @endforeach

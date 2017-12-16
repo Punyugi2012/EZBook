@@ -18,6 +18,7 @@ class CreatePublishersTable extends Migration
             $table->string('name');
             $table->string('address');
             $table->string('phone');
+            $table->enum('status', ['able', 'unable']);
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();

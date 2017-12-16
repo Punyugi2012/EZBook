@@ -84,22 +84,15 @@ class AdminController extends Controller
         ]);
     }
     public function onBooks() {
-        $publishers = Publisher::get();
-        foreach($publishers as $publisher) {
-            $books = Book::where('publisher_id', $publisher->id)->get();
-            $publisher->$books = $books;
-            foreach($publisher->books as $book) {
-                $book->type = BookType::find($book->book_type_id)->name;
-            }
-        }
-        $numOfBook = Book::count();
+        $bookTypes = BookType::get();
+        $numOfBook = Book::count('id');
         return view('web.admin.adminDashboard', [
             'isPublishers'=>false, 
             'isUploadBooks'=>false, 
             'isMembers'=>false,
-            'isBooks'=>true,
+            'isBooks'=>true, 
             'isAuthors'=>false,
-            'publishers'=>$publishers,
+            'bookTypes'=>$bookTypes,
             'numOfBook'=>$numOfBook
         ]);
     }
@@ -158,9 +151,29 @@ class AdminController extends Controller
            'name' => $request->input('name'),
            'address' => $request->input('address'),
            'phone' => $request->input('phone'),
+           'status' => 'able',
            'user_id' => User::latest('id')->first()->id
        ]);
        return redirect('/admin-publishers');
+    }
+    public function onEditPublisher($publisherId) {
+        $publisher = Publisher::find($publisherId);
+        return view('web.admin.editPublisher', ['publisher'=>$publisher]);
+    }
+    public function updatePublisher(Request $request, $publisherId) {
+        $validatedData = $request->validate([
+            'name' => 'required',
+            'address' => 'required',
+            'phone' => 'required|regex:/(0)[0-9]{9}/',
+            'status' => 'required'
+        ]);
+        Publisher::find($publisherId)->update([
+            'name' => $request->input('name'),
+            'address' => $request->input('address'),
+            'phone' => $request->input('phone'),
+            'status' => $request->input('status')
+        ]);
+        return redirect('admin-publishers');
     }
     public function createAuthor(Request $request) {
         $validatedData = $request->validate([
@@ -186,7 +199,6 @@ class AdminController extends Controller
             'num_page' => 'required',
             'publish' => 'required',
             'cover_image' => 'required',
-            'images' => 'required',
             'file' => 'required',
             'status' => 'required'
         ]);
@@ -213,15 +225,16 @@ class AdminController extends Controller
         $book->url_cover_image = Storage::url($urlCoverImage);
 
         $book->save();
-        
-        foreach($request->file('images') as $image) {
-            $fileNameImage = md5(uniqid(rand(), true)).'.'.$image->getClientOriginalName();
-            $urlImage = $image->storeAs('public/file/book-image', $fileNameImage);
-            BookImage::create([
-                'pathFile'=>$urlImage, 
-                'url_image'=>Storage::url($urlImage), 
-                'book_id'=>Book::latest('id')->first()->id
-            ]);
+        if($request->hasFile('images')) {
+            foreach($request->file('images') as $image) {
+                $fileNameImage = md5(uniqid(rand(), true)).'.'.$image->getClientOriginalName();
+                $urlImage = $image->storeAs('public/file/book-image', $fileNameImage);
+                BookImage::create([
+                    'pathFile'=>$urlImage, 
+                    'url_image'=>Storage::url($urlImage), 
+                    'book_id'=>Book::latest('id')->first()->id
+                ]);
+            }
         }
         $bookLatest = Book::latest('id')->first();
         foreach($request->input('authors') as $author) {

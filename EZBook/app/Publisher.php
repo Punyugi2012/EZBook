@@ -11,7 +11,8 @@ class Publisher extends Model
         'name', 
         'address', 
         'phone', 
-        'email', 
+        'email',
+        'status', 
         'user_id'
     ];
     public function user() {

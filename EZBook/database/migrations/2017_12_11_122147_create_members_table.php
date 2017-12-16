@@ -21,6 +21,9 @@ class CreateMembersTable extends Migration
             $table->string('address');
             $table->enum('gender', ['female', 'male']);
             $table->date('birthday');
+            $table->enum('status', ['able', 'unable']);
+            $table->string('image')->nullable();
+            $table->string('url_image')->nullable();
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();

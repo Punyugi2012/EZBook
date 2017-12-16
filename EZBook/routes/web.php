@@ -24,6 +24,8 @@ Route::get('/admin-books', 'web\admin\AdminController@onBooks')->middleware('adm
 Route::get('/admin-regis-publisher', 'web\admin\AdminController@registerPublisher')->middleware('admin-isLogin');
 Route::get('/admin-regis-author', 'web\admin\AdminController@registerAuthor')->middleware('admin-isLogin');
 Route::post('/admin-create-publisher', 'web\admin\AdminController@createPublisher')->middleware('admin-isLogin');
+Route::get('/admin-edit-publisher/{publisherId}', 'web\admin\AdminController@onEditPublisher')->middleware('admin-isLogin');
+Route::put('/admin-update-publisher/{publisherId}', 'web\admin\AdminController@updatePublisher')->middleware('admin-isLogin');
 Route::post('/admin-create-author', 'web\admin\AdminController@createAuthor')->middleware('admin-isLogin');
 Route::post('/admin-create-book', 'web\admin\AdminController@uploadBook')->middleware('admin-isLogin');
 Route::put('/admin-update-book/{bookId}/publisher/{publisherId}', 'web\admin\AdminController@updateBook')->middleware('admin-isLogin');

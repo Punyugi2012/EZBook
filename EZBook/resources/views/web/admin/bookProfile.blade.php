@@ -36,6 +36,7 @@
 				<p>ชื่อหนังสือ: {{$book->name}}</p>
 				<p>ราคา: {{$book->price}} บาท</p>
 				<p>ส่วนลด: {{$book->discount_percent}} %</p>
+				<p>ราคาสุทธิ: {{$book->price - ($book->price * ($book->discount_percent / 100))}} บาท</p>
 				<p>ประเภท: {{$book->type}}</p>
 				<p>ขนาดไฟล์: {{$book->file_size}}</p>
 				<p>จำนวนหน้า: {{$book->num_page}} หน้า</p>

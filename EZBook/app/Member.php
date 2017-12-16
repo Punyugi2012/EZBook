@@ -14,7 +14,9 @@ class Member extends Model
         'address',
         'gender',
         'birthday',
+        'status',
         'image',
+        'url_image',
         'user_id'
     ];
     public function user() {
