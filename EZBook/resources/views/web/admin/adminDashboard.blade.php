@@ -301,7 +301,8 @@
                     reader.readAsDataURL(input.files[0]);
                 }
             }
-            $("#cover_image").change(function() {
+            $("#cover_image").on('change', function() {
+				console.log('kuy');
                 readURL(this);
             });   
             var imagesPreview = function(input, placeToInsertImagePreview) {
