@@ -3,7 +3,7 @@
 @section('header')
     <nav class="navbar navbar-light bg-light justify-content-between">
         <span>
-            <a class="navbar-brand">EZBooks</a>
+            <a href="/admin-dashboard" class="navbar-brand">EZBooks</a>
         </span>
         <span>
             <a href="/admin-logout" class="btn btn-primary">Logout</a>

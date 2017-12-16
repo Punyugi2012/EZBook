@@ -1,14 +1,13 @@
 @extends('web.templates.app') @section('title', 'BookProfile') @section('header')
 <nav class="navbar navbar-light bg-light justify-content-between">
 	<span>
-		<a class="navbar-brand">EZBooks Admin</a>
+		<a href="/admin-dashboard" class="navbar-brand">EZBooks Admin</a>
 	</span>
 	<span>
 		<a href="/admin-logout" class="btn btn-primary">Logout</a>
 	</span>
 </nav>
 @endsection @section('content')
-<a href='/admin-books' class="btn btn-primary" style="margin-top: 10px">ย้อนกลับ</a>
 <div class="card" style="margin-top:20px;margin-bottom:60px;">
 	<div class="card-header">
 		หนังสือ: {{$book->name}}
@@ -60,7 +59,8 @@
 		</div>
 		<div class="row">
 			<div class="col-md-12">
-				<p>รายละเอียด: {{$book->detail}}</p>
+				รายละเอียด: 
+				<p>{{$book->detail}}</p>
 			</div>
 		</div>
 		<div class="row">

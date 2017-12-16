@@ -113,10 +113,6 @@ class AdminController extends Controller
     public function registerAuthor() {
         return view('web.admin.authorRegister');
     }
-    public function onEditAuthor($authorId) {
-        $author = Author::find($authorId);
-        return view('web.admin.editAuthor', ['author'=>$author]);
-    }
     private function randomPassword() {
         $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
         $pass = array(); 
@@ -192,6 +188,23 @@ class AdminController extends Controller
         ]);
         return redirect('/admin-authors');
     }
+    public function onEditAuthor($authorId) {
+        $author = Author::find($authorId);
+        return view('web.admin.editAuthor', ['author'=>$author]);
+    }
+    public function updateAuthor(Request $request, $authorId) {
+        $validatedData = $request->validate([
+            'name' => 'required',
+            'email' => 'required',
+            'phone' => 'required|regex:/(0)[0-9]{9}/'
+        ]);
+        Author::find($authorId)->update([
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'phone' => $request->input('phone')
+        ]);
+        return redirect('/admin-authors');
+    }
     public function uploadBook(Request $request){
         $validatedData = $request->validate([
             'publisher'=>'required',
@@ -263,5 +276,15 @@ class AdminController extends Controller
         $book->discount_percent = $request->input('discount');
         $book->save();
         return redirect('/admin-book/'.$bookId);
+    }
+    public function onPublisherBooks($publisherId) {
+        $publisher = Publisher::find($publisherId);
+        $books = $publisher->books;
+        return view('web.admin.publisherBooks', ['books'=>$books, 'publisher'=>$publisher]);
+    }
+    public function onAuthorBooks($authorId) {
+        $author = Author::find($authorId);
+        $books = $author->books;
+        return view('web.admin.authorBooks', ['books'=>$books, 'author'=>$author]);
     }
 }

@@ -3,7 +3,7 @@
 @section('header')
     <nav class="navbar navbar-light bg-light justify-content-between">
         <span>
-            <a class="navbar-brand">EZBooks Admin</a>
+            <a href="/admin-dashboard" class="navbar-brand">EZBooks Admin</a>
         </span>
         <span>
             <a href="/admin-logout" class="btn btn-primary">Logout</a>
@@ -78,7 +78,7 @@
                                     <td>{{$publisher->updated_at}}</td>
                                     <td>
                                         <a href="/admin-edit-publisher/{{$publisher->id}}" class="btn btn-warning">แก้ไข</a>
-                                        <a href="#" class="btn btn-info">ดูหนังสือ</a>
+                                        <a href="/admin-books/publisher/{{$publisher->id}}" class="btn btn-info">ดูหนังสือ</a>
                                     </td>
                                 </tr>
                             @endforeach
@@ -99,7 +99,9 @@
                             <select class="form-control" id="publisher" name="publisher" required>
                                 <option value="">เลือกสำนักพิมพ์</option>
                                 @foreach($publishers as $publisher)
-                                    <option value="{{$publisher->id}}">{{$publisher->name}}</option>
+                                    @if($publisher->status == 'able') 
+                                        <option value="{{$publisher->id}}">{{$publisher->name}}</option>
+                                    @endif
                                 @endforeach
                             </select>
                         </div>
@@ -261,7 +263,7 @@
                                     <td>{{$author->updated_at}}</td>
                                     <td>
                                         <a href="/admin-edit-author/{{$author->id}}" class="btn btn-warning">แก้ไข</a>
-                                        <a href="#" class="btn btn-info">ดูหนังสือ</a>
+                                        <a href="/admin-books/author/{{$author->id}}" class="btn btn-info">ดูหนังสือ</a>
                                     </td>
                                 </tr>
                             @endforeach
