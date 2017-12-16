@@ -113,6 +113,10 @@ class AdminController extends Controller
     public function registerAuthor() {
         return view('web.admin.authorRegister');
     }
+    public function onEditAuthor($authorId) {
+        $author = Author::find($authorId);
+        return view('web.admin.editAuthor', ['author'=>$author]);
+    }
     private function randomPassword() {
         $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
         $pass = array(); 
@@ -242,14 +246,11 @@ class AdminController extends Controller
         }
         return redirect('/admin-books');
     }
-    public function onBook($bookId, $publisherId) {
+    public function onBook($bookId) {
         $book = Book::find($bookId);
-        $book->type = BookType::find($book->book_type_id)->name;
-        $book->publisher = Publisher::find($publisherId);
-        $book->images = BookImage::where('book_id', $bookId)->get();
         return view('web.admin.bookProfile', ['book'=>$book]);
     }
-    public function updateBook(Request $request, $bookId, $publisherId) {
+    public function updateBook(Request $request, $bookId) {
         $validatedData = $request->validate([
             'status'=>'required',
             'price' => 'required',
@@ -261,6 +262,6 @@ class AdminController extends Controller
         $book->detail = $request->input('detail');
         $book->discount_percent = $request->input('discount');
         $book->save();
-        return redirect('/admin-book/'.$bookId.'/publisher/'.$publisherId);
+        return redirect('/admin-book/'.$bookId);
     }
 }

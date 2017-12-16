@@ -215,7 +215,7 @@
                                         <div class="card-body row">
                                             @foreach($type->books as $book)
                                                 <div  class="col-md-3">
-                                                    <a href="/admin-book/{{$book->id}}/publisher/{{$publisher->id}}">
+                                                    <a href="/admin-book/{{$book->id}}">
                                                         <img class="border border-secondary rounded" src="{{$book->url_cover_image}}" alt="cover image" style="width:150px;height:200px"/>
                                                     </a>
                                                     <p style="margin-top:10px">ชื่อหนังสือ: {{$book->name}}</p>
@@ -247,6 +247,8 @@
                                 <th>อีเมลล์</th>
                                 <th>เบอร์โทรศัพท์</th>
                                 <th>created_at</th>
+                                <th>updated_at</th>
+                                <th>เครื่องมือ</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -256,6 +258,11 @@
                                     <td>{{$author->email}}</td>
                                     <td>{{$author->phone}}</td>
                                     <td>{{$author->created_at}}</td>
+                                    <td>{{$author->updated_at}}</td>
+                                    <td>
+                                        <a href="/admin-edit-author/{{$author->id}}" class="btn btn-warning">แก้ไข</a>
+                                        <a href="#" class="btn btn-info">ดูหนังสือ</a>
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>

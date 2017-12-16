@@ -18,7 +18,7 @@
 			<div class="col-md-9 text-center">
 				<div class="row">
 					<div class="col-md-5">
-						รูปภาพ: @foreach($book->images as $image)
+						รูปภาพ: @foreach($book->bookImages as $image)
 						<div>
 							<a href="{{$image->url_image}}" target="_blank">
 								<img src="{{$image->url_image}}" alt="image" style="width:100px;height:100px" />
@@ -74,7 +74,7 @@
 		<div class="row" style="margin-top:30px">
 			<div class="col-md-12">
 				แก้ไขสถานะ:
-				<form action="/admin-update-book/{{$book->id}}/publisher/{{$book->publisher->id}}" method="POST">
+				<form action="/admin-update-book/{{$book->id}}" method="POST">
 					<div class="form-check form-check-inline">
 						<label class="form-check-label text-success">
 							{{ csrf_field() }}
