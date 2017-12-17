@@ -1,4 +1,4 @@
-@extends('web.templates.app') @section('title', 'publisher register') @section('header')
+@extends('web.templates.app') @section('title', 'EditPublisher') @section('header')
 <nav class="navbar navbar-light bg-light justify-content-between">
 	<span>
 		<a href="/admin-dashboard" class="navbar-brand">EZBooks</a>

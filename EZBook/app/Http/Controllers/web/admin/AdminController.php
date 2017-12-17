@@ -18,7 +18,7 @@ class AdminController extends Controller
         return view('web.admin.adminLogin');
     }
     public function checkLogin(Request $request) {
-        $user = User::where('username', $request->input('username'))->where('password', $request->input('password'))->first();
+        $user = User::where('username', $request->input('username'))->where('password', $request->input('password'))->where('type', 'admin')->first();
         if($user) {
             session()->put('admin', $user);
             return redirect('/admin-dashboard');

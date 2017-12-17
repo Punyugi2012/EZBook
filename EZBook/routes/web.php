@@ -38,3 +38,12 @@ Route::get('/admin-search/publishers', 'web\admin\AdminController@searchPubliser
 Route::get('/admin-search/authors', 'web\admin\AdminController@searchAuthors')->middleware('admin-isLogin');
 Route::get('/admin-search/books', 'web\admin\AdminController@searchBooks')->middleware('admin-isLogin');
 
+
+Route::get('/publisher-login', 'web\publisher\PublisherController@onLogin');
+Route::post('/publisher-login', 'web\publisher\PublisherController@checkLogin');
+Route::get('/publisher-logout', 'web\publisher\PublisherController@onLogout');
+Route::get('/publisher-dashboard', 'web\publisher\PublisherController@onDashboard')->middleware('publisher-isLogin');
+Route::get('/publisher-books', 'web\publisher\PublisherController@onBooks')->middleware('publisher-isLogin');
+Route::get('/publisher-profile', 'web\publisher\PublisherController@onProfile')->middleware('publisher-isLogin');
+Route::get('/publisher-history', 'web\publisher\PublisherController@onHistory')->middleware('publisher-isLogin');
+
