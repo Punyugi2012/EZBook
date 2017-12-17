@@ -33,7 +33,7 @@
 			</div>
 			<div class="cold-md-6">
 				<p>ชื่อหนังสือ: {{$book->name}}</p>
-				<p>ราคา: {{$book->price}} บาท</p>
+				<p>ราคา: {{$book->price == 0 ? 'ฟรี' : $book->price.' บาท'}}</p>
 				<p>ส่วนลด: {{$book->discount_percent}} %</p>
 				<p>ราคาสุทธิ: {{$book->price - ($book->price * ($book->discount_percent / 100))}} บาท</p>
 				<p>ประเภท: {{$book->type}}</p>

@@ -277,14 +277,52 @@ class AdminController extends Controller
         $book->save();
         return redirect('/admin-book/'.$bookId);
     }
-    public function onPublisherBooks($publisherId) {
+    public function onPublisherBooks($publisherId, $type='all') {
         $publisher = Publisher::find($publisherId);
         $books = $publisher->books;
-        return view('web.admin.publisherBooks', ['books'=>$books, 'publisher'=>$publisher]);
+        if($type == 'all') {
+            $type = 'ทั้งหมด';
+        }
+        else {
+            $filterBook = [];
+            foreach($books as $book) {
+                if($book->book_type_id == $type) {
+                    array_push($filterBook, $book);
+                }
+            }
+            $type = BookType::find($type)->name;
+            $books = $filterBook;
+        }
+        $bookTypes = BookType::get();
+        return view('web.admin.publisherBooks', [
+            'books'=>$books, 
+            'publisher'=>$publisher,
+            'bookTypes'=>$bookTypes,
+            'type'=>$type
+        ]);
     }
-    public function onAuthorBooks($authorId) {
+    public function onAuthorBooks($authorId, $type='all') {
         $author = Author::find($authorId);
         $books = $author->books;
-        return view('web.admin.authorBooks', ['books'=>$books, 'author'=>$author]);
+        if($type == 'all') {
+            $type = 'ทั้งหมด';
+        }
+        else {
+            $filterBook = [];
+            foreach($books as $book) {
+                if($book->book_type_id == $type) {
+                    array_push($filterBook, $book);
+                }
+            }
+            $type = BookType::find($type)->name;
+            $books = $filterBook;
+        }
+        $bookTypes = BookType::get();
+        return view('web.admin.authorBooks', [
+            'books'=>$books, 
+            'author'=>$author,
+            'bookTypes'=>$bookTypes,
+            'type'=>$type
+        ]);
     }
 }

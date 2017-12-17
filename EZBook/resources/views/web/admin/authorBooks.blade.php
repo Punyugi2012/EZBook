@@ -11,7 +11,19 @@
 <a href='/admin-authors' class="btn btn-primary" style="margin-top: 10px">ย้อนกลับ</a>
 <div class="card" style="margin-top:20px;margin-bottom:60px;">
 	<div class="card-header">
-		ผู้แต่ง: {{$author->name}}, มีหนังสือทั้งหมด: {{count($books)}} เล่ม
+		ผู้แต่ง: <a href="javascript:void(0)">{{$author->name}}</a>, ประเภท <a href="javascript:void(0)">{{$type}}</a>, มีหนังสือทั้งหมด: <a href="javascript:void(0)">{{count($books)}}</a> เล่ม
+		<div class="dropdown float-right">
+			<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+			 aria-expanded="false">
+				จัดเรียงตามประเภท
+			</button>
+			<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+				<a class="dropdown-item" href="/admin-books/author/{{$author->id}}">ทั้งหมด</a>
+				@foreach($bookTypes as $type)
+					<a class="dropdown-item" href="/admin-books/author/{{$author->id}}/{{$type->id}}">{{$type->name}}</a>
+				@endforeach
+			</div>
+		</div>
 	</div>
 	<div class="card-body">
 		<div class="row">
