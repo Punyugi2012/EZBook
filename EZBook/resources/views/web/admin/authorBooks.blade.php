@@ -8,7 +8,6 @@
 	</span>
 </nav>
 @endsection @section('content')
-<a href='/admin-authors' class="btn btn-primary" style="margin-top: 10px">ย้อนกลับ</a>
 <div class="card" style="margin-top:20px;margin-bottom:60px;">
 	<div class="card-header">
 		ผู้แต่ง: <a href="javascript:void(0)">{{$author->name}}</a>, ประเภท <a href="javascript:void(0)">{{$type}}</a>, มีหนังสือทั้งหมด: <a href="javascript:void(0)">{{count($books)}}</a> เล่ม

@@ -11,7 +11,6 @@
     </nav>
 @endsection
 @section('content')
-    <a href='/admin-authors' class="btn btn-primary" style="margin-top: 10px">ย้อนกลับ</a>
     <div class="border border-secondary rounded" style="padding: 50px; margin-top: 30px">
         <h1>เพิ่ม ผู้แต่ง</h1>
         <form action="/admin-create-author" method="POST">

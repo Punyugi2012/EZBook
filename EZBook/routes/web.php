@@ -34,4 +34,7 @@ Route::put('/admin-update-book/{bookId}', 'web\admin\AdminController@updateBook'
 Route::get('/admin-book/{bookId}', 'web\admin\AdminController@onBook')->middleware('admin-isLogin');
 Route::get('/admin-books/publisher/{publisherId}/{type?}', 'web\admin\AdminController@onPublisherBooks')->middleware('admin-isLogin');
 Route::get('/admin-books/author/{authorId}/{type?}', 'web\admin\AdminController@onAuthorBooks')->middleware('admin-isLogin');
+Route::get('/admin-search/publishers', 'web\admin\AdminController@searchPublisers')->middleware('admin-isLogin');
+Route::get('/admin-search/authors', 'web\admin\AdminController@searchAuthors')->middleware('admin-isLogin');
+Route::get('/admin-search/books', 'web\admin\AdminController@searchBooks')->middleware('admin-isLogin');
 

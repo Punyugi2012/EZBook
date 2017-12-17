@@ -8,7 +8,6 @@
 	</span>
 </nav>
 @endsection @section('content')
-<a href='/admin-publishers' class="btn btn-primary" style="margin-top: 10px">ย้อนกลับ</a>
 <div class="border border-secondary rounded" style="padding: 50px; margin-top: 30px">
 	<h1>แก้ไข สำนักพิมพ์</h1>
 	<form action="/admin-update-publisher/{{$publisher->id}}" method="POST">

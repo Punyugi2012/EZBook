@@ -325,4 +325,77 @@ class AdminController extends Controller
             'type'=>$type
         ]);
     }
+    public function searchPublisers(Request $request) {
+        $publishers = $this->getPublishers();
+        $filterPublishers = [];
+        $search = $request->input('search');
+        foreach($publishers as $publisher) {
+            if(
+                $publisher->name == $search || 
+                $publisher->email == $search ||
+                $publisher->phone == $search
+            ) {
+                array_push($filterPublishers, $publisher);
+            }
+        }
+        $publishers = $filterPublishers;
+        return view('web.admin.adminDashboard', [
+            'isPublishers'=>true,
+            'isUploadBooks'=>false,
+            'isMembers'=>false,
+            'isBooks'=>false,
+            'isAuthors'=>false,
+            'publishers'=>$publishers
+        ]);
+    }
+    public function searchAuthors(Request $request) {
+        $authors = Author::get();
+        $filterAuthors = [];
+        $search = $request->input('search');
+        foreach($authors as $author) {
+            if(
+                $author->name == $search || 
+                $author->email == $search ||
+                $author->phone == $search
+            ) {
+                array_push($filterAuthors, $author);
+            }
+        }
+        $authors = $filterAuthors;
+        return view('web.admin.adminDashboard', [
+            'isPublishers'=>false, 
+            'isUploadBooks'=>false, 
+            'isMembers'=>false,
+            'isBooks'=>false,
+            'isAuthors'=>true,
+            'authors'=>$authors
+        ]);
+
+    }
+    public function searchMembers(Request $request) {
+
+    }
+    public function searchBooks(Request $request) {
+        $bookTypes = BookType::get();
+        $numOfBook = 0;
+        foreach($bookTypes as $type) {
+            $filterBooks = [];
+            foreach($type->books as $book) {
+                if($book->name == $request->input('search')) {
+                    array_push($filterBooks, $book);
+                    $numOfBook++;
+                }
+            }
+            $type->books = $filterBooks;
+        }
+        return view('web.admin.adminDashboard', [
+            'isPublishers'=>false, 
+            'isUploadBooks'=>false, 
+            'isMembers'=>false,
+            'isBooks'=>true, 
+            'isAuthors'=>false,
+            'bookTypes'=>$bookTypes,
+            'numOfBook'=>$numOfBook
+        ]);
+    }
 }

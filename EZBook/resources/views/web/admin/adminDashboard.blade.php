@@ -36,7 +36,17 @@
 	@if($isPublishers)
 	<div class="card">
 		<div class="card-header">
-			สำนักพิมพ์
+			<span>สำนักพิมพ์</span>,
+			พบ <a href="javascript:void(0)">{{count($publishers)}}</a>
+			<form action="/admin-search/publishers" method="GET" class="float-right" style="width: 50%">
+				{{ csrf_field() }}
+				<div class="input-group">
+					<span class="input-group-btn">
+						<button class="btn btn-secondary" type="submit">Go!</button>
+					</span>
+					<input type="text" name="search" class="form-control" placeholder="ค้นหาโดย ชื่อสำนักพิมพ์/เบอร์โทรศัพท์/อีเมลล์">
+				</div>
+			</form>
 		</div>
 		<div class="card-body">
 			<a href="/admin-regis-publisher" class="btn btn-info">เพิ่มสำนักพิมพ์</a>
@@ -184,7 +194,17 @@
 	@elseif($isMembers)
 	<div class="card">
 		<div class="card-header">
-			สมาชิก
+			<span>สมาชิก</span>,
+			{{--  พบ <a href="javascript:void(0)">{{count($publishers)}}</a>
+			<form action="/admin-search/publishers" method="GET" class="float-right" style="width: 50%">
+				{{ csrf_field() }}
+				<div class="input-group">
+					<span class="input-group-btn">
+						<button class="btn btn-secondary" type="submit">Go!</button>
+					</span>
+					<input type="text" name="search" class="form-control" placeholder="ค้นหาโดย ชื่อสำนักพิมพ์/เบอร์โทรศัพท์/อีเมลล์">
+				</div>
+			</form>  --}}
 		</div>
 		<div class="card-body">
 			<div class="card-body">
@@ -192,20 +212,20 @@
 					<thead>
 						<tr>
 							<th>ชื่อ</th>
-                            <th>นามสกุล</th>
+							<th>นามสกุล</th>
 							<th>เบอร์โทรศัพท์</th>
-                            <th>ที่อยู่</th>
-                            <th>อายุ</th>
-                            <th>วันเกิด</th>
-                            <th>สถานะ</th>
-                            <th>รูปประจำตัว</th>
+							<th>ที่อยู่</th>
+							<th>อายุ</th>
+							<th>วันเกิด</th>
+							<th>สถานะ</th>
+							<th>รูปประจำตัว</th>
 							<th>created_at</th>
 							<th>updated_at</th>
 							<th>เครื่องมือ</th>
 						</tr>
 					</thead>
 					<tbody>
-						
+
 					</tbody>
 				</table>
 			</div>
@@ -214,7 +234,16 @@
 	@elseif($isBooks)
 	<div class="card">
 		<div class="card-header">
-			มีทั้งหมด {{$numOfBook}} เล่ม
+			พบ <a href="javascript:void(0)">{{$numOfBook}}</a> เล่ม
+			<form action="/admin-search/books" method="GET" class="float-right" style="width: 50%">
+				{{ csrf_field() }}
+				<div class="input-group">
+					<span class="input-group-btn">
+						<button class="btn btn-secondary" type="submit">Go!</button>
+					</span>
+					<input type="text" name="search" class="form-control" placeholder="ค้นหาโดย ชื่อหนังสือ">
+				</div>
+			</form>
 		</div>
 		<div class="card-body">
 			<div id="accordion" role="tablist">
@@ -254,7 +283,17 @@
 	@elseif($isAuthors)
 	<div class="card">
 		<div class="card-header">
-			ผู้แต่ง
+			<span>ผู้แต่ง</span>,
+			พบ <a href="javascript:void(0)">{{count($authors)}}</a>
+			<form action="/admin-search/authors" method="GET" class="float-right" style="width: 50%">
+				{{ csrf_field() }}
+				<div class="input-group">
+					<span class="input-group-btn">
+						<button class="btn btn-secondary" type="submit">Go!</button>
+					</span>
+					<input type="text" name="search" class="form-control" placeholder="ค้นหาโดย ชื่อ/เบอร์โทรศัพท์/อีเมลล์">
+				</div>
+			</form>
 		</div>
 		<div class="card-body">
 			<a href="/admin-regis-author" class="btn btn-info">เพิ่มผู้แต่ง</a>
@@ -324,5 +363,6 @@
             });
 
         });
+
 </script>
 @endif @endsection
