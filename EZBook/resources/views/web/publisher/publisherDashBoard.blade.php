@@ -43,7 +43,7 @@
 			<div class="card-header">
 				พบ
 				<a href="javascript:void(0)">{{$numOfBook}}</a> เล่ม
-				<form action="/admin-search/books" method="GET" class="float-right" style="width: 50%">
+				<form action="/publisher-search/books" method="GET" class="float-right" style="width: 50%">
 					{{ csrf_field() }}
 					<div class="input-group">
 						<span class="input-group-btn">

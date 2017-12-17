@@ -85,4 +85,26 @@ class PublisherController extends Controller
             'purchases'=>$purchases
         ]);
     }
+    public function searchBook(Request $request) {
+        $bookTypes = BookType::get();
+        $numOfBook = 0;
+        foreach($bookTypes as $type) {
+            $filterBooks = [];
+            foreach($type->books as $book) {
+                if($book->name == $request->input('search')) {
+                    array_push($filterBooks, $book);
+                    $numOfBook++;
+                }
+            }
+            $type->books = $filterBooks;
+        }
+        return view('web.publisher.publisherDashboard', [
+            'isDashboard'=>false,
+            'isBooks'=>true,
+            'isProfile'=>false,
+            'isHistory'=>false,
+            'bookTypes'=>$bookTypes,
+            'numOfBook'=>$numOfBook
+        ]);
+    }
 }

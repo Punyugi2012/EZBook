@@ -46,4 +46,5 @@ Route::get('/publisher-dashboard', 'web\publisher\PublisherController@onDashboar
 Route::get('/publisher-books', 'web\publisher\PublisherController@onBooks')->middleware('publisher-isLogin');
 Route::get('/publisher-profile', 'web\publisher\PublisherController@onProfile')->middleware('publisher-isLogin');
 Route::get('/publisher-history', 'web\publisher\PublisherController@onHistory')->middleware('publisher-isLogin');
+Route::get('/publisher-search/books', 'web\publisher\PublisherController@searchBook')->middleware('publisher-isLogin');
 
