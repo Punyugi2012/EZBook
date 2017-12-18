@@ -10,7 +10,6 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/home', 'web\HomeController@onHome');
 
 Route::get('/admin-login', 'web\admin\AdminController@onLogin');
 Route::post('/admin-login', 'web\admin\AdminController@checkLogin');
@@ -48,3 +47,12 @@ Route::get('/publisher-profile', 'web\publisher\PublisherController@onProfile')-
 Route::get('/publisher-history', 'web\publisher\PublisherController@onHistory')->middleware('publisher-isLogin');
 Route::get('/publisher-search/books', 'web\publisher\PublisherController@searchBook')->middleware('publisher-isLogin');
 
+Route::get('/', 'web\user\UserController@index');
+Route::get('/recommend', 'web\user\UserController@onRecommend');
+Route::get('/free', 'web\user\UserController@onFree');
+Route::get('/discount', 'web\user\UserController@onDiscount');
+Route::get('/user-login', 'web\user\UserController@onLogin');
+Route::post('/user-login', 'web\user\UserController@checkLogin');
+Route::get('/user-logout', 'web\user\UserController@logout');
+Route::get('/user-register', 'web\user\UserController@onRegister');
+Route::post('/user-register', 'web\user\UserController@register');

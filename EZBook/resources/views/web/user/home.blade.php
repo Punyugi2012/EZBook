@@ -1,0 +1,142 @@
+@extends('web.templates.app')
+@section('titile', 'Home')
+@section('header')
+    @include('web.components.header')
+@endseciton
+@section('content')
+    <style>
+        .carousel img {
+            height:350px;
+            object-fit:cover;
+        }
+    </style>
+    <div style="margin-top:50px;margin-bottom:300px">
+        <div id="carouselExampleControls" class="carousel slide" data-ride="carousel" style="width:100%;height:350px;">
+            <div class="carousel-inner">
+                <div class="carousel-item">
+                    <img class="d-block w-100" src="https://hilight.kapook.com/img_cms2/other1/bookexpo2011.jpg" alt="Third slide">
+                </div>
+                <div class="carousel-item">
+                    <img class="d-block w-100" src="http://www.libraryhub.in.th/wp-content/uploads/2009/10/bookexpo.jpg" alt="Third slide">
+                </div>
+                <div class="carousel-item active">
+                    <img class="d-block w-100" src="http://www.baanlaesuan.com/wp-content/uploads/2016/10/14666086_1315246585176089_4983327205539273554_n.jpg" alt="Third slide">
+                </div>
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+        <div style="margin-top:10px">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link {{$isNewBook ? 'active' : ''}}" href="/">หนังสือมาใหม่</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{$isRecommend ? 'active' : ''}}" href="/recommend">หนังสือแนะนำ</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{$isFree ? 'active' : ''}}" href="/free">หนังสือฟรี</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{$isDiscount ? 'active' : ''}}" href="/discount">หนังสือลดราคา</a>
+                </li>
+            </ul>
+        </div>
+        <div>
+            @if($isNewBook)
+                <div class="card" style="border-top:0px;border-radius:0px">
+                    <div class="card-body">
+
+                    </div>
+                     <div class="card-footer">
+                        <a class="float-right" href="#">ดูหนังสือใหม่ทั้งหมด</a>
+                    </div>
+                </div>
+            @elseif($isRecommend)
+                <div class="card" style="border-top:0px;border-radius:0px">
+                    <div class="card-body">
+
+                    </div>
+                     <div class="card-footer">
+                        <a class="float-right" href="#">ดูหนังสือแนะนำทั้งหมด</a>
+                    </div>
+                </div>
+            @elseif($isFree)
+                <div class="card" style="border-top:0px;border-radius:0px">
+                    <div class="card-body">
+                        <div class="row">
+                            @foreach($books as $book)
+                                <div class="col-md-3 text-center">
+                                    <img class="rounded border border-secondary" src="{{$book->url_cover_image}}" alt="cover image" style="width:120px;height:150px">
+                                    <p>{{$book->name}}</p>
+                                    <p>ฟรี</p>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                     <div class="card-footer">
+                        <a class="float-right" href="#">ดูหนังสือฟรีทั้งหมด</a>
+                    </div>
+                </div>
+            @elseif($isDiscount)
+                <div class="card" style="border-top:0px;border-radius:0px">
+                    <div class="card-body">
+                        <div class="row">
+                        @foreach($books as $book)
+                            <div class="col-md-3 text-center">
+                                <img class="rounded border border-secondary" src="{{$book->url_cover_image}}" alt="cover image" style="width:120px;height:150px">
+                                <p>{{$book->name}}</p>
+                                <p>ราคา <span style="text-decoration: line-through;">{{$book->price}}</span> <sub>ลด {{$book->discount_percent}}%</sub> {{$book->price - ($book->price * $book->discount_percent / 100)}} บาท</p>
+                            </div>
+                        @endforeach
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a class="float-right" href="#">ดูหนังสือลดราคาทั้งหมด</a>
+                    </div>
+                </div>
+            @endif
+        </div>
+        <div class="card" style="margin-top:20px">
+            <div class="card-header">
+                อันดับขายดี
+            </div>
+            <div class="card-body">
+                <div class="row">
+            
+                </div>
+            </div>
+        </div>
+        <div class="card" style="margin-top:20px">
+            <div class="card-header">
+                สำนักพิมพ์อัปเดทล่าสุด
+            </div>
+            <div class="card-body">
+                <div class="row">
+            
+                </div>
+            </div>
+        </div>
+        <div class="card" style="margin-top:20px">
+            <div class="card-header">
+                ข่าวสาร
+            </div>
+            <div class="card-body">
+                <div class="row">
+            
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
+@section('javascript')
+    <script type="text/javascript">
+            $('.carousel').carousel({})
+    </script>
+@endsection
