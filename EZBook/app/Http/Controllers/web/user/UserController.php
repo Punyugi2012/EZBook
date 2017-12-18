@@ -115,6 +115,9 @@ class UserController extends Controller
             'phone' => 'required|regex:/(0)[0-9]{9}/',
             'gender' => 'required',
             'birthday' => 'required',
+            'username'=>'required|unique:users',
+            'email'=>'required|unique:users',
+            'password'=>'required'
         ]);
         $image = md5(uniqid(rand(), true)).'.'.$request->file('image')->getClientOriginalName();
         $urlImage = $request->file('image')->storeAs('public/file/user-image', $image);

@@ -11,19 +11,19 @@
                 {{ csrf_field() }}
                 <div class="form-group">
                     <label for="name">ชื่อ:</label>
-                    <input type="text" class="form-control" name="name" id="name" placeholder="ชื่อ">
+                    <input type="text" class="form-control" name="name" id="name" placeholder="ชื่อ" required>
                 </div>
                 <div class="form-group">
                     <label for="surname">นามสกุล:</label>
-                    <input type="text" class="form-control" name="surname" id="surname" placeholder="นามสกุล">
+                    <input type="text" class="form-control" name="surname" id="surname" placeholder="นามสกุล" required>
                 </div>
                 <div class="form-group">
                     <label for="phone">เบอร์โทรศัพท์:</label>
-                    <input type="number" class="form-control" name="phone" id="phone" placeholder="เบอร์โทรศัพท์">
+                    <input type="number" class="form-control" name="phone" id="phone" placeholder="เบอร์โทรศัพท์" required>
                 </div>
                 <div class="form-group">
                     <label for="address">ที่อยุ่:</label>
-                    <input type="text" class="form-control" name="address" id="address" placeholder="ที่อยู่">
+                    <input type="text" class="form-control" name="address" id="address" placeholder="ที่อยู่" required>
                 </div>
                 เพศ:
                 <div class="form-group">
@@ -42,25 +42,25 @@
                 </div>
                 <div class"form-group">
                     <label for="birthday">วันเกิด:</label>
-                    <input type="date" name="birthday" id="birthday" class="form-control">
+                    <input type="date" name="birthday" id="birthday" class="form-control" required>
                 </div>
                 <div class="form-group" style="margin-top:10px">
 					<img id="blah" src="#" alt="image" style="max-width:200px;max-height:200px" />
 					<br>
 					<label for="image">รูป:</label>
-					<input type="file" class="form-control" name="image" id="image" required>
+					<input type="file" class="form-control" name="image" id="image">
 				</div>
                 <div class="form-group">
                     <label for="username">username:</label>
-                    <input type="text" class="form-control" name="username" id="username" placeholder="username">
+                    <input type="text" class="form-control" name="username" id="username" placeholder="username" required>
                 </div>
                 <div class="form-group">
                     <label for="email">email:</label>
-                    <input type="email" class="form-control" name="email" id="email" placeholder="อีเมลล์">
+                    <input type="email" class="form-control" name="email" id="email" placeholder="อีเมลล์" required>
                 </div>
                 <div class="form-group">
                     <label for="password">password:</label>
-                    <input type="password" class="form-control" name="password" id="password" placeholder="password">
+                    <input type="password" class="form-control" name="password" id="password" placeholder="password" required>
                 </div>
                 <div class="text-center">
                     <button type="submit" class="btn btn-success">ยืนยัน</button>
