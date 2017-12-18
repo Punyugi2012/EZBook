@@ -52,7 +52,19 @@
             @if($isNewBook)
                 <div class="card" style="border-top:0px;border-radius:0px">
                     <div class="card-body">
-
+                        <div class="row">
+                            @foreach($books as $book)
+                                <div class="col-md-3 text-center">
+                                    <img class="rounded border border-secondary" src="{{$book->url_cover_image}}" alt="cover image" style="width:120px;height:150px">
+                                    <p>{{$book->name}}</p>
+                                    @if($book->price == 0)
+                                        <p>ราคา: ฟรี</p>
+                                    @else 
+                                        <p>ราคา <span style="text-decoration: line-through;">{{$book->price}}</span> <sub>ลด {{$book->discount_percent}}%</sub> {{$book->price - ($book->price * $book->discount_percent / 100)}} บาท</p>
+                                    @endif
+                                </div>
+                            @endforeach
+                        </div>
                     </div>
                      <div class="card-footer">
                         <a class="float-right" href="#">ดูหนังสือใหม่ทั้งหมด</a>
@@ -115,11 +127,15 @@
         </div>
         <div class="card" style="margin-top:20px">
             <div class="card-header">
-                สำนักพิมพ์อัปเดทล่าสุด
+                สำนักพิมพ์/นักเขียน อัปเดทล่าสุด
             </div>
             <div class="card-body">
                 <div class="row">
-            
+                    @foreach($publishers as $publisher)
+                        <div class="col-md-3">
+                            <a href="#">{{$publisher->name}}</a>
+                        </div>
+                    @endforeach
                 </div>
             </div>
         </div>

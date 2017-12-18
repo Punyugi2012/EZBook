@@ -9,52 +9,76 @@ use App\Book;
 use App\BookType;
 use App\Member;
 use App\User;
+use Carbon\Carbon;
+use App\Publisher;
 
 
 class UserController extends Controller
 {
     public function index() {
         $bookTypes = BookType::get();
+        $publishers = $this->getPublisherLimit();
+        $now = Carbon::now();
+        $monthCurrent = $now->format('m');
+        $books = Book::get();
+        $filterBooks = [];
+        for($i = 0; $i < count($books) && $i < 8; $i++) {
+            if($monthCurrent - $books[$i]->created_at->month <= 1) {
+                array_push($filterBooks, $books[$i]);
+            }
+        }
+        $books = $filterBooks;
         return view('web.user.home', [
             'isNewBook'=>true,
             'isRecommend'=>false,
             'isFree'=>false,
             'isDiscount'=>false,
-            'bookTypes'=>$bookTypes
+            'bookTypes'=>$bookTypes,
+            'books'=>$books,
+            'publishers'=>$publishers
         ]);
-    }   
+    } 
+    private function getPublisherLimit() {
+        return Publisher::paginate(8);
+    }  
     public function onRecommend() {
         $bookTypes = BookType::get();
+        $publishers = $this->getPublisherLimit();
         return view('web.user.home', [
             'isNewBook'=>false,
             'isRecommend'=>true,
             'isFree'=>false,
             'isDiscount'=>false,
-            'bookTypes'=>$bookTypes
+            'bookTypes'=>$bookTypes,
+            'publishers'=>$publishers
         ]);
     }
     public function onDiscount() {
         $bookTypes = BookType::get();
         $books = Book::where('discount_percent', '>', '0')->where('price', '>', '0')->get();
+        $publishers = $this->getPublisherLimit();
         return view('web.user.home', [
             'isNewBook'=>false,
             'isRecommend'=>false,
             'isDiscount'=>true,
             'isFree'=>false,
             'books'=>$books,
-            'bookTypes'=>$bookTypes
+            'bookTypes'=>$bookTypes,
+            'publishers'=>$publishers
         ]);
     }
     public function onFree() {
         $bookTypes = BookType::get();
         $books = Book::where('price', 0)->get();
+        $publishers = $this->getPublisherLimit();
         return view('web.user.home', [
             'isNewBook'=>false,
             'isRecommend'=>false,
             'isDiscount'=>false,
             'isFree'=>true,
             'books'=>$books,
-            'bookTypes'=>$bookTypes
+            'bookTypes'=>$bookTypes,
+            'publishers'=>$publishers
         ]);
     }
     public function onLogin() {
