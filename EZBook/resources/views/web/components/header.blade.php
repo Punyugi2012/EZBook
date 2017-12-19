@@ -17,7 +17,7 @@
 			<div class="input-group">
 				<input type="text" name="search" class="form-control" placeholder="ค้นหาหนังสือ">
 				<span class="input-group-btn">
-					<button class="btn btn-secondary" type="button">Go!</button>
+					<button class="btn btn-secondary" type="submit">Go!</button>
 				</span>
 			</div>
 		</form>
@@ -29,7 +29,7 @@
 			</button>
 			<div class="dropdown-menu dropdown-menu-right" style="width:inherit!important">
 				@foreach($bookTypes as $type)
-					<a class="dropdown-item" href="user-books/{{$type->id}}">{{$type->name}}</a>
+					<a class="dropdown-item" href="/user-books/{{$type->id}}">{{$type->name}}</a>
 				@endforeach
 			</div>
 		</div>

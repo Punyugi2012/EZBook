@@ -1,5 +1,5 @@
 @extends('web.templates.app')
-@section('titile', 'Home')
+@section('title', 'Books')
 @section('header')
     @include('web.components.header')
 @endseciton

@@ -199,7 +199,28 @@ class UserController extends Controller
         ]);
     }
     public function search(Request $request) {
-        
+        $bookTypes = BookType::get();
+        $publishers = $this->getPublisherLimit();
+        $allPublishers = Publisher::get();
+        $found = 0;
+        if($request->input('search-type')) {
+            $books = Book::where('name', $request->input('search'))
+            ->where('book_type_id', $request->input('search-type'))
+            ->paginate(10);
+            $found =  Book::where('name', $request->input('search'))->where('book_type_id', $request->input('search-type'))->count('id');
+        }
+        else {
+            $books = Book::where('name', $request->input('search'))->paginate(10);
+            $found = Book::where('name', $request->input('search'))->count('id');
+        }
+        return view('web.user.search-books', [
+            'bookTypes'=>$bookTypes,
+            'publishers'=>$publishers,
+            'books'=>$books,
+            'found'=>$found,
+            'search'=>$request->input('search'),
+            'allPublishers'=>$allPublishers
+        ]);
     }
 
 }
