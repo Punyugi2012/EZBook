@@ -29,7 +29,7 @@ class Member extends Model
     public function purchases() {
         return $this->hasMany('App\Purchase');
     }
-    public function vote() {
-        return $this->hasOne('App\Vote');
+    public function votes() {
+        return $this->hasMany('App\Vote');
     }
 }
