@@ -59,5 +59,6 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'admin-isLogin' => \App\Http\Middleware\CheckAdminLogin::class,
         'publisher-isLogin' => \App\Http\Middleware\CheckPublisherLogin::class,
+        'user-isLogin' => \App\Http\Middleware\CheckUserLogin::class,
     ];
 }

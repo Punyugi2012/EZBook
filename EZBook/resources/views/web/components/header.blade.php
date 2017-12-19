@@ -12,7 +12,8 @@
 		<a class="navbar-brand" href="/">EZBooks</a>
 	</span>
 	<span>
-		<form style="display:inline">
+		<form action="/user-search-book" method="get"style="display:inline">
+			{{ csrf_field() }}
 			<div class="input-group">
 				<input type="text" name="search" class="form-control" placeholder="ค้นหาหนังสือ">
 				<span class="input-group-btn">
@@ -28,7 +29,7 @@
 			</button>
 			<div class="dropdown-menu dropdown-menu-right" style="width:inherit!important">
 				@foreach($bookTypes as $type)
-					<a class="dropdown-item" >{{$type->name}}</a>
+					<a class="dropdown-item" href="user-books/{{$type->id}}">{{$type->name}}</a>
 				@endforeach
 			</div>
 		</div>
@@ -39,8 +40,8 @@
 					ข้อมูลผู้ใช้
 				</button>
 				<div class="dropdown-menu" aria-labelledby="dropdownMenu2" style="width:inherit!important">
-					<a class="dropdown-item" href="#">ข้อมูลส่วนตัว</a>
-					<a class="dropdown-item" href="#">ประวัติการซื้อ</a>
+					<a class="dropdown-item disabled" href="javascript:void(0)">สวัสดี, {{session()->get('user')->member->name}}</a>
+					<a class="dropdown-item" href="/user-profile">ข้อมูลส่วนตัว</a>
 				</div>
 			</div>
 		@else

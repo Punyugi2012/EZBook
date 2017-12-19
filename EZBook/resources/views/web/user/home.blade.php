@@ -7,12 +7,12 @@
     <style>
         .carousel img {
             height:350px;
-            object-fit:cover;
+            object-fit:fill;
         }
     </style>
     <div style="margin-top:50px;margin-bottom:300px">
-        <div id="carouselExampleControls" class="carousel slide" data-ride="carousel" style="width:100%;height:350px;">
-            <div class="carousel-inner">
+        <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner" style="height:350px">
                 <div class="carousel-item">
                     <img class="d-block w-100" src="https://hilight.kapook.com/img_cms2/other1/bookexpo2011.jpg" alt="Third slide">
                 </div>
@@ -66,8 +66,8 @@
                             @endforeach
                         </div>
                     </div>
-                     <div class="card-footer">
-                        <a class="float-right" href="#">ดูหนังสือใหม่ทั้งหมด</a>
+                     <div>
+                        <a class="float-right" href="#">ดูหนังสือใหม่เพิ่มเติม</a>
                     </div>
                 </div>
             @elseif($isRecommend)
@@ -75,8 +75,8 @@
                     <div class="card-body">
 
                     </div>
-                     <div class="card-footer">
-                        <a class="float-right" href="#">ดูหนังสือแนะนำทั้งหมด</a>
+                     <div>
+                        <a class="float-right" href="#">ดูหนังสือแนะนำเพิ่มเติม</a>
                     </div>
                 </div>
             @elseif($isFree)
@@ -92,8 +92,8 @@
                             @endforeach
                         </div>
                     </div>
-                     <div class="card-footer">
-                        <a class="float-right" href="#">ดูหนังสือฟรีทั้งหมด</a>
+                     <div>
+                        <a class="float-right" href="#">ดูหนังสือฟรีเพิ่มเติม</a>
                     </div>
                 </div>
             @elseif($isDiscount)
@@ -109,8 +109,8 @@
                         @endforeach
                         </div>
                     </div>
-                    <div class="card-footer">
-                        <a class="float-right" href="#">ดูหนังสือลดราคาทั้งหมด</a>
+                    <div>
+                        <a class="float-right" href="#">ดูหนังสือลดราคาเพิ่มเติม</a>
                     </div>
                 </div>
             @endif
@@ -138,6 +138,9 @@
                     @endforeach
                 </div>
             </div>
+            <div>
+                <a href="#" class="float-right">สำนักพิมพ์/นักเขียนเพิ่มเติม</a>
+            </div>
         </div>
         <div class="card" style="margin-top:20px">
             <div class="card-header">
@@ -147,6 +150,9 @@
                 <div class="row">
             
                 </div>
+            </div>
+            <div>
+                <a href="#" class="float-right">ข่าวสารเพิ่มเติม</a>
             </div>
         </div>
     </div>

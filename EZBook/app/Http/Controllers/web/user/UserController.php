@@ -11,6 +11,7 @@ use App\Member;
 use App\User;
 use Carbon\Carbon;
 use App\Publisher;
+use App\Purchase;
 
 
 class UserController extends Controller
@@ -20,14 +21,9 @@ class UserController extends Controller
         $publishers = $this->getPublisherLimit();
         $now = Carbon::now();
         $monthCurrent = $now->format('m');
-        $books = Book::get();
+        $books = Book::orderBy('id', 'desc')->paginate(8);
         $filterBooks = [];
-        for($i = 0; $i < count($books) && $i < 8; $i++) {
-            if($monthCurrent - $books[$i]->created_at->month <= 1) {
-                array_push($filterBooks, $books[$i]);
-            }
-        }
-        $books = $filterBooks;
+        $round = 0;
         return view('web.user.home', [
             'isNewBook'=>true,
             'isRecommend'=>false,
@@ -39,7 +35,8 @@ class UserController extends Controller
         ]);
     } 
     private function getPublisherLimit() {
-        return Publisher::paginate(8);
+        $publishers = Publisher::orderBy('id', 'desc')->paginate(8);
+        return $publishers;
     }  
     public function onRecommend() {
         $bookTypes = BookType::get();
@@ -119,8 +116,11 @@ class UserController extends Controller
             'email'=>'required|unique:users',
             'password'=>'required'
         ]);
-        $image = md5(uniqid(rand(), true)).'.'.$request->file('image')->getClientOriginalName();
-        $urlImage = $request->file('image')->storeAs('public/file/user-image', $image);
+        $urlImage = null;
+        if($request->hasFile('image')) {
+            $image = md5(uniqid(rand(), true)).'.'.$request->file('image')->getClientOriginalName();
+            $urlImage = $request->file('image')->storeAs('public/file/user-image', $image);
+        }
         User::create([
             'username'=>$request->input('name'),
             'password'=>$request->input('password'),
@@ -140,6 +140,66 @@ class UserController extends Controller
             'user_id'=>User::latest('id')->first()->id
         ]);
         return redirect('/user-login');
+    }
+    public function onProfile(Request $request) {
+        $bookTypes = BookType::get();
+        $publishers = $this->getPublisherLimit();
+        $purchases = Purchase::where('member_id', session()->get('user')->member->id)->orderBy('id', 'desc')->paginate(10);
+        foreach($purchases as $purchase) {
+            $purchase->book = Book::find($purchase->book_id);
+        }
+        $hasQuery = false;
+        if($request->query()) {
+            $hasQuery = true;
+        }
+        return view('web.user.profile', [
+            'bookTypes'=>$bookTypes,
+            'publishers'=>$publishers,
+            'purchases'=>$purchases,
+            'hasQuery'=>$hasQuery
+        ]);
+    }
+    public function update(Request $request, $userId) {
+        $validatedData = $request->validate([
+            'name' => 'required',
+            'surname' => 'required',
+            'address' => 'required',
+            'phone' => 'required|regex:/(0)[0-9]{9}/',
+            'gender' => 'required',
+            'birthday' => 'required',
+        ]);
+        $urlImage = null;
+        if($request->hasFile('image')) {
+            $image = md5(uniqid(rand(), true)).'.'.$request->file('image')->getClientOriginalName();
+            $urlImage = $request->file('image')->storeAs('public/file/user-image', $image);
+        }
+        Member::find($userId)->update([
+            'name'=>$request->input('name'),
+            'surname'=>$request->input('surname'),
+            'phone'=>$request->input('phone'),
+            'address'=>$request->input('address'),
+            'gender'=>$request->input('gender'),
+            'birthday'=>$request->input('birthday'),
+            'image'=>$urlImage,
+            'url_image'=>Storage::url($urlImage),
+        ]);
+        session()->get('user')->member = Member::find($userId);
+        return redirect('user-profile');
+    }
+    public function books($typeId) {
+        $bookTypes = BookType::get();
+        $publishers = $this->getPublisherLimit();
+        $books = Book::where('book_type_id', $typeId)->paginate(10);
+        $type = BookType::find($typeId);
+        return view('web.user.books', [
+            'bookTypes'=>$bookTypes,
+            'publishers'=>$publishers,
+            'books'=>$books,
+            'type'=>$type
+        ]);
+    }
+    public function search(Request $request) {
+        
     }
 
 }
