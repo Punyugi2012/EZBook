@@ -1,11 +1,9 @@
 @extends('web.templates.app')
-@section('title', 'AdminLogin')
-@section('header')
+@section('title', 'Login')
     @include('web.components.header')
-@endsection
 @section('content')
-    <div class="border border-secondary rounded" style="padding: 50px; margin-top: 50px">
-        <h1>Admin เข้าสู่ระบบ</h1>
+     <div class="border border-secondary rounded" style="padding: 50px; margin-top: 100px">
+        <h1>แอดมิน เข้าสู่ระบบ</h1>
         <form action="admin-login" method="POST">
             {{ csrf_field() }}
              <div class="form-group">
@@ -20,5 +18,3 @@
         </form>
     </div>
 @endsection
-
-    

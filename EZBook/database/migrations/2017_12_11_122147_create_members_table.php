@@ -22,6 +22,8 @@ class CreateMembersTable extends Migration
             $table->enum('gender', ['female', 'male']);
             $table->date('birthday');
             $table->enum('status', ['able', 'unable']);
+            $table->enum('isVoted', ['voted', 'unvoted']);
+            $table->string('account_number')->nullable();
             $table->string('image')->nullable();
             $table->string('url_image')->nullable();
             $table->integer('user_id')->unsigned();

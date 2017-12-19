@@ -12,7 +12,8 @@ use App\Book;
 class PublisherController extends Controller
 {
     public function onLogin() {
-        return view('web.publisher.login');
+        $bookTypes = BookType::get();
+        return view('web.publisher.login', ['bookTypes'=>$bookTypes]);
     }
     public function checkLogin(Request $request) {
         $user = User::where('username', $request->input('username'))->where('password', $request->input('password'))->where('type', 'publisher')->first();

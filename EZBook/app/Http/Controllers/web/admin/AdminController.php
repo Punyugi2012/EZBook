@@ -15,7 +15,8 @@ use App\Author;
 class AdminController extends Controller
 {
     public function onLogin() {
-        return view('web.admin.adminLogin');
+        $bookTypes = BookType::get();
+        return view('web.admin.adminLogin', ['bookTypes'=>$bookTypes]);
     }
     public function checkLogin(Request $request) {
         $user = User::where('username', $request->input('username'))->where('password', $request->input('password'))->where('type', 'admin')->first();

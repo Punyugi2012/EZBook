@@ -60,3 +60,9 @@ Route::get('/user-profile', 'web\user\UserController@onProfile')->middleware('us
 Route::put('/user-update/{userId}', 'web\user\UserController@update')->middleware('user-isLogin');
 Route::get('/user-books/{typeId}', 'web\user\UserController@books');
 Route::get('/user-search-book', 'web\user\UserController@search');
+Route::get('/newbooks', 'web\user\UserController@onNewBooks');
+Route::get('/freebooks', 'web\user\UserController@onFreeBooks');
+Route::get('/discountbooks', 'web\user\UserController@onDiscountBooks');
+Route::get('/publishers', 'web\user\UserController@onPublishers');
+Route::get('/book/{bookId}', 'web\user\UserController@book');
+Route::post('/user-comment/book/{bookId}', 'web\user\UserController@comment')->middleware('user-isLogin');

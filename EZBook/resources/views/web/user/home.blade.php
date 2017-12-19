@@ -55,7 +55,9 @@
                         <div class="row">
                             @foreach($books as $book)
                                 <div class="col-md-3 text-center">
-                                    <img class="rounded border border-secondary" src="{{$book->url_cover_image}}" alt="cover image" style="width:120px;height:150px">
+                                    <a href="/book/{{$book->id}}">
+                                        <img class="rounded border border-secondary" src="{{$book->url_cover_image}}" alt="cover image" style="width:120px;height:150px">
+                                    </a>
                                     <p>{{$book->name}}</p>
                                     @if($book->price == 0)
                                         <p>ราคา: ฟรี</p>
@@ -67,7 +69,7 @@
                         </div>
                     </div>
                      <div>
-                        <a class="float-right" href="#">ดูหนังสือใหม่เพิ่มเติม</a>
+                        <a class="float-right" href="/newbooks">ดูหนังสือใหม่เพิ่มเติม</a>
                     </div>
                 </div>
             @elseif($isRecommend)
@@ -85,7 +87,9 @@
                         <div class="row">
                             @foreach($books as $book)
                                 <div class="col-md-3 text-center">
-                                    <img class="rounded border border-secondary" src="{{$book->url_cover_image}}" alt="cover image" style="width:120px;height:150px">
+                                    <a href="/book/{{$book->id}}">
+                                        <img class="rounded border border-secondary" src="{{$book->url_cover_image}}" alt="cover image" style="width:120px;height:150px">
+                                    </a>
                                     <p>{{$book->name}}</p>
                                     <p>ฟรี</p>
                                 </div>
@@ -93,7 +97,7 @@
                         </div>
                     </div>
                      <div>
-                        <a class="float-right" href="#">ดูหนังสือฟรีเพิ่มเติม</a>
+                        <a class="float-right" href="/freebooks">ดูหนังสือฟรีเพิ่มเติม</a>
                     </div>
                 </div>
             @elseif($isDiscount)
@@ -102,7 +106,9 @@
                         <div class="row">
                         @foreach($books as $book)
                             <div class="col-md-3 text-center">
-                                <img class="rounded border border-secondary" src="{{$book->url_cover_image}}" alt="cover image" style="width:120px;height:150px">
+                                <a href="/book/{{$book->id}}">
+                                    <img class="rounded border border-secondary" src="{{$book->url_cover_image}}" alt="cover image" style="width:120px;height:150px">
+                                </a>
                                 <p>{{$book->name}}</p>
                                 <p>ราคา <span style="text-decoration: line-through;">{{$book->price}}</span> <sub>ลด {{$book->discount_percent}}%</sub> {{$book->price - ($book->price * $book->discount_percent / 100)}} บาท</p>
                             </div>
@@ -110,7 +116,7 @@
                         </div>
                     </div>
                     <div>
-                        <a class="float-right" href="#">ดูหนังสือลดราคาเพิ่มเติม</a>
+                        <a class="float-right" href="/discountbooks">ดูหนังสือลดราคาเพิ่มเติม</a>
                     </div>
                 </div>
             @endif
@@ -139,7 +145,7 @@
                 </div>
             </div>
             <div>
-                <a href="#" class="float-right">สำนักพิมพ์/นักเขียนเพิ่มเติม</a>
+                <a href="/publishers" class="float-right">สำนักพิมพ์/นักเขียนเพิ่มเติม</a>
             </div>
         </div>
         <div class="card" style="margin-top:20px">

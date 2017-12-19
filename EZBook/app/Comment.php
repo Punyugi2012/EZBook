@@ -18,6 +18,6 @@ class Comment extends Model
         return $this->belongsTo('App\Book', 'book_id', 'id');
     }
     public function member() {
-        return $this->belongsTo('App\Book', 'member_id', 'id');
+        return $this->belongsTo('App\Member', 'member_id', 'id');
     }
 }

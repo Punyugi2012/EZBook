@@ -21,7 +21,7 @@
 						<div>
 							<a href="{{$image->url_image}}" target="_blank">
 								<img src="{{$image->url_image}}" alt="image" style="width:100px;height:100px" />
-								<a>
+							<a>
 						</div>
 						<br> @endforeach
 					</div>

@@ -15,6 +15,7 @@ class Member extends Model
         'gender',
         'birthday',
         'status',
+        'isVoted',
         'image',
         'url_image',
         'user_id'
@@ -27,5 +28,8 @@ class Member extends Model
     }
     public function purchases() {
         return $this->hasMany('App\Purchase');
+    }
+    public function vote() {
+        return $this->hasOne('App\Vote');
     }
 }

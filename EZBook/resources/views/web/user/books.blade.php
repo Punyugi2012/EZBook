@@ -13,7 +13,9 @@
             <div class="row">
                 @foreach($books as $book)
                     <div class="col-md-3 text-center">
-                        <img class="rounded border border-secondary" src="{{$book->url_cover_image}}" alt="cover image" style="width:120px;height:150px">
+                        <a href="/book/{{$book->id}}">
+                            <img class="rounded border border-secondary" src="{{$book->url_cover_image}}" alt="cover image" style="width:120px;height:150px">
+                        </a>
                         <p>{{$book->name}}</p>
                         @if($book->price == 0)
                             <p>ราคา: ฟรี</p>
