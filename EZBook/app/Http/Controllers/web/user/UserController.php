@@ -119,7 +119,7 @@ class UserController extends Controller
             $urlImage = $request->file('image')->storeAs('public/file/user-image', $image);
         }
         User::create([
-            'username'=>$request->input('name'),
+            'username'=>$request->input('username'),
             'password'=>$request->input('password'),
             'email'=>$request->input('email'),
             'type'=>'user'
@@ -132,6 +132,7 @@ class UserController extends Controller
             'gender'=>$request->input('gender'),
             'birthday'=>$request->input('birthday'),
             'status'=>'able',
+            'isVoted'=>'unvoted',
             'image'=>$urlImage,
             'url_image'=>Storage::url($urlImage),
             'user_id'=>User::latest('id')->first()->id
@@ -270,7 +271,6 @@ class UserController extends Controller
         ]);
         Comment::create([
             'message'=>$request->input('comment'),
-            'score'=>0,
             'book_id'=>$bookId,
             'member_id'=>session()->get('user')->member->id
         ]);

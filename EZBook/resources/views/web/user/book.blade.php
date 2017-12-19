@@ -26,7 +26,7 @@
 						<img class="border border-secondary rounded" src="{{$book->url_cover_image}}" alt="cover image" style="width:250px;height:300px"
 						/>
                         <div style="margin-top:20px">
-                            @if($book->status == 'able')
+                            
                                 @if(!session()->has('user'))
                                     <a href="/user-login">กรุณา เข้าสู่ระบบ เพื่ออ่านหนังสือหรือซื้อหนังสือ</a>
                                 @elseif($isBought)
@@ -34,15 +34,17 @@
                                     <br>
                                     <a href="{{$book->url_file}}" target="_blank" download>ดาวน์โหลด</a>
                                 @elseif(!$isBought)
-                                    @if($book->price == 0)
-                                        <a href="#">อ่านฟรี</a>
+                                    @if($book->status == 'able')
+                                        @if($book->price == 0)
+                                            <a href="#">อ่านฟรี</a>
+                                        @else
+                                            <a href="#">ซื้อหนังสือ</a>
+                                        @endif
                                     @else
-                                        <a href="#">ซื้อหนังสือ</a>
+                                        ไม่วางขายแล้ว
                                     @endif
                                 @endif
-                            @else
-                                ไม่วางขายแล้ว
-                            @endif
+    
                         </div>
 					</div>
 				</div>
@@ -56,7 +58,7 @@
 				<p>ขนาดไฟล์: {{$book->file_size}}</p>
 				<p>จำนวนหน้า: {{$book->num_page}} หน้า</p>
 				<p>คะแนน: {{$book->score}}</p>
-				<p>จำนวนผู้อ่าน:</p>
+				<p>จำนวนผู้อ่าน: {{$book->num_read}}</p>
 				ผู้แต่ง:
 				<div style="padding-left:20px">
 					@foreach($book->authors as $author)
@@ -101,9 +103,13 @@
                             <input type="text" name="comment" style="width:100%" placeholder="คอมเม้น..">
                             <span class="input-group-btn">
                                 @if(session()->has('user'))
-                                    <button class="btn btn-secondary" type="submit">ส่ง</button>
+                                    @if($isBought)
+                                        <button class="btn btn-secondary" type="submit">ส่ง</button>
+                                    @else
+                                        <button class="btn btn-secondary" type="button" disabled>กรุณาซื้อหนังสือก่อน</button>
+                                    @endif
                                 @else
-                                    <button class="btn btn-secondary" type="button" disabled>กรุณาเข้าสู่ระบบ!</button>
+                                    <button class="btn btn-secondary" type="button" disabled>กรุณาเข้าสู่ระบบก่อน</button>
                                 @endif
                             </span>
                         </div>

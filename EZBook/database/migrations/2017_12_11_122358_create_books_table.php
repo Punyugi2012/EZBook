@@ -19,6 +19,7 @@ class CreateBooksTable extends Migration
             $table->double('score')->default(0.0);
             $table->string('file_size');
             $table->integer('num_page');
+            $table->integer('num_read')->default(0);
             $table->double('price');
             $table->integer('discount_percent')->default(0);
             $table->text('detail')->nullable();
