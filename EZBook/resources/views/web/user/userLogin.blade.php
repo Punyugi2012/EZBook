@@ -4,7 +4,7 @@
 @section('content')
      <div class="border border-secondary rounded" style="padding: 50px; margin-top: 100px">
         <h1>เข้าสู่ระบบ</h1>
-        <form action="user-login" method="POST">
+        <form action="user-login" method="POST" autocomplete="off">
             {{ csrf_field() }}
              <div class="form-group">
                 <label for="username">Username:</label>

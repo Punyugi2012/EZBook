@@ -139,7 +139,7 @@
                 <div class="row">
                     @foreach($publishers as $publisher)
                         <div class="col-md-3">
-                            <a href="#">{{$publisher->name}}</a>
+                            <a href="/user-books/publisher/{{$publisher->id}}">{{$publisher->name}}</a>
                         </div>
                     @endforeach
                 </div>
@@ -154,7 +154,11 @@
             </div>
             <div class="card-body">
                 <div class="row">
-            
+                    @foreach($news as $new)
+                        <div class="col-md-12">
+                            <a href="#">{{$new->created_at}} <span style="margin-left:50px">{{$new->title}}</span></a>
+                        </div>
+                    @endforeach
                 </div>
             </div>
             <div>

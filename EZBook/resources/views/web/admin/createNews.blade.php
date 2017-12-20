@@ -13,7 +13,7 @@
 @section('content')
     <div class="border border-secondary rounded" style="padding: 50px; margin-top: 30px">
         <h1>เพิ่ม ข่าวสาร</h1>
-        <form action="/admin-create-news" method="POST">
+        <form action="/admin-create-news" method="POST" autocomplete="off">
             {{ csrf_field() }}
             <div class="form-group">
                 <label for="title">หัวข้อ:</label>

@@ -7,7 +7,7 @@
             สมัครสมาชิก
         </div>
         <div class="card-body">
-            <form action="/user-register" method="post" enctype="multipart/form-data" >
+            <form action="/user-register" method="post" enctype="multipart/form-data" autocomplete="off">
                 {{ csrf_field() }}
                 <div class="form-group">
                     <label for="name">ชื่อ:</label>

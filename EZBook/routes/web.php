@@ -74,3 +74,6 @@ Route::get('/discountbooks', 'web\user\UserController@onDiscountBooks');
 Route::get('/publishers', 'web\user\UserController@onPublishers');
 Route::get('/book/{bookId}', 'web\user\UserController@book');
 Route::post('/user-comment/book/{bookId}', 'web\user\UserController@comment')->middleware('user-isLogin');
+Route::get('/user-books/publisher/{publisherId}/{type?}', 'web\user\UserController@publisherBooks');
+Route::get('/user-books', 'web\user\UserController@userBooks')->middleware('user-isLogin');
+Route::get('/user-books/author/{authorId}/{type?}', 'web\user\UserController@authorBooks');

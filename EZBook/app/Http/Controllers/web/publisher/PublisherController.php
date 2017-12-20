@@ -31,11 +31,11 @@ class PublisherController extends Controller
         $purchases = Purchase::get();
         $total = 0.0;
         foreach($purchases as $purchase) {
-            if($purchase->book->publisher_id == session()->get('publisher')->id) {
+            if($purchase->book->publisher_id == session()->get('publisher')->publisher->id) {
                 $total += $purchase->price;
             }
         }
-        $books = Book::where('publisher_id', session()->get('publisher')->id)->get();
+        $books = Book::where('publisher_id', session()->get('publisher')->publisher->id)->get();
         $max = 0;
         $topBook = null;
         foreach($books as $book) {

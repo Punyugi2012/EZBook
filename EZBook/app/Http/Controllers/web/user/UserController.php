@@ -14,6 +14,8 @@ use App\Publisher;
 use App\Purchase;
 use App\Comment;
 use App\Vote;
+use App\Info;
+use App\Author;
 
 
 class UserController extends Controller
@@ -22,6 +24,7 @@ class UserController extends Controller
         $bookTypes = BookType::get();
         $publishers = $this->getPublisherLimit();
         $books = Book::orderBy('id', 'desc')->paginate(8);
+        $news = $this->getNewsLimit();
         return view('web.user.home', [
             'isNewBook'=>true,
             'isRecommend'=>false,
@@ -29,29 +32,36 @@ class UserController extends Controller
             'isDiscount'=>false,
             'bookTypes'=>$bookTypes,
             'books'=>$books,
-            'publishers'=>$publishers
+            'publishers'=>$publishers,
+            'news'=>$news
         ]);
     } 
     private function getPublisherLimit() {
         $publishers = Publisher::orderBy('id', 'desc')->paginate(8);
         return $publishers;
     }  
+    private function getNewsLimit() {
+        return Info::orderBy('id', 'desc')->paginate(8);
+    }
     public function onRecommend() {
         $bookTypes = BookType::get();
         $publishers = $this->getPublisherLimit();
+        $news = $this->getNewsLimit();
         return view('web.user.home', [
             'isNewBook'=>false,
             'isRecommend'=>true,
             'isFree'=>false,
             'isDiscount'=>false,
             'bookTypes'=>$bookTypes,
-            'publishers'=>$publishers
+            'publishers'=>$publishers,
+            'news'=>$news
         ]);
     }
     public function onDiscount() {
         $bookTypes = BookType::get();
         $books = Book::where('discount_percent', '>', '0')->where('price', '>', '0')->get();
         $publishers = $this->getPublisherLimit();
+        $news = $this->getNewsLimit();
         return view('web.user.home', [
             'isNewBook'=>false,
             'isRecommend'=>false,
@@ -59,13 +69,15 @@ class UserController extends Controller
             'isFree'=>false,
             'books'=>$books,
             'bookTypes'=>$bookTypes,
-            'publishers'=>$publishers
+            'publishers'=>$publishers,
+            'news'=>$news
         ]);
     }
     public function onFree() {
         $bookTypes = BookType::get();
         $books = Book::where('price', 0)->get();
         $publishers = $this->getPublisherLimit();
+        $news = $this->getNewsLimit();
         return view('web.user.home', [
             'isNewBook'=>false,
             'isRecommend'=>false,
@@ -73,7 +85,8 @@ class UserController extends Controller
             'isFree'=>true,
             'books'=>$books,
             'bookTypes'=>$bookTypes,
-            'publishers'=>$publishers
+            'publishers'=>$publishers,
+            'news'=>$news
         ]);
     }
     public function onLogin() {
@@ -143,6 +156,7 @@ class UserController extends Controller
         $bookTypes = BookType::get();
         $publishers = $this->getPublisherLimit();
         $purchases = Purchase::where('member_id', session()->get('user')->member->id)->orderBy('id', 'desc')->paginate(10);
+
         foreach($purchases as $purchase) {
             $purchase->book = Book::find($purchase->book_id);
         }
@@ -150,11 +164,13 @@ class UserController extends Controller
         if($request->query()) {
             $hasQuery = true;
         }
+        $secondPurchases = Purchase::where('member_id', session()->get('user')->member->id)->orderBy('id', 'desc')->paginate(10);
         return view('web.user.profile', [
             'bookTypes'=>$bookTypes,
             'publishers'=>$publishers,
             'purchases'=>$purchases,
-            'hasQuery'=>$hasQuery
+            'hasQuery'=>$hasQuery,
+            'secondPurchases'=>$secondPurchases
         ]);
     }
     public function update(Request $request, $userId) {
@@ -281,5 +297,61 @@ class UserController extends Controller
             'member_id'=>session()->get('user')->member->id
         ]);
         return redirect('/book/'.$bookId);
+    }
+    public function publisherBooks($publisherId, $type="all") {
+        $publisher = Publisher::find($publisherId);
+        $books = $publisher->books;
+        if($type == 'all') {
+            $type = 'ทั้งหมด';
+        }
+        else {
+            $filterBook = [];
+            foreach($books as $book) {
+                if($book->book_type_id == $type) {
+                    array_push($filterBook, $book);
+                }
+            }
+            $type = BookType::find($type)->name;
+            $books = $filterBook;
+        }
+        $bookTypes = BookType::get();
+        return view('web.user.publisherBooks',[
+            'books'=>$books,
+            'publisher'=>$publisher,
+            'bookTypes'=>$bookTypes,
+            'type'=>$type
+        ]);
+    }
+    public function authorBooks($authorId, $type="all") {
+        $author = Author::find($authorId);
+        $books = $author->books;
+        if($type == 'all') {
+            $type = 'ทั้งหมด';
+        }
+        else {
+            $filterBook = [];
+            foreach($books as $book) {
+                if($book->book_type_id == $type) {
+                    array_push($filterBook, $book);
+                }
+            }
+            $type = BookType::find($type)->name;
+            $books = $filterBook;
+        }
+        $bookTypes = BookType::get();
+        return view('web.user.authorBooks',[
+            'books'=>$books,
+            'author'=>$author,
+            'bookTypes'=>$bookTypes,
+            'type'=>$type
+        ]);
+    }
+    public function userBooks() {
+        $bookTypes = BookType::get();
+        $purchases = Purchase::where('member_id', session()->get('user')->member->id)->orderBy('id', 'desc')->paginate(8);
+        return view('web.user.userBooks',[
+            'purchases'=>$purchases,
+            'bookTypes'=>$bookTypes
+        ]);
     }
 }

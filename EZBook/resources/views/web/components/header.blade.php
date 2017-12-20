@@ -1,12 +1,3 @@
-<style>
-	#login:hover {
-
-	}
-	.dropdown-menu {
-		display:block;
-	}
-	
-</style>
 <nav class="navbar navbar-light bg-light justify-content-between fixed-top">
 	<span>
 		<a class="navbar-brand" href="/">EZBooks</a>
@@ -42,6 +33,7 @@
 				<div class="dropdown-menu" aria-labelledby="dropdownMenu2" style="width:inherit!important">
 					<a class="dropdown-item disabled" href="javascript:void(0)">สวัสดี, {{session()->get('user')->member->name}}</a>
 					<a class="dropdown-item" href="/user-profile">ข้อมูลส่วนตัว</a>
+					<a class="dropdown-item" href="/user-books">หนังสือที่ได้ซื้อ</a>
 				</div>
 			</div>
 		@else

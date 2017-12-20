@@ -142,7 +142,7 @@
                         @foreach($purchases as $purchase)
                             <tr>
 								<td>{{$purchase->date_purchase}}</td>
-                                <td>{{$purchase->book->name}}</td>
+                                <td><a href="/publisher-book/{{$purchase->book->id}}">{{$purchase->book->name}}</a></td>
                                 <td>{{$purchase->price}}</td>
                                 <td>{{$purchase->member->name}}</td>
                             </tr>

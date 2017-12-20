@@ -1,5 +1,5 @@
 @extends('web.templates.app')
-@section('titile', 'Profile')
+@section('title', 'Profile')
 @section('header')
     @include('web.components.header')
 @endseciton
@@ -14,15 +14,14 @@
         <div class="row" style="margin-top:10px">
             <div class="col-md-3">
                 <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                    <a class="nav-link {{$hasQuery?'':'active'}}" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">ข้อมูลส่วนตัว</a>
-                    <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">แก้ไขข้อมูลส่วนตัว</a>
-                    <a class="nav-link {{$hasQuery?'active':''}}" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">ประวัติการซื้อ</a>
+                    <a class="nav-link {{$hasQuery?'':'active'}}" id="tab-profile" data-toggle="pill" href="#profile" role="tab" aria-selected="true">ข้อมูลส่วนตัว</a>
+                    <a class="nav-link" id="tab-edit-profile" data-toggle="pill" href="#edit-profile" role="tab" aria-selected="false">แก้ไขข้อมูลส่วนตัว</a>
+                    <a class="nav-link {{$hasQuery?'active':''}}" id="tab-history" data-toggle="pill" href="#history" role="tab" aria-selected="false">ประวัติการซื้อ</a>
                 </div>
-
             </div>
             <div class="col-md-9">
                 <div class="tab-content" id="v-pills-tabContent">
-                    <div class="tab-pane fade {{$hasQuery?'':'show active'}}" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                    <div class="tab-pane fade {{$hasQuery?'':'show active'}}" id="profile" role="tabpanel">
                         <div class="card">
                             <div class="card-body">
                                 <div class="text-center">
@@ -42,7 +41,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                    <div class="tab-pane fade" id="edit-profile" role="tabpanel">
                         <div class="card">
                             <div class="card-body">
                                 <form action="/user-update/{{session()->get('user')->member->id}}" method="POST" enctype="multipart/form-data" >
@@ -97,7 +96,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade {{$hasQuery?'show active':''}}" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+                    <div class="tab-pane fade {{$hasQuery?'show active':''}}" id="history" role="tabpanel">
                         <div class="card">
                             <div class="card-body">
                                 <table class="table table-striped">
@@ -114,10 +113,17 @@
                                         @foreach($purchases as $purchase)
                                              <tr>
                                                 <td>{{$purchase->date_purchase}}</td>
-                                                <td>{{$purchase->book->name}}</td>
+                                                <td>
+                                                    <a href="/book/{{$purchase->book->id}}">{{$purchase->book->name}}</a>
+                                                </td>
                                                 <td>{{$purchase->price}}</td>
                                                 <td>{{$purchase->book->bookType->name}}</td>
-                                                <td>{{$purchase->book->publisher->name}}</td>
+                                            
+                                                <td>
+                                                    <a href="/user-books/publisher/{{$purchase->book->publisher->id}}">
+                                                        {{$purchase->book->publisher->name}}
+                                                    </a>
+                                                </td>
                                             </tr>
                                         @endforeach
                                     </tbody>

@@ -12,7 +12,7 @@
             <div class="row">
              @foreach($publishers as $publisher)
                 <div class="col-md-3">
-                    <a href="javascript:void(0)">{{$publisher->name}}</a>
+                    <a href="/user-books/publisher/{{$publisher->id}}">{{$publisher->name}}</a>
                 </div>
             @endforeach
             </div>

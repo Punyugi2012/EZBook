@@ -119,12 +119,12 @@
 				ผู้แต่ง:
 				<div style="padding-left:20px">
 					@foreach($book->authors as $author)
-					<a href="javascript:void(0)" class="d-block">{{$author->name}}</a>
+					<a href="/user-books/author/{{$author->id}}" class="d-block">{{$author->name}}</a>
 					@endforeach
 				</div>
 				<br>
 				<p>สำนักพิมพ์:
-					<a href="javascript:void(0)">{{$book->publisher->name}}</a>
+					<a href="/user-books/publisher/{{$book->publisher->id}}">{{$book->publisher->name}}</a>
 				</p>
 				<p>วันที่ตีพิมพ์: {{$book->date_publish}}</p>
                 <p>สถานะ:
