@@ -77,3 +77,5 @@ Route::post('/user-comment/book/{bookId}', 'web\user\UserController@comment')->m
 Route::get('/user-books/publisher/{publisherId}/{type?}', 'web\user\UserController@publisherBooks');
 Route::get('/user-books', 'web\user\UserController@userBooks')->middleware('user-isLogin');
 Route::get('/user-books/author/{authorId}/{type?}', 'web\user\UserController@authorBooks');
+Route::get('/infos', 'web\user\UserController@onInfos');
+Route::get('/info/{infoId}', 'web\user\UserController@info');

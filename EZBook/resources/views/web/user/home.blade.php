@@ -154,15 +154,15 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                    @foreach($news as $new)
+                    @foreach($infos as $info)
                         <div class="col-md-12">
-                            <a href="#">{{$new->created_at}} <span style="margin-left:50px">{{$new->title}}</span></a>
+                            <a href="/info/{{$info->id}}">{{$info->created_at}} <span style="margin-left:50px">{{$info->title}}</span></a>
                         </div>
                     @endforeach
                 </div>
             </div>
             <div>
-                <a href="#" class="float-right">ข่าวสารเพิ่มเติม</a>
+                <a href="/infos" class="float-right">ข่าวสารเพิ่มเติม</a>
             </div>
         </div>
     </div>

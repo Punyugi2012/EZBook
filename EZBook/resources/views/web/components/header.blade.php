@@ -3,12 +3,12 @@
 		<a class="navbar-brand" href="/">EZBooks</a>
 	</span>
 	<span>
-		<form action="/user-search-book" method="get"style="display:inline">
+		<form action="/user-search-book" method="get"style="display:inline" autocomplete="off">
 			{{ csrf_field() }}
 			<div class="input-group">
 				<input type="text" name="search" class="form-control" placeholder="ค้นหาหนังสือ">
 				<span class="input-group-btn">
-					<button class="btn btn-secondary" type="submit">Go!</button>
+					<button class="btn btn-secondary" type="submit">ค้นหา</button>
 				</span>
 			</div>
 		</form>

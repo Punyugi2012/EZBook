@@ -85,7 +85,7 @@
 							<div class="card-body">
 								<div class="card-body row">
 									@foreach($type->books as $book)
-									<div class="col-md-3">
+									<div class="col-md-3 text-center">
 										<a href="/publisher-book/{{$book->id}}">
 											<img class="border border-secondary rounded" src="{{$book->url_cover_image}}" alt="cover image" style="width:150px;height:200px"
 											/>

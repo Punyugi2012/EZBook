@@ -24,7 +24,7 @@ class UserController extends Controller
         $bookTypes = BookType::get();
         $publishers = $this->getPublisherLimit();
         $books = Book::orderBy('id', 'desc')->paginate(8);
-        $news = $this->getNewsLimit();
+        $infos = $this->getInfosLimit();
         return view('web.user.home', [
             'isNewBook'=>true,
             'isRecommend'=>false,
@@ -33,20 +33,20 @@ class UserController extends Controller
             'bookTypes'=>$bookTypes,
             'books'=>$books,
             'publishers'=>$publishers,
-            'news'=>$news
+            'infos'=>$infos
         ]);
     } 
     private function getPublisherLimit() {
         $publishers = Publisher::orderBy('id', 'desc')->paginate(8);
         return $publishers;
     }  
-    private function getNewsLimit() {
+    private function getInfosLimit() {
         return Info::orderBy('id', 'desc')->paginate(8);
     }
     public function onRecommend() {
         $bookTypes = BookType::get();
         $publishers = $this->getPublisherLimit();
-        $news = $this->getNewsLimit();
+        $infos = $this->getInfosLimit();
         return view('web.user.home', [
             'isNewBook'=>false,
             'isRecommend'=>true,
@@ -54,14 +54,14 @@ class UserController extends Controller
             'isDiscount'=>false,
             'bookTypes'=>$bookTypes,
             'publishers'=>$publishers,
-            'news'=>$news
+            'infos'=>$infos
         ]);
     }
     public function onDiscount() {
         $bookTypes = BookType::get();
         $books = Book::where('discount_percent', '>', '0')->where('price', '>', '0')->get();
         $publishers = $this->getPublisherLimit();
-        $news = $this->getNewsLimit();
+        $infos = $this->getInfosLimit();
         return view('web.user.home', [
             'isNewBook'=>false,
             'isRecommend'=>false,
@@ -70,14 +70,14 @@ class UserController extends Controller
             'books'=>$books,
             'bookTypes'=>$bookTypes,
             'publishers'=>$publishers,
-            'news'=>$news
+            'infos'=>$infos
         ]);
     }
     public function onFree() {
         $bookTypes = BookType::get();
         $books = Book::where('price', 0)->get();
         $publishers = $this->getPublisherLimit();
-        $news = $this->getNewsLimit();
+        $infos = $this->getInfosLimit();
         return view('web.user.home', [
             'isNewBook'=>false,
             'isRecommend'=>false,
@@ -86,7 +86,7 @@ class UserController extends Controller
             'books'=>$books,
             'bookTypes'=>$bookTypes,
             'publishers'=>$publishers,
-            'news'=>$news
+            'infos'=>$infos
         ]);
     }
     public function onLogin() {
@@ -352,6 +352,22 @@ class UserController extends Controller
         return view('web.user.userBooks',[
             'purchases'=>$purchases,
             'bookTypes'=>$bookTypes
+        ]);
+    }
+    public function onInfos() {
+        $infos = Info::paginate(8);
+        $bookTypes = BookType::get();
+        return view('web.user.infos', [
+            'bookTypes'=>$bookTypes,
+            'infos'=>$infos
+        ]);
+    }
+    public function info($infoId) {
+        $info = Info::find($infoId);
+        $bookTypes = BookType::get();
+        return view('web.user.info', [
+            'bookTypes'=>$bookTypes,
+            'info'=>$info
         ]);
     }
 }
