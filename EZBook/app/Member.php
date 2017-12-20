@@ -15,7 +15,6 @@ class Member extends Model
         'gender',
         'birthday',
         'status',
-        'isVoted',
         'account_number',
         'image',
         'url_image',

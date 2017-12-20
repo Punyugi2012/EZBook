@@ -11,6 +11,9 @@ use App\BookType;
 use App\Book;
 use App\BookImage;
 use App\Author;
+use App\Info;
+use App\Member;
+use Carbon\Carbon;
 
 class AdminController extends Controller
 {
@@ -33,35 +36,33 @@ class AdminController extends Controller
             'isMembers'=>false,
             'isBooks'=>false,
             'isAuthors'=>false,
+            'isNews'=>false
         ]);
     }
     public function logout() {
         session()->forget('admin');
         return redirect('admin-login');
     }
-    private function getPublishers() {
-        $publishers = Publisher::get();
-        foreach($publishers as $publisher) {
-            $user = User::find($publisher->user_id);
-            $publisher->username = $user->username;
-            $publisher->email = $user->email;
-            $publisher->password = $user->password;
-        }
-        return $publishers;
-    }
     public function onPublishers() {
-        $publishers = $this->getPublishers();
+        $publishers = Publisher::paginate(8);
+        foreach($publishers as $publisher) {
+            $publisher->email = $publisher->user->email;
+            $publisher->username = $publisher->user->username;
+            $publisher->password = $publisher->user->password;
+        }
         return view('web.admin.adminDashboard', [
             'isPublishers'=>true,
             'isUploadBooks'=>false,
             'isMembers'=>false,
             'isBooks'=>false,
             'isAuthors'=>false,
-            'publishers'=>$publishers
+            'isNews'=>false,
+            'publishers'=>$publishers,
+            'isSearch'=>false
         ]);
     }
     public function onUploadBooks() {
-        $publishers = $this->getPublishers();
+        $publishers = Publisher::get();
         $bookTypes = BookType::get();
         $authors = Author::get();
         return view('web.admin.adminDashboard', [
@@ -70,18 +71,27 @@ class AdminController extends Controller
             'isMembers'=>false,
             'isBooks'=>false, 
             'isAuthors'=>false,
+            'isNews'=>false,
             'publishers'=>$publishers, 
             'bookTypes'=>$bookTypes,
             'authors'=>$authors
         ]);
     }
     public function onMembers() {
+        $members = Member::paginate(8);
+        foreach($members as $member) {
+            $member->email = $member->user->email;
+            $member->age = Carbon::now()->year - Carbon::createFromFormat('Y-m-d', $member->birthday)->year;
+        }
         return view('web.admin.adminDashboard', [
             'isPublishers'=>false, 
             'isUploadBooks'=>false, 
             'isMembers'=>true,
             'isBooks'=>false,
             'isAuthors'=>false,
+            'isNews'=>false,
+            'members'=>$members,
+            'isSearch'=>false
         ]);
     }
     public function onBooks() {
@@ -93,19 +103,23 @@ class AdminController extends Controller
             'isMembers'=>false,
             'isBooks'=>true, 
             'isAuthors'=>false,
+            'isNews'=>false,
             'bookTypes'=>$bookTypes,
-            'numOfBook'=>$numOfBook
+            'numOfBook'=>$numOfBook,
+            'isSearch'=>false
         ]);
     }
     public function onAuthors() {
-        $authors = Author::get();
+        $authors = Author::paginate(8);
         return view('web.admin.adminDashboard', [
             'isPublishers'=>false, 
             'isUploadBooks'=>false, 
             'isMembers'=>false,
             'isBooks'=>false,
             'isAuthors'=>true,
-            'authors'=>$authors
+            'isNews'=>false,
+            'authors'=>$authors,
+            'isSearch'=>false
         ]);
     }
     public function registerPublisher() {
@@ -326,55 +340,66 @@ class AdminController extends Controller
             'type'=>$type
         ]);
     }
-    public function searchPublisers(Request $request) {
-        $publishers = $this->getPublishers();
-        $filterPublishers = [];
-        $search = $request->input('search');
-        foreach($publishers as $publisher) {
-            if(
-                $publisher->name == $search || 
-                $publisher->email == $search ||
-                $publisher->phone == $search
-            ) {
-                array_push($filterPublishers, $publisher);
-            }
-        }
-        $publishers = $filterPublishers;
+    public function searchPublisher(Request $request) {
+       $validatedData = $request->validate([
+        'search'=>'required'
+       ]);
+       $publishers = User::join('publishers', 'users.id', '=', 'publishers.user_id')
+       ->where('name', $request->input('search'))
+       ->orWhere('phone', $request->input('search'))
+       ->orWhere('email', $request->input('search'))->paginate(8);
         return view('web.admin.adminDashboard', [
             'isPublishers'=>true,
             'isUploadBooks'=>false,
             'isMembers'=>false,
             'isBooks'=>false,
             'isAuthors'=>false,
-            'publishers'=>$publishers
+            'isNews'=>false,
+            'publishers'=>$publishers,
+            'isSearch'=>true,
+            'search'=>$request->input('search')
         ]);
     }
     public function searchAuthors(Request $request) {
-        $authors = Author::get();
-        $filterAuthors = [];
-        $search = $request->input('search');
-        foreach($authors as $author) {
-            if(
-                $author->name == $search || 
-                $author->email == $search ||
-                $author->phone == $search
-            ) {
-                array_push($filterAuthors, $author);
-            }
-        }
-        $authors = $filterAuthors;
+        $authors = Author::where('name', $request->input('search'))
+        ->orWhere('email', $request->input('search'))
+        ->orWhere('phone', $request->input('search'))->paginate(8);
         return view('web.admin.adminDashboard', [
             'isPublishers'=>false, 
             'isUploadBooks'=>false, 
             'isMembers'=>false,
             'isBooks'=>false,
             'isAuthors'=>true,
-            'authors'=>$authors
+            'isNews'=>false,
+            'authors'=>$authors,
+            'isSearch'=>true,
+            'search'=>$request->input('search')
         ]);
 
     }
     public function searchMembers(Request $request) {
-
+        $validatedData = $request->validate([
+            'search'=>'required'
+        ]);
+        $members = User::join('members', 'users.id', '=', 'members.user_id')
+        ->where('name', $request->input('search'))
+        ->orWhere('surname', $request->input('search'))
+        ->orWhere('email', $request->input('search'))
+        ->orWhere('phone', $request->input('search'))->paginate(8);
+        foreach($members as $member) {
+            $member->age = Carbon::now()->year - Carbon::createFromFormat('Y-m-d', $member->birthday)->year;;
+        }
+        return view('web.admin.adminDashboard', [
+            'isPublishers'=>false, 
+            'isUploadBooks'=>false, 
+            'isMembers'=>true,
+            'isBooks'=>false,
+            'isAuthors'=>false,
+            'isNews'=>false,
+            'members'=>$members,
+            'isSearch'=>true,
+            'search'=>$request->input('search')
+        ]);
     }
     public function searchBooks(Request $request) {
         $bookTypes = BookType::get();
@@ -395,8 +420,59 @@ class AdminController extends Controller
             'isMembers'=>false,
             'isBooks'=>true, 
             'isAuthors'=>false,
+            'isNews'=>false,
             'bookTypes'=>$bookTypes,
-            'numOfBook'=>$numOfBook
+            'numOfBook'=>$numOfBook,
+            'isSearch'=>true,
+            'search'=>$request->input('search')
         ]);
+    }
+    public function news() {
+        $infos = Info::paginate(8);
+        return view('web.admin.adminDashboard', [
+            'isPublishers'=>false, 
+            'isUploadBooks'=>false, 
+            'isMembers'=>false,
+            'isBooks'=>false, 
+            'isAuthors'=>false,
+            'isNews'=>true,
+            'infos'=>$infos
+        ]);
+    }
+    public function onCreateNews() {
+        return view('web.admin.createNews');
+    }
+    public function createNews(Request $request) {
+        $validatedData = $request->validate([
+            'title'=>'required',
+            'description'=>'required'
+        ]);
+        Info::create([
+            'title'=>$request->input('title'),
+            'description'=>$request->input('description')
+        ]);
+        return redirect('/admin-news');
+    }
+    public function onEditNews($newsId) {
+        $news = Info::find($newsId);
+        return view('web.admin.editNews', ['news'=>$news]);
+    }
+    public function editNews(Request $request, $newsId) {
+        $validatedData = $request->validate([
+            'title'=>'required',
+            'description'=>'required'
+        ]);
+        Info::find($newsId)->update([
+            'title'=>$request->input('title'),
+            'description'=>$request->input('description')
+        ]);
+        return redirect('/admin-news');
+    }
+    public function deleteNews(Request $request) {
+        $validatedData = $request->validate([
+            'newsId'=>'required',
+        ]);
+        Info::find($request->input('newsId'))->delete();
+        return redirect('/admin-news');
     }
 }

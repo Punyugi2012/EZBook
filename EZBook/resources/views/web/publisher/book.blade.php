@@ -1,10 +1,12 @@
-@extends('web.templates.app') @section('title', 'BookProfile') @section('header')
+@extends('web.templates.app') 
+@section('title', 'BookProfile') 
+@section('header')
 <nav class="navbar navbar-light bg-light justify-content-between">
 	<span>
-		<a href="/admin-dashboard" class="navbar-brand">EZBooks Admin</a>
+		<a href="/publisher-dashboard" class="navbar-brand">EZBooks Publisher</a>
 	</span>
 	<span>
-		<a href="/admin-logout" class="btn btn-primary">Logout</a>
+		<a href="/publisher-logout" class="btn btn-primary">Logout</a>
 	</span>
 </nav>
 @endsection @section('content')
@@ -34,6 +36,12 @@
 						<p>คะแนน: {{$book->score}}</p>
 						<img class="border border-secondary rounded" src="{{$book->url_cover_image}}" alt="cover image" style="width:250px;height:300px"
 						/>
+                        <p>
+                            <a href="{{$book->url_file}}" target="_blank">อ่าน</a>
+                        </p>
+                        <p>
+                            <a href="{{$book->url_file}}" download>ดาวน์โหลด</a>
+                        </p>
 					</div>
 				</div>
 			</div>
@@ -76,8 +84,8 @@
 					<div class="alert alert-warning text-center">
 						ไม่มีความคิดเห็นสำหรับหนังสือเล่มนี้
 					</div>
-				@else
-					 <div style="border:1px solid #ced4da" class="rounded">
+                @else
+                    <div style="border:1px solid #ced4da" class="rounded">
                         <ul class="list-group" style="overflow:auto">
                             @foreach($book->comments as $comment)
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -95,38 +103,6 @@
                         </ul>
                     </div>
 				@endif
-			</div>
-		</div>
-		<div class="row" style="margin-top:30px">
-			<div class="col-md-12">
-				แก้ไขสถานะ:
-				<form action="/admin-update-book/{{$book->id}}" method="POST">
-					<div class="form-check form-check-inline">
-						<label class="form-check-label text-success">
-							{{ csrf_field() }}
-            				{{ method_field('PUT') }}
-							<input class="form-check-input" type="radio" name="status" value="able" {{$book->status == 'able' ? 'checked' : ''}}> วางขาย
-						</label>
-					</div>
-					<div class="form-check form-check-inline">
-						<label class="form-check-label text-danger">
-							<input class="form-check-input" type="radio" name="status" value="unable" {{$book->status == 'unable' ? 'checked' : ''}}> ไม่วางขาย
-						</label>
-					</div>
-					<div class="form-group">
-						<lable for="price">แก้ไขราคา:</label>
-						<input type="number" class="form-control" name="price" value="{{$book->price}}" id="price">
-					</div>
-					<div class="form-group">
-						<lable for="discount">แก้ไข % ส่วนลด:</label>
-						<input type="number" class="form-control" name="discount" value="{{$book->discount_percent}}" id="discount">
-					</div>
-					<div class="form-group">
-						  <label for="detail">แก้ไขรายละเอียด:</label>
-						<textarea class="form-control" id="detail" name="detail" rows="3">{{$book->detail}}</textarea>
-					</div>
-					<button type="submit" class="btn btn-primary">บันทึก</button>
-				</form>
 			</div>
 		</div>
 	</div>

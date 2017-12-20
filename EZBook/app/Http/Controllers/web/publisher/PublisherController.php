@@ -31,9 +31,19 @@ class PublisherController extends Controller
         $purchases = Purchase::get();
         $total = 0.0;
         foreach($purchases as $purchase) {
-            $book = $purchase->book;
-            if($book->publisher_id == session()->get('publisher')->id) {
+            if($purchase->book->publisher_id == session()->get('publisher')->id) {
                 $total += $purchase->price;
+            }
+        }
+        $books = Book::where('publisher_id', session()->get('publisher')->id)->get();
+        $max = 0;
+        $topBook = null;
+        foreach($books as $book) {
+            $count = 0;
+            $count = Purchase::where('book_id', $book->id)->count('id');
+            if($count > $max) {
+                $max = $count;
+                $topBook = $book;
             }
         }
         return view('web.publisher.publisherDashboard', [
@@ -41,7 +51,8 @@ class PublisherController extends Controller
             'isBooks'=>false,
             'isProfile'=>false,
             'isHistory'=>false,
-            'total'=>$total
+            'total'=>$total,
+            'topBook'=>$topBook
         ]);
     }
     public function onBooks() {
@@ -58,7 +69,8 @@ class PublisherController extends Controller
             'isProfile'=>false,
             'isHistory'=>false,
             'numOfBook'=>$numOfBook,
-            'bookTypes'=>$bookTypes
+            'bookTypes'=>$bookTypes,
+            'isSearch'=>false
         ]);
     }
     public function onProfile() {
@@ -105,7 +117,13 @@ class PublisherController extends Controller
             'isProfile'=>false,
             'isHistory'=>false,
             'bookTypes'=>$bookTypes,
-            'numOfBook'=>$numOfBook
+            'numOfBook'=>$numOfBook,
+            'isSearch'=>true,
+            'search'=>$request->input('search')
         ]);
+    }
+    public function book($bookId) {
+        $book = Book::find($bookId);
+        return view('web.publisher.book', ['book'=>$book]);
     }
 }

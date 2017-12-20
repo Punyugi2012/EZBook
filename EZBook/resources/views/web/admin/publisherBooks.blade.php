@@ -10,7 +10,7 @@
 @endsection @section('content')
 <div class="card" style="margin-top:20px;margin-bottom:60px;">
 	<div class="card-header">
-		สำนักพิมพ์: <a href="javascript:void(0)">{{$publisher->name}}</a>, ประเภท <a href="javascript:void(0)">{{$type}}</a>, มีหนังสือทั้งหมด: <a href="javascript:void(0)">{{count($books)}}</a> เล่ม
+		สำนักพิมพ์: <a href="javascript:void(0)">{{$publisher->name}}</a>, ประเภท <a href="javascript:void(0)">{{$type}}</a>, ทั้งหมด: <a href="javascript:void(0)">{{count($books)}}</a> เล่ม
 		<div class="dropdown float-right">
 			<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
 			 aria-expanded="false">

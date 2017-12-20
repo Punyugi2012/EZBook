@@ -13,6 +13,7 @@ use Carbon\Carbon;
 use App\Publisher;
 use App\Purchase;
 use App\Comment;
+use App\Vote;
 
 
 class UserController extends Controller
@@ -132,7 +133,6 @@ class UserController extends Controller
             'gender'=>$request->input('gender'),
             'birthday'=>$request->input('birthday'),
             'status'=>'able',
-            'isVoted'=>'unvoted',
             'image'=>$urlImage,
             'url_image'=>Storage::url($urlImage),
             'user_id'=>User::latest('id')->first()->id
@@ -253,16 +253,22 @@ class UserController extends Controller
         $bookTypes = BookType::get();
         $book = Book::find($bookId);
         $isBought = false;
+        $isVoted = false;
         if(session()->has('user')) {
             $result = Purchase::where('member_id', session()->get('user')->member->id)->where('book_id', $bookId)->first();
             if($result) {
                 $isBought = true;
             }
+            $result = Vote::where('member_id', session()->get('user')->member->id)->where('book_id', $bookId)->first();
+            if($result) {
+                $isVoted = true;
+            }
         }
         return view('web.user.book', [
             'bookTypes'=>$bookTypes,
             'book'=>$book,
-            'isBought'=>$isBought
+            'isBought'=>$isBought,
+            'isVoted'=>$isVoted
         ]);
     }
     public function comment(Request $request, $bookId) {

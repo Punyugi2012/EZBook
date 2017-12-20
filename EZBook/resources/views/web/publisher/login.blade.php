@@ -2,9 +2,9 @@
 @section('title', 'Login')
     @include('web.components.header')
 @section('content')
-     <div class="border border-secondary rounded" style="padding: 50px; margin-top: 50px">
-        <h1>สำนักพิมพ์ เข้าสู่ระบบ</h1>
-        <form action="publisher-login" method="POST">
+     <div class="border border-secondary rounded" style="padding: 50px; margin-top: 100px">
+        <h1>สำนักพิมพ์/นักเขียน เข้าสู่ระบบ</h1>
+        <form action="publisher-login" method="POST" autocomplete="off">
             {{ csrf_field() }}
              <div class="form-group">
                 <label for="username">Username:</label>

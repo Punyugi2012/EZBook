@@ -26,7 +26,11 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="text-center">
-                                    <img class="card-img-top" src="{{session()->get('user')->member->url_image}}" alt="image" style="width:150px;height:150px">
+                                     @if(session()->get('user')->member->url_image != "/storage/")
+                                        <img src="{{session()->get('user')->member->url_image }}" class="rounded-circle" style="width:150px;height:150px">
+                                    @else 
+                                        <img src="https://cdn0.iconfinder.com/data/icons/users-android-l-lollipop-icon-pack/24/user-512.png" class="rounded-circle" style="width:150px;height:150px">
+                                    @endif
                                 </div>
                                 <p class="card-text">ชื่อ: {{session()->get('user')->member->name}}</p>
                                 <p class="card-text">นามสกุล: {{session()->get('user')->member->surname}}</p>

@@ -30,19 +30,25 @@
 		<li class="nav-item">
 			<a class="nav-link btn btn-light {{$isBooks?'active':''}}" href="/admin-books">หนังสือ</a>
 		</li>
+		<li class="nav-item">
+			<a class="nav-link btn btn-light {{$isNews?'active':''}}" href="/admin-news">ข่าวสาร</a>
+		</li>
 	</ul>
 </div>
 <div style="margin-bottom:60px;margin-top:10px">
 	@if($isPublishers)
 	<div class="card">
 		<div class="card-header">
-			<span>สำนักพิมพ์</span>,
-			พบ <a href="javascript:void(0)">{{count($publishers)}}</a>
-			<form action="/admin-search/publishers" method="GET" class="float-right" style="width: 50%">
+			@if($isSearch)
+			คุณได้ค้นหา {{$search}}, พบ {{$publishers->total()}}
+			@else
+			<span>สำนักพิมพ์</span>, ทั้งหมด <a href="javascript:void(0)">{{$publishers->total()}}</a>
+			@endif
+			<form action="/admin-search/publishers" method="GET" class="float-right" style="width: 50%" autocomplete="off">
 				{{ csrf_field() }}
 				<div class="input-group">
 					<span class="input-group-btn">
-						<button class="btn btn-secondary" type="submit">Go!</button>
+						<button class="btn btn-secondary" type="submit">ค้นหา</button>
 					</span>
 					<input type="text" name="search" class="form-control" placeholder="ค้นหาโดย ชื่อสำนักพิมพ์/เบอร์โทรศัพท์/อีเมลล์">
 				</div>
@@ -91,6 +97,7 @@
 					@endforeach
 				</tbody>
 			</table>
+			{{$publishers->links()}}
 		</div>
 	</div>
 	@elseif($isUploadBooks)
@@ -194,17 +201,20 @@
 	@elseif($isMembers)
 	<div class="card">
 		<div class="card-header">
-			<span>สมาชิก</span>,
-			{{--  พบ <a href="javascript:void(0)">{{count($publishers)}}</a>
-			<form action="/admin-search/publishers" method="GET" class="float-right" style="width: 50%">
+			@if($isSearch)
+				คุณได้ค้นหา {{$search}}, พบ {{$members->total()}}
+			@else
+				<span>สมาชิก</span>, ทั้งหมด <a href="javascript:void(0)">{{$members->total()}}</a>
+			@endif
+			<form action="/admin-search/members" method="GET" class="float-right" style="width: 50%">
 				{{ csrf_field() }}
 				<div class="input-group">
 					<span class="input-group-btn">
-						<button class="btn btn-secondary" type="submit">Go!</button>
+						<button class="btn btn-secondary" type="submit">ค้นหา</button>
 					</span>
-					<input type="text" name="search" class="form-control" placeholder="ค้นหาโดย ชื่อสำนักพิมพ์/เบอร์โทรศัพท์/อีเมลล์">
+					<input type="text" name="search" class="form-control" placeholder="ค้นหาโดย ชื่อ/นามสกุล/อีเมลล์/เบอร์โทรศัพท์">
 				</div>
-			</form>  --}}
+			</form>
 		</div>
 		<div class="card-body">
 			<div class="card-body">
@@ -214,6 +224,7 @@
 							<th>ชื่อ</th>
 							<th>นามสกุล</th>
 							<th>เบอร์โทรศัพท์</th>
+							<th>อีเมลล์</th>
 							<th>ที่อยู่</th>
 							<th>อายุ</th>
 							<th>วันเกิด</th>
@@ -225,21 +236,47 @@
 						</tr>
 					</thead>
 					<tbody>
-
+						@foreach($members as $member)
+							<tr>
+								<td>{{$member->name}}</td>
+								<td>{{$member->surname}}</td>
+								<td>{{$member->phone}}</td>
+								<td>{{$member->email}}</td>
+								<td>{{$member->address}}</td>
+								<td>{{$member->age}}</td>
+								<td>{{$member->birthday}}</td>
+								<td>{{$member->status == 'able' ? 'ใช้งาน' : 'ไม่ใช้งาน'}}</td>
+								<td>
+									@if($member->url_image != "/storage/")
+                                        <img src="{{$member->url_image}}" class="rounded-circle" style="width:50px;height:50px">
+                                    @else 
+                                        <img src="https://cdn0.iconfinder.com/data/icons/users-android-l-lollipop-icon-pack/24/user-512.png" class="rounded-circle" style="width:50px;height:50px">
+                                    @endif
+								</td>
+								<td>{{$member->created_at}}</td>
+								<td>{{$member->updated_at}}</td>
+								<td><button class="btn btn-danger">ลบ</button></td>
+							</tr>
+						@endforeach
 					</tbody>
 				</table>
+				{{$members->links()}}
 			</div>
 		</div>
 	</div>
 	@elseif($isBooks)
 	<div class="card">
 		<div class="card-header">
-			พบ <a href="javascript:void(0)">{{$numOfBook}}</a> เล่ม
-			<form action="/admin-search/books" method="GET" class="float-right" style="width: 50%">
+			@if($isSearch)
+				คุณได้ค้นหา {{$search}}, พบ {{$numOfBook}}
+			@else
+				ทั้งหมด <a href="javascript:void(0)">{{$numOfBook}}</a> เล่ม
+			@endif
+			<form action="/admin-search/books" method="GET" class="float-right" style="width: 50%" autocomplete="off">
 				{{ csrf_field() }}
 				<div class="input-group">
 					<span class="input-group-btn">
-						<button class="btn btn-secondary" type="submit">Go!</button>
+						<button class="btn btn-secondary" type="submit">ค้นหา</button>
 					</span>
 					<input type="text" name="search" class="form-control" placeholder="ค้นหาโดย ชื่อหนังสือ">
 				</div>
@@ -283,13 +320,17 @@
 	@elseif($isAuthors)
 	<div class="card">
 		<div class="card-header">
+			@if($isSearch)
+			คุณได้ค้นหา {{$search}}, พบ {{$authors->total()}}
+			@else
 			<span>ผู้แต่ง</span>,
-			พบ <a href="javascript:void(0)">{{count($authors)}}</a>
-			<form action="/admin-search/authors" method="GET" class="float-right" style="width: 50%">
+			ทั้งหมด <a href="javascript:void(0)">{{$authors->total()}}</a>
+			@endif
+			<form action="/admin-search/authors" method="GET" class="float-right" style="width: 50%" autocomplete="off">
 				{{ csrf_field() }}
 				<div class="input-group">
 					<span class="input-group-btn">
-						<button class="btn btn-secondary" type="submit">Go!</button>
+						<button class="btn btn-secondary" type="submit">ค้นหา</button>
 					</span>
 					<input type="text" name="search" class="form-control" placeholder="ค้นหาโดย ชื่อ/เบอร์โทรศัพท์/อีเมลล์">
 				</div>
@@ -326,6 +367,60 @@
 			</table>
 		</div>
 	</div>
+	@elseif($isNews)
+		<div class="card">
+			<div class="card-header">
+				ข่าวสาร, ทั้งหมด {{$infos->total()}}
+			</div>
+			<div class="card-body">
+				<a href="/admin-create-news" class="btn btn-info">เพิ่มข่าวสาร</a>
+				<table class="table table-striped" style="margin-top:10px">
+					<thead>
+						<tr>
+							<th>หัวข้อ</th>
+							<th>รายละเอียด</th>
+							<th>created_at</th>
+							<th>เครื่องมือ</th>
+						</tr>
+					</thead>
+					<tbody>
+						@foreach($infos as $info)
+							<tr>
+								<th>{{$info->title}}</th>
+								<th>{{$info->description}}</th>
+								<th>{{$info->created_at}}</th>
+								<th>
+									<a href="/admin-edit-news/{{$info->id}}" class="btn btn-warning">แก้ไข</a>
+									<button class="btn btn-danger" data-toggle="modal" data-target="#deleteNews">ลบ</button>
+								</th>
+							</tr>
+							<div class="modal fade" id="deleteNews" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+								<div class="modal-dialog" role="document">
+									<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="exampleModalLabel">คุณแน่ใจแล้วใช่ไหมที่จะลบ</h5>
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<form action="/admin-delete-news" method="post">
+										{{ csrf_field() }}
+            							{{ method_field('DELETE') }}
+										<input type="hidden" name="newsId" value="{{$info->id}}">
+										<div class="modal-footer">
+											<button type="submit" class="btn btn-primary">ลบ</button>
+											<button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
+										</div>
+									</form>
+									</div>
+								</div>
+							</div>
+						@endforeach
+					</tbody>
+				</table>
+				{{$infos->links()}}
+			</div>
+		</div>
 	@endif
 </div>
 @endsection @section('javascript') @if($isUploadBooks)

@@ -33,19 +33,27 @@ Route::put('/admin-update-book/{bookId}', 'web\admin\AdminController@updateBook'
 Route::get('/admin-book/{bookId}', 'web\admin\AdminController@onBook')->middleware('admin-isLogin');
 Route::get('/admin-books/publisher/{publisherId}/{type?}', 'web\admin\AdminController@onPublisherBooks')->middleware('admin-isLogin');
 Route::get('/admin-books/author/{authorId}/{type?}', 'web\admin\AdminController@onAuthorBooks')->middleware('admin-isLogin');
-Route::get('/admin-search/publishers', 'web\admin\AdminController@searchPublisers')->middleware('admin-isLogin');
+Route::get('/admin-search/publishers', 'web\admin\AdminController@searchPublisher')->middleware('admin-isLogin');
 Route::get('/admin-search/authors', 'web\admin\AdminController@searchAuthors')->middleware('admin-isLogin');
 Route::get('/admin-search/books', 'web\admin\AdminController@searchBooks')->middleware('admin-isLogin');
+Route::get('/admin-search/members', 'web\admin\AdminController@searchMembers')->middleware('admin-isLogin');
+Route::get('/admin-news', 'web\admin\AdminController@news')->middleware('admin-isLogin');
+Route::get('/admin-create-news', 'web\admin\AdminController@onCreateNews')->middleware('admin-isLogin');
+Route::post('/admin-create-news', 'web\admin\AdminController@createNews')->middleware('admin-isLogin');
+Route::get('/admin-edit-news/{newsId}', 'web\admin\AdminController@onEditNews')->middleware('admin-isLogin');
+Route::put('/admin-edit-news/{newsId}', 'web\admin\AdminController@editNews')->middleware('admin-isLogin');
+Route::delete('/admin-delete-news', 'web\admin\AdminController@deleteNews')->middleware('admin-isLogin');
 
 
 Route::get('/publisher-login', 'web\publisher\PublisherController@onLogin');
 Route::post('/publisher-login', 'web\publisher\PublisherController@checkLogin');
-Route::get('/publisher-logout', 'web\publisher\PublisherController@onLogout');
+Route::get('/publisher-logout', 'web\publisher\PublisherController@onLogout')->middleware('publisher-isLogin');
 Route::get('/publisher-dashboard', 'web\publisher\PublisherController@onDashboard')->middleware('publisher-isLogin');
 Route::get('/publisher-books', 'web\publisher\PublisherController@onBooks')->middleware('publisher-isLogin');
 Route::get('/publisher-profile', 'web\publisher\PublisherController@onProfile')->middleware('publisher-isLogin');
 Route::get('/publisher-history', 'web\publisher\PublisherController@onHistory')->middleware('publisher-isLogin');
 Route::get('/publisher-search/books', 'web\publisher\PublisherController@searchBook')->middleware('publisher-isLogin');
+Route::get('/publisher-book/{bookId}', 'web\publisher\PublisherController@book')->middleware('publisher-isLogin');
 
 Route::get('/', 'web\user\UserController@index');
 Route::get('/recommend', 'web\user\UserController@onRecommend');
