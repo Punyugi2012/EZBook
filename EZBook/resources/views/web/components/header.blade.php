@@ -1,6 +1,6 @@
 <nav class="navbar navbar-light bg-light justify-content-between fixed-top">
 	<span>
-		<a class="navbar-brand" href="/">EZBooks</a>
+		<a class="navbar-brand" href="/"><h2><i class="fa fa-book" aria-hidden="true"></i> EZBooks</h2></a>
 	</span>
 	<span>
 		<form action="/user-search-book" method="get"style="display:inline" autocomplete="off">

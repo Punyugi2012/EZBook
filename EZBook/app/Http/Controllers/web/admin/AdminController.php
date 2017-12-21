@@ -25,6 +25,7 @@ class AdminController extends Controller
         $user = User::where('username', $request->input('username'))->where('password', $request->input('password'))->where('type', 'admin')->first();
         if($user) {
             session()->put('admin', $user);
+            session()->flash('status', 'เข้าสู่ระบบสำเร็จ');
             return redirect('/admin-dashboard');
         }
         return redirect('/admin-login');
@@ -174,6 +175,19 @@ class AdminController extends Controller
     public function onEditPublisher($publisherId) {
         $publisher = Publisher::find($publisherId);
         return view('web.admin.editPublisher', ['publisher'=>$publisher]);
+    }
+    public function onEditMember($memberId) {
+        $member = Member::find($memberId);
+        return view('web.admin.editMember', ['member'=>$member]);
+    }
+    public function updateMember(Request $request, $memberId) {
+        $validatedData = $request->validate([
+            'status_member'=>'required'
+        ]);
+        Member::find($memberId)->update([
+                'status'=>$request->input('status_member')
+        ]);
+        return redirect('/admin-members');
     }
     public function updatePublisher(Request $request, $publisherId) {
         $validatedData = $request->validate([

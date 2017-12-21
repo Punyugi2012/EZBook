@@ -1,12 +1,5 @@
 @extends('web.templates.app') @section('title', 'Dashboard') @section('header')
-<nav class="navbar navbar-light bg-light justify-content-between">
-	<span>
-		<a href="/admin-dashboard" class="navbar-brand">EZBooks Admin</a>
-	</span>
-	<span>
-		<a href="/admin-logout" class="btn btn-primary">Logout</a>
-	</span>
-</nav>
+	@include('web.components.headerSecond')
 @endsection @section('content')
 <style>
 	.nav li {
@@ -16,22 +9,22 @@
 <div style="margin-top:20px">
 	<ul class="nav nav-pills flex-column flex-sm-row">
 		<li class="nav-item">
-			<a class="nav-link btn btn-light {{$isPublishers?'active':''}}" href="/admin-publishers">สำนักพิมพ์</a>
+			<a class="nav-link btn btn-primary  {{$isPublishers?'active':''}}" href="/admin-publishers"><h5>สำนักพิมพ์/นักเขียน</h5></a>
 		</li>
 		<li class="nav-item">
-			<a class="nav-link btn btn-light {{$isMembers?'active':''}}" href="/admin-members">สมาชิก</a>
+			<a class="nav-link btn btn-primary {{$isMembers?'active':''}}" href="/admin-members"><h5>สมาชิก</h5></a>
 		</li>
 		<li class="nav-item">
-			<a class="nav-link btn btn-light {{$isAuthors?'active':''}}" href="/admin-authors">ผู้แต่ง</a>
+			<a class="nav-link btn btn-primary {{$isAuthors?'active':''}}" href="/admin-authors"><h5>ผู้แต่ง</h5></a>
 		</li>
 		<li class="nav-item">
-			<a class="nav-link btn btn-light {{$isUploadBooks?'active':''}}" href="/admin-uploadbooks">เพิ่มหนังสือ</a>
+			<a class="nav-link btn btn-primary {{$isUploadBooks?'active':''}}" href="/admin-uploadbooks"><h5>เพิ่มหนังสือ</h5></a>
 		</li>
 		<li class="nav-item">
-			<a class="nav-link btn btn-light {{$isBooks?'active':''}}" href="/admin-books">หนังสือ</a>
+			<a class="nav-link btn btn-primary {{$isBooks?'active':''}}" href="/admin-books"><h5>หนังสือ</h5></a>
 		</li>
 		<li class="nav-item">
-			<a class="nav-link btn btn-light {{$isNews?'active':''}}" href="/admin-news">ข่าวสาร</a>
+			<a class="nav-link btn btn-primary {{$isNews?'active':''}}" href="/admin-news"><h5>ข่าวสาร</h5></a>
 		</li>
 	</ul>
 </div>
@@ -39,11 +32,13 @@
 	@if($isPublishers)
 	<div class="card">
 		<div class="card-header">
+			<span style="font-size:20px">
 			@if($isSearch)
-			คุณได้ค้นหา {{$search}}, พบ {{$publishers->total()}}
+				คุณได้ค้นหา <a href="javascript:void(0)">{{$search}}</a>, พบ <a href="javascript:void(0)">{{$publishers->total()}}</a>
 			@else
-			<span>สำนักพิมพ์</span>, ทั้งหมด <a href="javascript:void(0)">{{$publishers->total()}}</a>
+				<span>สำนักพิมพ์/นักเขียน</span>, ทั้งหมด <a href="javascript:void(0)">{{$publishers->total()}}</a>
 			@endif
+			</span>
 			<form action="/admin-search/publishers" method="GET" class="float-right" style="width: 50%" autocomplete="off">
 				{{ csrf_field() }}
 				<div class="input-group">
@@ -55,7 +50,7 @@
 			</form>
 		</div>
 		<div class="card-body">
-			<a href="/admin-regis-publisher" class="btn btn-info">เพิ่มสำนักพิมพ์</a>
+			<a href="/admin-regis-publisher" class="btn btn-info"><h5>เพิ่มสำนักพิมพ์</h5></a>
 			<table class="table table-striped" style="margin-top:10px">
 				<thead>
 					<tr>
@@ -201,11 +196,13 @@
 	@elseif($isMembers)
 	<div class="card">
 		<div class="card-header">
+			<span style="font-size:20px">
 			@if($isSearch)
 				คุณได้ค้นหา {{$search}}, พบ {{$members->total()}}
 			@else
 				<span>สมาชิก</span>, ทั้งหมด <a href="javascript:void(0)">{{$members->total()}}</a>
 			@endif
+			</span>
 			<form action="/admin-search/members" method="GET" class="float-right" style="width: 50%">
 				{{ csrf_field() }}
 				<div class="input-group">
@@ -256,7 +253,7 @@
 								<td>{{$member->created_at}}</td>
 								<td>{{$member->updated_at}}</td>
 								<td>
-									<button class="btn btn-warning">แก้ไขสถานะ</button>
+									<a href="/admin-edit-member/{{$member->id}}" class="btn btn-warning" >แก้ไขสถานะ</button>
 								</td>
 							</tr>
 						@endforeach
@@ -423,6 +420,9 @@
 				{{$infos->links()}}
 			</div>
 		</div>
+	@endif
+	@if(session()->has('status'))
+		<div class="alert alert-success text-center"><h2>เข้าสู่ระบบสำเร็จ</h2></div>	
 	@endif
 </div>
 @endsection @section('javascript') @if($isUploadBooks)

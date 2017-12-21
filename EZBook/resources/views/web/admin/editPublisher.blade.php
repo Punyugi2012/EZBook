@@ -27,12 +27,12 @@
 		</div>
 		<div class="form-check form-check-inline">
 			<label class="form-check-label">
-				<input class="form-check-input" type="radio" name="status" value="able" {{$publisher->status == 'able' ? 'checked' : ''}}> สัญญายังไม่หมด
+				<input class="form-check-input" type="radio" name="status_member" value="able" {{$publisher->status == 'able' ? 'checked' : ''}}> สัญญายังไม่หมด
 			</label>
 		</div>
 		<div class="form-check form-check-inline">
 			<label class="form-check-label">
-				<input class="form-check-input" type="radio" name="status" value="unable"  {{$publisher->status == 'unable' ? 'checked' : ''}}> หมดสัญญา
+				<input class="form-check-input" type="radio" name="status_member" value="unable"  {{$publisher->status == 'unable' ? 'checked' : ''}}> หมดสัญญา
 			</label>
 		</div>
 		<div class="text-center">
