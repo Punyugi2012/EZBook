@@ -5,6 +5,8 @@ namespace App\Http\Controllers\web\user;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendPassword;
 use App\Book;
 use App\BookType;
 use App\Member;
@@ -16,7 +18,6 @@ use App\Comment;
 use App\Vote;
 use App\Info;
 use App\Author;
-
 
 class UserController extends Controller
 {
@@ -265,26 +266,36 @@ class UserController extends Controller
             'publishers'=>$publishers
         ]);
     }
+    private function calculateBookScore($book) {
+        $numVoted = Vote::where('book_id', $book->id)->count('id');
+        $sum = Vote::where('book_id', $book->id)->sum('score');
+        $book->score = $numVoted == 0 ? 0 : $sum / $numVoted;
+    }
     public function book($bookId) {
         $bookTypes = BookType::get();
         $book = Book::find($bookId);
+        $this->calculateBookScore($book);
         $isBought = false;
         $isVoted = false;
+        $scoreVoted = null;
         if(session()->has('user')) {
             $result = Purchase::where('member_id', session()->get('user')->member->id)->where('book_id', $bookId)->first();
             if($result) {
                 $isBought = true;
             }
             $result = Vote::where('member_id', session()->get('user')->member->id)->where('book_id', $bookId)->first();
+
             if($result) {
                 $isVoted = true;
+                $scoreVoted = $result->score;
             }
         }
         return view('web.user.book', [
             'bookTypes'=>$bookTypes,
             'book'=>$book,
             'isBought'=>$isBought,
-            'isVoted'=>$isVoted
+            'isVoted'=>$isVoted,
+            'scoreVoted'=>$scoreVoted
         ]);
     }
     public function comment(Request $request, $bookId) {
@@ -368,6 +379,56 @@ class UserController extends Controller
         return view('web.user.info', [
             'bookTypes'=>$bookTypes,
             'info'=>$info
+        ]);
+    }
+    public function vote(Request $request, $bookId) {
+        $validatedData = $request->validate([
+            'vote'=>'required'
+        ]);
+        Vote::create([
+            'score'=>$request->input('vote'),
+            'member_id'=>session()->get('user')->member->id,
+            'book_id'=>$bookId
+        ]);
+        return back();
+    }
+    public function editVote(Request $request, $bookId) {
+        $validatedData = $request->validate([
+            'edit_vote'=>'required'
+        ]);
+        Vote::where('member_id', session()->get('user')->member->id)->where('book_id', $bookId)->first()->update([
+            'score'=>$request->input('edit_vote')
+        ]);
+        return back();
+    }
+    public function onForgetPassword() {
+        $bookTypes = BookType::get();
+        return view('web.user.forgetPassword', [
+            'bookTypes'=>$bookTypes
+        ]);
+    }
+    public function sendEmail(Request $request) {
+        $validatedData = $request->validate([
+            'username'=>'required',
+            'email'=>'required'
+        ]);
+        $email = $request->input('email');
+        $user =  User::where('email', $email)
+        ->where('username', $request->input('username'))
+        ->where('type', 'user')
+        ->first();
+        if($user) {
+            Mail::to($email)->send(new SendPassword($user));
+            return redirect('/send-password-success');
+        }
+        else {
+            return back();
+        }
+    }
+    public function sendSuccess() {
+        $bookTypes = BookType::get();
+        return view('web.user.sendPassword', [
+            'bookTypes'=>$bookTypes
         ]);
     }
 }

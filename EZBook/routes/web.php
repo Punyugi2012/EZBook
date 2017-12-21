@@ -79,3 +79,8 @@ Route::get('/user-books', 'web\user\UserController@userBooks')->middleware('user
 Route::get('/user-books/author/{authorId}/{type?}', 'web\user\UserController@authorBooks');
 Route::get('/infos', 'web\user\UserController@onInfos');
 Route::get('/info/{infoId}', 'web\user\UserController@info');
+Route::post('/user-vote/book/{bookId}', 'web\user\UserController@vote')->middleware('user-isLogin');
+Route::put('/user-edit-vote/book/{bookId}', 'web\user\UserController@editVote')->middleware('user-isLogin');
+Route::get('/user-foget-pass', 'web\user\UserController@onForgetPassword');
+Route::post('/send-email', 'web\user\UserController@sendEmail');
+Route::get('/send-password-success', 'web\user\UserController@sendSuccess');
