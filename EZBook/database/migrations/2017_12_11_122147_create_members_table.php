@@ -15,6 +15,7 @@ class CreateMembersTable extends Migration
     {
         Schema::create('members', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('id_card');
             $table->string('name');
             $table->string('surname');
             $table->string('phone');
@@ -22,7 +23,6 @@ class CreateMembersTable extends Migration
             $table->enum('gender', ['female', 'male']);
             $table->date('birthday');
             $table->enum('status', ['able', 'unable']);
-            $table->string('account_number')->nullable();
             $table->string('image')->nullable();
             $table->string('url_image')->nullable();
             $table->integer('user_id')->unsigned();

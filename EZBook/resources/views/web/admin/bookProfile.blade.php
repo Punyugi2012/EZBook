@@ -99,19 +99,34 @@
 		</div>
 		<div class="row" style="margin-top:30px">
 			<div class="col-md-12">
-				แก้ไขสถานะ:
 				<form action="/admin-update-book/{{$book->id}}" method="POST">
-					<div class="form-check form-check-inline">
-						<label class="form-check-label text-success">
-							{{ csrf_field() }}
-            				{{ method_field('PUT') }}
-							<input class="form-check-input" type="radio" name="status" value="able" {{$book->status == 'able' ? 'checked' : ''}}> วางขาย
-						</label>
+					{{ csrf_field() }}
+            		{{ method_field('PUT') }}
+					แก้ไขการแนะนำ:
+					<div class="form-group">
+						<div class="form-check form-check-inline">
+							<label class="form-check-label text-success">
+								<input class="form-check-input" type="radio" name="recommend" value="yes" {{$book->recommend == 'yes' ? 'checked' : ''}}> แนะนำ
+							</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<label class="form-check-label text-danger">
+								<input class="form-check-input" type="radio" name="recommend" value="not" {{$book->recommend == 'not' ? 'checked' : ''}}> ไม่แนะนำ
+							</label>
+						</div>
 					</div>
-					<div class="form-check form-check-inline">
-						<label class="form-check-label text-danger">
-							<input class="form-check-input" type="radio" name="status" value="unable" {{$book->status == 'unable' ? 'checked' : ''}}> ไม่วางขาย
-						</label>
+					แก้ไขสถานะ:
+					<div class="form-group">
+						<div class="form-check form-check-inline">
+							<label class="form-check-label text-success">
+								<input class="form-check-input" type="radio" name="status" value="able" {{$book->status == 'able' ? 'checked' : ''}}> วางขาย
+							</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<label class="form-check-label text-danger">
+								<input class="form-check-input" type="radio" name="status" value="unable" {{$book->status == 'unable' ? 'checked' : ''}}> ไม่วางขาย
+							</label>
+						</div>
 					</div>
 					<div class="form-group">
 						<lable for="price">แก้ไขราคา:</label>

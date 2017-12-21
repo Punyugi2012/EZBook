@@ -9,6 +9,10 @@
         <div class="card-body">
             <form action="/user-register" method="post" enctype="multipart/form-data" autocomplete="off">
                 {{ csrf_field() }}
+                 <div class="form-group">
+                    <label for="id_card">เลขที่บัตรประชาชน:</label>
+                    <input type="text" class="form-control" name="id_card" id="id_card" placeholder="เลขที่บัตรประชาชน" required>
+                </div>
                 <div class="form-group">
                     <label for="name">ชื่อ:</label>
                     <input type="text" class="form-control" name="name" id="name" placeholder="ชื่อ" required>
@@ -23,7 +27,7 @@
                 </div>
                 <div class="form-group">
                     <label for="address">ที่อยุ่:</label>
-                    <input type="text" class="form-control" name="address" id="address" placeholder="ที่อยู่" required>
+                    <input type="text" class="form-control" name="address" id="address" placeholder="จังหวัด/อำเภอ/ตำบล/บ้านเลขที่/หมู่" required>
                 </div>
                 เพศ:
                 <div class="form-group">

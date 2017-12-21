@@ -75,10 +75,24 @@
             @elseif($isRecommend)
                 <div class="card" style="border-top:0px;border-radius:0px">
                     <div class="card-body">
-
+                        <div class="row">
+                            @foreach($books as $book)
+                                <div class="col-md-3 text-center">
+                                    <a href="/book/{{$book->id}}">
+                                        <img class="rounded border border-secondary" src="{{$book->url_cover_image}}" alt="cover image" style="width:120px;height:150px">
+                                    </a>
+                                    <p>{{$book->name}}</p>
+                                    @if($book->price == 0)
+                                        <p>ราคา: ฟรี</p>
+                                    @else 
+                                        <p>ราคา <span style="text-decoration: line-through;">{{$book->price}}</span> <sub>ลด {{$book->discount_percent}}%</sub> {{$book->price - ($book->price * $book->discount_percent / 100)}} บาท</p>
+                                    @endif
+                                </div>
+                            @endforeach
+                        </div>
                     </div>
                      <div>
-                        <a class="float-right" href="#">ดูหนังสือแนะนำเพิ่มเติม</a>
+                        <a class="float-right" href="/recommendBooks">ดูหนังสือแนะนำเพิ่มเติม</a>
                     </div>
                 </div>
             @elseif($isFree)
@@ -123,11 +137,25 @@
         </div>
         <div class="card" style="margin-top:20px">
             <div class="card-header">
-                อันดับขายดี
+                อันดับยอดขายสูงสุด
             </div>
             <div class="card-body">
                 <div class="row">
-            
+                    @foreach($topBooks as $book)
+                        @if($book)
+                            <div class="col-md-3 text-center">
+                                <a href="/book/{{$book->id}}">
+                                    <img class="rounded border border-secondary" src="{{$book->url_cover_image}}" alt="cover image" style="width:120px;height:150px">
+                                </a>
+                                <p>{{$book->name}}</p>
+                                @if($book->price == 0)
+                                    <p>ราคา: ฟรี</p>
+                                @else 
+                                    <p>ราคา <span style="text-decoration: line-through;">{{$book->price}}</span> <sub>ลด {{$book->discount_percent}}%</sub> {{$book->price - ($book->price * $book->discount_percent / 100)}} บาท</p>
+                                @endif
+                            </div>
+                        @endif
+                    @endforeach
                 </div>
             </div>
         </div>

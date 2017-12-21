@@ -69,6 +69,7 @@ Route::put('/user-update/{userId}', 'web\user\UserController@update')->middlewar
 Route::get('/user-books/{typeId}', 'web\user\UserController@books');
 Route::get('/user-search-book', 'web\user\UserController@search');
 Route::get('/newbooks', 'web\user\UserController@onNewBooks');
+Route::get('/recommendBooks', 'web\user\UserController@onRecommendBooks');
 Route::get('/freebooks', 'web\user\UserController@onFreeBooks');
 Route::get('/discountbooks', 'web\user\UserController@onDiscountBooks');
 Route::get('/publishers', 'web\user\UserController@onPublishers');
@@ -84,3 +85,4 @@ Route::put('/user-edit-vote/book/{bookId}', 'web\user\UserController@editVote')-
 Route::get('/user-foget-pass', 'web\user\UserController@onForgetPassword');
 Route::post('/send-email', 'web\user\UserController@sendEmail');
 Route::get('/send-password-success', 'web\user\UserController@sendSuccess');
+Route::get('/user-buy/book/{bookId}', 'web\user\UserController@buyBook')->middleware('user-isLogin');

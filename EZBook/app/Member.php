@@ -8,6 +8,7 @@ class Member extends Model
 {
     protected $table = 'members';
     protected $fillable = [
+        'id_card',
         'name',
         'surname',
         'phone',

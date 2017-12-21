@@ -32,11 +32,13 @@
 							<a href="{{$book->url_file}}" target="_blank">อ่าน</a>
 							<br>
 							<a href="{{$book->url_file}}" target="_blank" download>ดาวน์โหลด</a>
-							@elseif(!$isBought) @if($book->status == 'able') @if($book->price == 0)
-							<a href="#">กดอ่านฟรี</a>
-							@else
-							<a href="#">ซื้อหนังสือ</a>
-							@endif @else ไม่วางขายแล้ว @endif @endif
+							@elseif(!$isBought) 
+                                @if($book->status == 'able') 
+                                    <a href="/user-buy/book/{{$book->id}}">{{$book->price == 0 ? 'กดอ่านฟรี':'ซื้อหนังสือ'}}</a>
+                                @else 
+                                    ไม่วางขาย
+                                @endif 
+                            @endif
 						</div>
 						@if(session()->has('user') && $isBought) 
                             @if(!$isVoted)
@@ -162,7 +164,7 @@
 				ผู้แต่ง:
 				<div style="padding-left:20px">
 					@foreach($book->authors as $author)
-					<a href="/user-books/author/{{$author->id}}" class="d-block">{{$author->name}}</a>
+					    <a href="/user-books/author/{{$author->id}}" class="d-block">{{$author->name}}</a>
 					@endforeach
 				</div>
 				<br>
@@ -171,7 +173,7 @@
 				</p>
 				<p>วันที่ตีพิมพ์: {{$book->date_publish}}</p>
 				<p>สถานะ:
-					<span class="{{$book->status == 'able' ? 'text-success' : 'text-danger'}}">{{$book->status == 'able' ? 'วางขาย' : 'ไม่วางขายแล้ว'}}</span>
+					<span class="{{$book->status == 'able' ? 'text-success' : 'text-danger'}}">{{$book->status == 'able' ? 'วางขาย' : 'ไม่วางขาย'}}</span>
 				</p>
 			</div>
 		</div>

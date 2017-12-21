@@ -24,6 +24,7 @@ class CreateBooksTable extends Migration
             $table->integer('discount_percent')->default(0);
             $table->text('detail')->nullable();
             $table->enum('status', ['able', 'unable']);
+            $table->enum('recommend', ['yes', 'not']);
             $table->string('path_file');
             $table->string('url_file');
             $table->date('date_publish');

@@ -188,7 +188,7 @@
 				</div>
 				<div class="form-check form-check-inline">
 					<label class="form-check-label">
-						<input class="form-check-input" type="radio" name="status" value="unable"> ยังไม่วางขาย
+						<input class="form-check-input" type="radio" name="status" value="unable"> ไม่วางขาย
 					</label>
 				</div>
 				<div class="text-center">

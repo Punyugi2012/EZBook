@@ -242,6 +242,8 @@ class AdminController extends Controller
         $book->price = $request->input('price');
         $book->discount_percent = $request->input('discount');
         $book->detail = $request->input('detail');
+        $book->status = $request->input('status');
+        $book->recommend = 'not';
         $book->date_publish = $request->input('publish');
         $book->book_type_id = $request->input('type');
         $book->publisher_id = $request->input('publisher');
@@ -283,11 +285,13 @@ class AdminController extends Controller
             'status'=>'required',
             'price' => 'required',
             'discount' => 'required',
+            'recommend' => 'required'
         ]);
         $book = Book::find($bookId);
         $book->status = $request->input('status');
         $book->price = $request->input('price');
         $book->detail = $request->input('detail');
+        $book->recommend = $request->input('recommend');
         $book->discount_percent = $request->input('discount');
         $book->save();
         return redirect('/admin-book/'.$bookId);

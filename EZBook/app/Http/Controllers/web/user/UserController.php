@@ -21,11 +21,71 @@ use App\Author;
 
 class UserController extends Controller
 {
+    private function getTopBooks() {
+        $books = Book::get();
+        $maxOne = 0;
+        $bookOne = null;
+        foreach($books as $book) {
+            $num = Purchase::where('book_id', $book->id)->count('id');
+            if($num > $maxOne) {
+                $maxOne = $num;
+                $bookOne = $book;
+            }
+        }
+
+        $maxTwo = 0;
+        $bookTwo = null;
+        foreach($books as $book) {
+            $num = Purchase::where('book_id', $book->id)->count('id');
+            if($num > $maxTwo && $num != $maxOne) {
+                $maxTwo = $num;
+                $bookTwo = $book;
+            }
+        }
+
+        $maxThree = 0;
+        $bookThree = null;
+        foreach($books as $book) {
+            $num = Purchase::where('book_id', $book->id)->count('id');
+            if($num > $maxThree && $num != $maxOne && $num != $maxTwo) {
+                $maxThree = $num;
+                $bookThree = $book;
+            }
+        }
+
+        $maxFour= 0;
+        $bookFour = null;
+        foreach($books as $book) {
+            $num = Purchase::where('book_id', $book->id)->count('id');
+            if($num > $maxFour && $num != $maxOne && $num != $maxTwo && $num != $maxThree) {
+                $maxFour = $num;
+                $bookFour = $book;
+            }
+        }
+
+        $maxFive= 0;
+        $bookFive = null;
+        foreach($books as $book) {
+            $num = Purchase::where('book_id', $book->id)->count('id');
+            if($num > $maxFive && $num != $maxOne && $num != $maxTwo && $num != $maxThree && $num != $maxFour) {
+                $maxFive = $num;
+                $bookFive = $book;
+            }
+        }
+        return [
+                'bookOne'=>$bookOne, 
+                'bookTwo'=>$bookTwo, 
+                'bookThree'=>$bookThree, 
+                'bookFour'=>$bookFour, 
+                'bookFive'=>$bookFive
+            ];
+    }
     public function index() {
         $bookTypes = BookType::get();
         $publishers = $this->getPublisherLimit();
         $books = Book::orderBy('id', 'desc')->paginate(8);
         $infos = $this->getInfosLimit();
+        $topBooks = $this->getTopBooks();
         return view('web.user.home', [
             'isNewBook'=>true,
             'isRecommend'=>false,
@@ -34,7 +94,8 @@ class UserController extends Controller
             'bookTypes'=>$bookTypes,
             'books'=>$books,
             'publishers'=>$publishers,
-            'infos'=>$infos
+            'infos'=>$infos,
+            'topBooks'=>$topBooks
         ]);
     } 
     private function getPublisherLimit() {
@@ -48,14 +109,18 @@ class UserController extends Controller
         $bookTypes = BookType::get();
         $publishers = $this->getPublisherLimit();
         $infos = $this->getInfosLimit();
+        $books = Book::where('recommend', 'yes')->paginate(8);
+        $topBooks = $this->getTopBooks();
         return view('web.user.home', [
             'isNewBook'=>false,
             'isRecommend'=>true,
             'isFree'=>false,
             'isDiscount'=>false,
+            'books'=>$books,
             'bookTypes'=>$bookTypes,
             'publishers'=>$publishers,
-            'infos'=>$infos
+            'infos'=>$infos,
+            'topBooks'=>$topBooks
         ]);
     }
     public function onDiscount() {
@@ -63,6 +128,7 @@ class UserController extends Controller
         $books = Book::where('discount_percent', '>', '0')->where('price', '>', '0')->get();
         $publishers = $this->getPublisherLimit();
         $infos = $this->getInfosLimit();
+        $topBooks = $this->getTopBooks();
         return view('web.user.home', [
             'isNewBook'=>false,
             'isRecommend'=>false,
@@ -71,7 +137,8 @@ class UserController extends Controller
             'books'=>$books,
             'bookTypes'=>$bookTypes,
             'publishers'=>$publishers,
-            'infos'=>$infos
+            'infos'=>$infos,
+            'topBooks'=>$topBooks
         ]);
     }
     public function onFree() {
@@ -79,6 +146,7 @@ class UserController extends Controller
         $books = Book::where('price', 0)->get();
         $publishers = $this->getPublisherLimit();
         $infos = $this->getInfosLimit();
+        $topBooks = $this->getTopBooks();
         return view('web.user.home', [
             'isNewBook'=>false,
             'isRecommend'=>false,
@@ -87,7 +155,8 @@ class UserController extends Controller
             'books'=>$books,
             'bookTypes'=>$bookTypes,
             'publishers'=>$publishers,
-            'infos'=>$infos
+            'infos'=>$infos,
+            'topBooks'=>$topBooks
         ]);
     }
     public function onLogin() {
@@ -118,6 +187,7 @@ class UserController extends Controller
     }
     public function register(Request $request) {
         $validatedData = $request->validate([
+            'id_card'=>'required|min:13|max:13|unique:members',
             'name' => 'required',
             'surname' => 'required',
             'address' => 'required',
@@ -140,6 +210,7 @@ class UserController extends Controller
             'type'=>'user'
         ]);
         Member::create([
+            'id_card'=>$request->input('id_card'),
             'name'=>$request->input('name'),
             'surname'=>$request->input('surname'),
             'phone'=>$request->input('phone'),
@@ -176,6 +247,7 @@ class UserController extends Controller
     }
     public function update(Request $request, $userId) {
         $validatedData = $request->validate([
+            'id_card'=>'required|min:13|max:13',
             'name' => 'required',
             'surname' => 'required',
             'address' => 'required',
@@ -189,6 +261,7 @@ class UserController extends Controller
             $urlImage = $request->file('image')->storeAs('public/file/user-image', $image);
         }
         Member::find($userId)->update([
+            'id_card'=>$request->input('id_card'),
             'name'=>$request->input('name'),
             'surname'=>$request->input('surname'),
             'phone'=>$request->input('phone'),
@@ -242,6 +315,14 @@ class UserController extends Controller
             'books'=>$books
         ]);
     }
+    public function onRecommendBooks() {
+        $bookTypes = BookType::get();
+        $books = Book::where('recommend', 'yes')->paginate(12);
+        return view('web.user.recommendBooks', [
+            'bookTypes'=>$bookTypes,
+            'books'=>$books
+        ]);
+    }
     public function onFreeBooks() {
         $bookTypes = BookType::get();
         $books = Book::where('price', 0)->paginate(12);
@@ -270,6 +351,7 @@ class UserController extends Controller
         $numVoted = Vote::where('book_id', $book->id)->count('id');
         $sum = Vote::where('book_id', $book->id)->sum('score');
         $book->score = $numVoted == 0 ? 0 : $sum / $numVoted;
+        $book->save();
     }
     public function book($bookId) {
         $bookTypes = BookType::get();
@@ -430,5 +512,19 @@ class UserController extends Controller
         return view('web.user.sendPassword', [
             'bookTypes'=>$bookTypes
         ]);
+    }
+    public function buyBook($bookId) {
+        $book = Book::find($bookId);
+        Purchase::create([
+            'date_purchase'=>Carbon::now(),
+            'price'=>$book->price,
+            'member_id'=>session()->get('user')->member->id,
+            'book_id'=>$bookId
+        ]);
+        return redirect('/book/'.$bookId);
+        // $bookTypes = BookType::get();
+        // return view('web.user.sendPassword', [
+        //     'bookTypes'=>$bookTypes
+        // ]);
     }
 }

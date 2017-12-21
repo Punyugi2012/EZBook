@@ -25,12 +25,13 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="text-center">
-                                     @if(session()->get('user')->member->url_image != "/storage/")
+                                    @if(session()->get('user')->member->url_image != "/storage/")
                                         <img src="{{session()->get('user')->member->url_image }}" class="rounded-circle" style="width:150px;height:150px">
                                     @else 
                                         <img src="https://cdn0.iconfinder.com/data/icons/users-android-l-lollipop-icon-pack/24/user-512.png" class="rounded-circle" style="width:150px;height:150px">
                                     @endif
                                 </div>
+                                <p class="card-text">เลขที่บัตรประชาชน: {{session()->get('user')->member->id_card}}</p>
                                 <p class="card-text">ชื่อ: {{session()->get('user')->member->name}}</p>
                                 <p class="card-text">นามสกุล: {{session()->get('user')->member->surname}}</p>
                                 <p class="card-text">เบอร์โทรศัพท์: {{session()->get('user')->member->phone}}</p>
@@ -47,6 +48,16 @@
                                 <form action="/user-update/{{session()->get('user')->member->id}}" method="POST" enctype="multipart/form-data" >
                                     {{ csrf_field() }}
                                     {{ method_field('PUT') }}
+                                    <div class="form-group text-center" style="margin-top:10px">
+                                        <img id="blah" src="" alt="image" style="width:150px;height:150px" class="rounded-circle"/>
+                                        <br>
+                                        <label for="image">รูป:</label>
+                                        <input type="file" class="form-control" name="image" id="image">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="id_card">ชื่อ:</label>
+                                        <input type="text" class="form-control" name="id_card" value="{{session()->get('user')->member->id_card}}" id="id_card" placeholder="เลขที่บัตรประชาชน" required>
+                                    </div>
                                     <div class="form-group">
                                         <label for="name">ชื่อ:</label>
                                         <input type="text" class="form-control" name="name" value="{{session()->get('user')->member->name}}" id="name" placeholder="ชื่อ" required>
@@ -82,13 +93,7 @@
                                         <label for="birthday">วันเกิด:</label>
                                         <input type="date" name="birthday" id="birthday" value="{{session()->get('user')->member->birthday}}" class="form-control" required>
                                     </div>
-                                    <div class="form-group" style="margin-top:10px">
-                                        <img id="blah" src="#" alt="image" style="max-width:200px;max-height:200px" />
-                                        <br>
-                                        <label for="image">รูป:</label>
-                                        <input type="file" class="form-control" name="image" id="image">
-                                    </div>
-                                    <div class="text-center">
+                                    <div class="text-center" style="margin-top:50px">
                                         <button type="submit" class="btn btn-success">ยืนยัน</button>
                                         <button type="reset" class="btn btn-warning">ล้าง</button>
                                     </div>
