@@ -11,8 +11,9 @@ class Account extends Model
         "account_number",
         "expired_date",
         "cvv",
+        "member_id"
     ];
     public function member() {
-        return $this->hasOne('App\Member');
+        return $this->belongsTo('App\Member', 'member_id', 'id');
     }
 }

@@ -18,6 +18,7 @@ use App\Comment;
 use App\Vote;
 use App\Info;
 use App\Author;
+use App\Account;
 
 class UserController extends Controller
 {
@@ -533,5 +534,34 @@ class UserController extends Controller
         // return view('web.user.sendPassword', [
         //     'bookTypes'=>$bookTypes
         // ]);
+    }
+    public function bind(Request $request) {
+        $validatedData = $request->validate([
+            'account_number'=>'required|min:10|max:12|unique:accounts',
+            'expired_date'=>'required',
+            'cvv'=>'required|min:3|max:4'
+        ]);
+        Account::create([
+            'account_number'=>$request->input('account_number'),
+            'expired_date'=>$request->input('expired_date'),
+            'cvv'=>$request->input('cvv'),
+            'member_id'=>session()->get('user')->member->id
+        ]);
+        session()->get('user')->member->account = Account::latest('id')->first();
+        return redirect('/user-profile');
+    }
+    public function editBind(Request $request, $bindId) {
+        $validatedData = $request->validate([
+            'edit_account_number'=>'required|min:10|max:12',
+            'edit_expired_date'=>'required',
+            'edit_cvv'=>'required|min:3|max:4'
+        ]);
+        Account::find($bindId)->update([
+            'account_number'=>$request->input('edit_account_number'),
+            'expired_date'=>$request->input('edit_expired_date'),
+            'cvv'=>$request->input('edit_cvv'),
+        ]);
+        session()->get('user')->member->account = Account::find($bindId);
+        return redirect('/user-profile');
     }
 }

@@ -143,12 +143,16 @@
                         <div class="card">
                             <div class="card-body">
                                 <h1 class="text-center">การผูกบัตรเครดิต</h1>
-                                <div class="alert alert-warning text-center">
-                                    คุณยังไม่ได้ผูกบัตรเครดิตกับระบบ กด<button data-toggle="modal" data-target="#bind">ผูกบัตรเครดิต</button>เพื่อผูกบัครเครดิตกับระบบ
-                                </div>
-                                <p>เลขที่บัญชี:</p>
-                                <p>วันหมดอายุ:</p>
-                                <p>CVV:</p>
+                                @if(session()->get('user')->member->account)
+                                    <p>เลขที่บัญชี: {{session()->get('user')->member->account->account_number}}</p>
+                                    <p>วันหมดอายุ: {{session()->get('user')->member->account->expired_date}}</p>
+                                    <p>CVV: {{session()->get('user')->member->account->cvv}}</p>
+                                    <p>ผูกเมื่อวันที่ {{session()->get('user')->member->account->created_at}}</p>
+                                @else
+                                    <div class="alert alert-warning text-center">
+                                        คุณยังไม่ได้ผูกบัตรเครดิตกับระบบ กด<button data-toggle="modal" data-target="#bind">ผูกบัตรเครดิต</button>เพื่อผูกบัครเครดิตกับระบบ
+                                    </div>
+                                @endif
                             </div>
                         </div>
                         <div class="modal fade" id="bind" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -160,7 +164,8 @@
                                     <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <form>
+                                <form action="/user-bind" method="post">
+                                    {{ csrf_field() }}
                                     <div class="modal-body">
                                         <div class="text-center">
                                         <img src="https://dharmamerchantservices.com/wp-content/uploads/2017/06/visa.jpg" alt="visa" style="width:100px;height:50px">
@@ -181,7 +186,7 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-primary">บันทึก</button>
+                                        <button type="submit" class="btn btn-primary">บันทึก</button>
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
                                     </div>
                                 </form>
@@ -202,31 +207,31 @@
                                                 <img src="http://www.global.jcb/en/common/images/svg/jcb_emblem_logo.svg" alt="jcb" style="width:50px;height:50px">
                                             </div>
                                         </h1>
-                                        <form>
+                                        <form action="/user-edit-bind/{{session()->get('user')->member->account->id}}" method="POST" autocomplete="off">
+                                            {{ csrf_field() }}
+                                            {{method_field('PUT')}}
                                             <div class="form-group">
-                                                <label for="account_number">เลขบัตร:</label>
-                                                <input type="text" name="account_number" id="account_number" class="form-control" placeholder="เลขที่บัตร" required>
+                                                <label for="edit_account_number">เลขบัตร:</label>
+                                                <input type="text" name="edit_account_number" id="edit_account_number" class="form-control" value="{{session()->get('user')->member->account ? session()->get('user')->member->account->account_number : ''}}" placeholder="เลขที่บัญชี" required>
                                             </div>
                                             <div class="form-group">
-                                                <label for="expired_date">วันหมดอายุ:</label>
-                                                <input type="month" name="expired_date" id="expired_date" class="form-control" required>
+                                                <label for="edit_expired_date">วันหมดอายุ:</label>
+                                                <input type="month" name="edit_expired_date" id="edit_expired_date" class="form-control" value="{{session()->get('user')->member->account ? session()->get('user')->member->account->expired_date : ''}}" placeholder="วันหมดอายุ" required>
                                             </div>
                                             <div class="form-group">
-                                                <label for="cvv">CVV:</label>
-                                                <input type="text" name="cvv" id="cvv" class="form-control" placeholder="CVV" required>
+                                                <label for="edit_cvv">CVV:</label>
+                                                <input type="text" name="edit_cvv" id="edit_cvv" class="form-control" value="{{session()->get('user')->member->account ? session()->get('user')->member->account->cvv : ''}}" placeholder="CVV"  required>
                                             </div>
                                             <div class="text-center">
                                                 <button type="submit" class="btn btn-primary">บันทึก</button>
-                                                <button type="resert" class="btn btn-warning">ล้าง</button>
+                                                <button type="reset" class="btn btn-warning">ล้าง</button>
                                             </div>
                                         </form>
                                     </div>
                                     <div class="col-md-4">
-
+                                        <p><span style="color:red">*</span>กรุณาตรวจสอบข้อมูลก่อนกดบันทึก</p>
                                     </div>
-
                                 </div>
-                              
                             </div>
                         </div>
                     </div>

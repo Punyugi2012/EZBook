@@ -20,7 +20,6 @@ class Member extends Model
         'image',
         'url_image',
         'user_id',
-        'account_id'
     ];
     public function user() {
         return $this->belongsTo('App\User', 'user_id', 'id');
@@ -35,6 +34,6 @@ class Member extends Model
         return $this->hasMany('App\Vote');
     }
     public function account() {
-        return $this->belongsTo('App\Account', 'account_id', 'id');
+        return $this->hasOne('App\Account');
     }
 }
