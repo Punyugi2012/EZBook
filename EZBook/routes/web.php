@@ -45,6 +45,7 @@ Route::post('/admin-create-news', 'web\admin\AdminController@createNews')->middl
 Route::get('/admin-edit-news/{newsId}', 'web\admin\AdminController@onEditNews')->middleware('admin-isLogin');
 Route::put('/admin-edit-news/{newsId}', 'web\admin\AdminController@editNews')->middleware('admin-isLogin');
 Route::delete('/admin-delete-news', 'web\admin\AdminController@deleteNews')->middleware('admin-isLogin');
+Route::delete('/admin-delete-comment/book/{bookId}', 'web\admin\AdminController@deleteComment')->middleware('admin-isLogin');
 
 
 Route::get('/publisher-login', 'web\publisher\PublisherController@onLogin');

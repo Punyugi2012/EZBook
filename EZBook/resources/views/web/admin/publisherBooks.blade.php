@@ -1,16 +1,11 @@
 @extends('web.templates.app') @section('title', 'books') @section('header')
-<nav class="navbar navbar-light bg-light justify-content-between">
-	<span>
-		<a href="/admin-dashboard" class="navbar-brand">EZBooks Admin</a>
-	</span>
-	<span>
-		<a href="/admin-logout" class="btn btn-primary">Logout</a>
-	</span>
-</nav>
+	@include('web.components.headerSecond')
 @endsection @section('content')
 <div class="card" style="margin-top:20px;margin-bottom:60px;">
 	<div class="card-header">
-		สำนักพิมพ์: <a href="javascript:void(0)">{{$publisher->name}}</a>, ประเภท <a href="javascript:void(0)">{{$type}}</a>, ทั้งหมด: <a href="javascript:void(0)">{{count($books)}}</a> เล่ม
+		<span style="font-size:20px">
+			สำนักพิมพ์: <a href="javascript:void(0)">{{$publisher->name}}</a>, ประเภท <a href="javascript:void(0)">{{$type}}</a>, ทั้งหมด: <a href="javascript:void(0)">{{count($books)}}</a> เล่ม
+		</span>
 		<div class="dropdown float-right">
 			<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
 			 aria-expanded="false">
@@ -33,8 +28,8 @@
 					/>
 				</a>
 				<p style="margin-top:10px">ชื่อหนังสือ: {{$book->name}}</p>
+				<p>คะแนน: {{$book->score}}</p>
 				<p>ราคา: {{$book->price == 0 ? 'ฟรี' : $book->price.' บาท'}}</p>
-				<p>%ส่วนลด: {{$book->discount_percent}} %</p>
 				<p>ราคาสุทธิ: {{$book->price - ($book->price * ($book->discount_percent / 100))}} บาท</p>
 				<p>สถานะ:
 					<span class="{{$book->status == 'able' ? 'text-success' : 'text-danger'}}">{{$book->status == 'able' ? 'วางขายอยู่' : 'ยังไม่วางขาย'}}</span>

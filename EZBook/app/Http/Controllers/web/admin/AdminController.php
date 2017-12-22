@@ -14,6 +14,7 @@ use App\Author;
 use App\Info;
 use App\Member;
 use Carbon\Carbon;
+use App\Comment;
 
 class AdminController extends Controller
 {
@@ -170,6 +171,7 @@ class AdminController extends Controller
            'status' => 'able',
            'user_id' => User::latest('id')->first()->id
        ]);
+       session()->flash('createdPub', 'เพิ่มสำนักพิมพ์สำเร็จ');
        return redirect('/admin-publishers');
     }
     public function onEditPublisher($publisherId) {
@@ -187,6 +189,7 @@ class AdminController extends Controller
         Member::find($memberId)->update([
                 'status'=>$request->input('status_member')
         ]);
+        session()->flash('updatedMember', 'แก้ไขสถานะสมาชิกสำเร็จ');
         return redirect('/admin-members');
     }
     public function updatePublisher(Request $request, $publisherId) {
@@ -202,6 +205,7 @@ class AdminController extends Controller
             'phone' => $request->input('phone'),
             'status' => $request->input('status')
         ]);
+        session()->flash('updatedPub', 'แก้ไขสำนักพิมพ์สำเร็จ');
         return redirect('admin-publishers');
     }
     public function createAuthor(Request $request) {
@@ -215,6 +219,7 @@ class AdminController extends Controller
             'email'=>$request->input('email'), 
             'phone'=>$request->input('phone')
         ]);
+        session()->flash('createdAuthor', 'เพิ่มผู้แต่งสำเร็จ');
         return redirect('/admin-authors');
     }
     public function onEditAuthor($authorId) {
@@ -232,6 +237,7 @@ class AdminController extends Controller
             'email' => $request->input('email'),
             'phone' => $request->input('phone')
         ]);
+        session()->flash('updatedAuthor', 'แก้ไขผู้แต่งสำเร็จ');
         return redirect('/admin-authors');
     }
     public function uploadBook(Request $request){
@@ -288,6 +294,7 @@ class AdminController extends Controller
         foreach($request->input('authors') as $author) {
             $bookLatest->authors()->attach($author);
         }
+        session()->flash('createdBook', 'เพิ่มหนังสือสำเร็จ');
         return redirect('/admin-books');
     }
     public function onBook($bookId) {
@@ -308,6 +315,7 @@ class AdminController extends Controller
         $book->recommend = $request->input('recommend');
         $book->discount_percent = $request->input('discount');
         $book->save();
+        session()->flash('updatedBook', 'แก้ไขหนังสือสำเร็จ');
         return redirect('/admin-book/'.$bookId);
     }
     public function onPublisherBooks($publisherId, $type='all') {
@@ -469,6 +477,7 @@ class AdminController extends Controller
             'title'=>$request->input('title'),
             'description'=>$request->input('description')
         ]);
+        session()->flash('createdNews', 'เพิ่มข่าวสารเรียบร้อยแล้ว');
         return redirect('/admin-news');
     }
     public function onEditNews($newsId) {
@@ -492,5 +501,13 @@ class AdminController extends Controller
         ]);
         Info::find($request->input('newsId'))->delete();
         return redirect('/admin-news');
+    }
+    public function deleteComment(Request $request, $bookId) {
+        $validatedData = $request->validate([
+            'commentId'=>'required'
+        ]);
+        Comment::find($request->input('commentId'))->delete();
+        session()->flash('deletedComment', 'ลบความคิดเห็นสำเร็จ');
+        return redirect('/admin-book/'.$bookId);
     }
 }

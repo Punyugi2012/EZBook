@@ -50,7 +50,16 @@
 			</form>
 		</div>
 		<div class="card-body">
-			<a href="/admin-regis-publisher" class="btn btn-info"><h5>เพิ่มสำนักพิมพ์</h5></a>
+			@if(session()->has('createdPub'))
+				<div class="alert alert-success text-center">
+					{{session()->get('createdPub')}}
+				</div>
+			@elseif(session()->has('updatedPub'))
+				<div class="alert alert-success text-center">
+						{{session()->get('updatedPub')}}
+				</div>
+			@endif
+			<a href="/admin-regis-publisher" class="btn btn-info"><h5>เพิ่มสำนักพิมพ์/นักเขียน</h5></a>
 			<table class="table table-striped" style="margin-top:10px">
 				<thead>
 					<tr>
@@ -98,99 +107,117 @@
 	@elseif($isUploadBooks)
 	<div class="card">
 		<div class="card-header">
-			เพิ่มหนังสือ
+			<span style="font-size:20px">
+				เพิ่มหนังสือ
+			</span>
 		</div>
-		<div class="card-body">
-			<form action="/admin-create-book" enctype="multipart/form-data" method="POST">
-				{{ csrf_field() }}
-				<div class="form-group">
-					<label for="publisher">สำนักพิมพ์:</label>
-					<select class="form-control" id="publisher" name="publisher" required>
-						<option value="">เลือกสำนักพิมพ์</option>
-						@foreach($publishers as $publisher) @if($publisher->status == 'able')
-						<option value="{{$publisher->id}}">{{$publisher->name}}</option>
-						@endif @endforeach
-					</select>
-				</div>
-				<div class="form-group">
-					<label for="type">ประเภทหนังสือ:</label>
-					<select class="form-control" id="type" name="type" required>
-						<option value="">เลือกประเภทหนังสือ</option>
-						@foreach($bookTypes as $type)
-						<option value="{{$type->id}}">{{$type->name}}</option>
+		<div class="card-body">		
+			@if ($errors->any())
+				<div class="alert alert-danger">
+					<ul>
+						@foreach ($errors->all() as $error)
+							<li>{{ $error }}</li>
 						@endforeach
-					</select>
+					</ul>
 				</div>
-				<div class="form-group">
-					<label for="name">ชื่อหนังสือ:</label>
-					<input type="text" class="form-control" name="name" id="name" placeholder="ชื่อหนังสือ" required>
+			@endif
+			<div class="row">
+				<div class="col-md-7" style="border-right:1px solid grey">
+					<form action="/admin-create-book" enctype="multipart/form-data" method="POST">
+						{{ csrf_field() }}
+						<div class="form-group">
+							<label for="publisher">สำนักพิมพ์:</label>
+							<select class="form-control" id="publisher" name="publisher" required>
+								<option value="">เลือกสำนักพิมพ์</option>
+								@foreach($publishers as $publisher) @if($publisher->status == 'able')
+								<option value="{{$publisher->id}}">{{$publisher->name}}</option>
+								@endif @endforeach
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="type">ประเภทหนังสือ:</label>
+							<select class="form-control" id="type" name="type" required>
+								<option value="">เลือกประเภทหนังสือ</option>
+								@foreach($bookTypes as $type)
+								<option value="{{$type->id}}">{{$type->name}}</option>
+								@endforeach
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="name">ชื่อหนังสือ:</label>
+							<input type="text" class="form-control" name="name" id="name" placeholder="ชื่อหนังสือ" required>
+						</div>
+						<div class="form-group">
+							<label for="detail">รายละเอียด:</label>
+							<textarea class="form-control" id="detail" name="detail" rows="3" placeholder="รายละเอียด"></textarea>
+						</div>
+						เลือกผู้แต่ง:
+						<div style="overflow:auto;height:100px;padding:10px;border:1px solid #ced4da" class="rounded">
+							@foreach($authors as $author)
+							<div class="form-check">
+								<label class="form-check-label">
+									<input type="checkbox" name="authors[]" class="form-check-input" value="{{$author->id}}"> {{$author->name}}
+								</label>
+							</div>
+							@endforeach
+						</div>
+						<br>
+						<div class="form-group">
+							<label for="detail">ราคา:</label>
+							<input type="number" class="form-control" name="price" id="price" value="0" placeholder="ราคา" required>
+						</div>
+						<div class="form-group">
+							<label for="discount">% ส่วนลด:</label>
+							<input type="number" class="form-control" name="discount" id="discount" value="0" placeholder="%ส่วนลด" required>
+						</div>
+						<div class="form-group">
+							<label for="file_size">ขนาดไฟล์:</label>
+							<input type="text" class="form-control" name="file_size" id="file_size" placeholder="ขนาดไฟล์" required>
+						</div>
+						<div class="form-group">
+							<label for="num_page">จำนวนหน้า:</label>
+							<input type="number" class="form-control" name="num_page" id="num_page" placeholder="จำนวนหน้า" required>
+						</div>
+						<div class="form-group">
+							<label for="publish">วันที่ตีพิมพ์:</label>
+							<input type="date" class="form-control" name="publish" id="publish" required>
+						</div>
+						<div class="form-group">
+							<img id="blah" src="#" alt="your cover image" style="max-width:200px;max-height:200px" />
+							<br>
+							<label for="cover_image">รูปปก:</label>
+							<input type="file" class="form-control" name="cover_image" id="cover_image" required>
+						</div>
+						<div class="form-group">
+							your images
+							<div class="gallery"></div>
+							<label for="images">รูป:</label>
+							<input type="file" class="form-control" multiple name="images[]" id="images">
+						</div>
+						<div class="form-group">
+							<label for="file">file:</label>
+							<input type="file" class="form-control" id="file" name="file" accept=".pdf" required>
+						</div>
+						<div class="form-check form-check-inline">
+							<label class="form-check-label">
+								<input class="form-check-input" type="radio" name="status" value="able" checked> <span class="text-success">วางขาย</span>
+							</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<label class="form-check-label">
+								<input class="form-check-input" type="radio" name="status" value="unable"> <span class="text-danger">ไม่วางขาย</span>
+							</label>
+						</div>
+						<div class="text-center">
+							<button type="submit" class="btn btn-success">เพิ่ม</button>
+							<button type="reset" class="btn btn-warning">ล้าง</button>
+						</div>
+					</form>
 				</div>
-				<div class="form-group">
-					<label for="detail">รายละเอียด:</label>
-					<textarea class="form-control" id="detail" name="detail" rows="3" placeholder="รายละเอียด"></textarea>
+				<div class="col-md-5">
+					<p><span style="color:red">*</span>กรุณากรอกข้อมูลให้ครบถ้วน</p>
 				</div>
-				เลือกผู้แต่ง:
-				<div style="overflow:auto;height:100px;padding:10px;border:1px solid #ced4da" class="rounded">
-					@foreach($authors as $author)
-					<div class="form-check">
-						<label class="form-check-label">
-							<input type="checkbox" name="authors[]" class="form-check-input" value="{{$author->id}}"> {{$author->name}}
-						</label>
-					</div>
-					@endforeach
-				</div>
-				<br>
-				<div class="form-group">
-					<label for="detail">ราคา:</label>
-					<input type="number" class="form-control" name="price" id="price" value="0" placeholder="ราคา" required>
-				</div>
-				<div class="form-group">
-					<label for="discount">% ส่วนลด:</label>
-					<input type="number" class="form-control" name="discount" id="discount" value="0" placeholder="%ส่วนลด" required>
-				</div>
-				<div class="form-group">
-					<label for="file_size">ขนาดไฟล์:</label>
-					<input type="text" class="form-control" name="file_size" id="file_size" placeholder="ขนาดไฟล์" required>
-				</div>
-				<div class="form-group">
-					<label for="num_page">จำนวนหน้า:</label>
-					<input type="number" class="form-control" name="num_page" id="num_page" placeholder="จำนวนหน้า" required>
-				</div>
-				<div class="form-group">
-					<label for="publish">วันที่ตีพิมพ์:</label>
-					<input type="date" class="form-control" name="publish" id="publish" required>
-				</div>
-				<div class="form-group">
-					<img id="blah" src="#" alt="your cover image" style="max-width:200px;max-height:200px" />
-					<br>
-					<label for="cover_image">รูปปก:</label>
-					<input type="file" class="form-control" name="cover_image" id="cover_image" required>
-				</div>
-				<div class="form-group">
-					your images
-					<div class="gallery"></div>
-					<label for="images">รูป:</label>
-					<input type="file" class="form-control" multiple name="images[]" id="images">
-				</div>
-				<div class="form-group">
-					<label for="file">file:</label>
-					<input type="file" class="form-control" id="file" name="file" accept=".pdf" required>
-				</div>
-				<div class="form-check form-check-inline">
-					<label class="form-check-label">
-						<input class="form-check-input" type="radio" name="status" value="able" checked> วางขาย
-					</label>
-				</div>
-				<div class="form-check form-check-inline">
-					<label class="form-check-label">
-						<input class="form-check-input" type="radio" name="status" value="unable"> ไม่วางขาย
-					</label>
-				</div>
-				<div class="text-center">
-					<button type="submit" class="btn btn-success">เพิ่ม</button>
-					<button type="reset" class="btn btn-warning">clear</button>
-				</div>
-			</form>
+			</div>
 		</div>
 	</div>
 	@elseif($isMembers)
@@ -198,12 +225,12 @@
 		<div class="card-header">
 			<span style="font-size:20px">
 			@if($isSearch)
-				คุณได้ค้นหา {{$search}}, พบ {{$members->total()}}
+				คุณได้ค้นหา <a href="javascript:void(0)">{{$search}}</a>, พบ <a href="javascript:void(0)">{{$members->total()}}</a>
 			@else
 				<span>สมาชิก</span>, ทั้งหมด <a href="javascript:void(0)">{{$members->total()}}</a>
 			@endif
 			</span>
-			<form action="/admin-search/members" method="GET" class="float-right" style="width: 50%">
+			<form action="/admin-search/members" method="GET" class="float-right" style="width: 50%" autocomplete="off">
 				{{ csrf_field() }}
 				<div class="input-group">
 					<span class="input-group-btn">
@@ -214,63 +241,68 @@
 			</form>
 		</div>
 		<div class="card-body">
-			<div class="card-body">
-				<table class="table table-striped" style="margin-top:10px">
-					<thead>
+			@if(session()->has('updatedMember'))
+				<div class="alert alert-success text-center">
+					{{session()->get('updatedMember')}}
+				</div>
+			@endif
+			<table class="table table-striped" style="margin-top:10px">
+				<thead>
+					<tr>
+						<th>ชื่อ</th>
+						<th>นามสกุล</th>
+						<th>เบอร์โทรศัพท์</th>
+						<th>อีเมลล์</th>
+						<th>ที่อยู่</th>
+						<th>อายุ</th>
+						<th>วันเกิด</th>
+						<th>สถานะ</th>
+						<th>รูปประจำตัว</th>
+						<th>created_at</th>
+						<th>updated_at</th>
+						<th>เครื่องมือ</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach($members as $member)
 						<tr>
-							<th>ชื่อ</th>
-							<th>นามสกุล</th>
-							<th>เบอร์โทรศัพท์</th>
-							<th>อีเมลล์</th>
-							<th>ที่อยู่</th>
-							<th>อายุ</th>
-							<th>วันเกิด</th>
-							<th>สถานะ</th>
-							<th>รูปประจำตัว</th>
-							<th>created_at</th>
-							<th>updated_at</th>
-							<th>เครื่องมือ</th>
+							<td>{{$member->name}}</td>
+							<td>{{$member->surname}}</td>
+							<td>{{$member->phone}}</td>
+							<td>{{$member->email}}</td>
+							<td>{{$member->address}}</td>
+							<td>{{$member->age}}</td>
+							<td>{{$member->birthday}}</td>
+							<td>{{$member->status == 'able' ? 'ใช้งาน' : 'ไม่ใช้งาน'}}</td>
+							<td>
+								@if($member->url_image != "/storage/")
+									<img src="{{$member->url_image}}" class="rounded-circle" style="width:50px;height:50px">
+								@else 
+									<img src="https://cdn0.iconfinder.com/data/icons/users-android-l-lollipop-icon-pack/24/user-512.png" class="rounded-circle" style="width:50px;height:50px">
+								@endif
+							</td>
+							<td>{{$member->created_at}}</td>
+							<td>{{$member->updated_at}}</td>
+							<td>
+								<a href="/admin-edit-member/{{$member->id}}" class="btn btn-warning" >แก้ไขสถานะ</button>
+							</td>
 						</tr>
-					</thead>
-					<tbody>
-						@foreach($members as $member)
-							<tr>
-								<td>{{$member->name}}</td>
-								<td>{{$member->surname}}</td>
-								<td>{{$member->phone}}</td>
-								<td>{{$member->email}}</td>
-								<td>{{$member->address}}</td>
-								<td>{{$member->age}}</td>
-								<td>{{$member->birthday}}</td>
-								<td>{{$member->status == 'able' ? 'ใช้งาน' : 'ไม่ใช้งาน'}}</td>
-								<td>
-									@if($member->url_image != "/storage/")
-                                        <img src="{{$member->url_image}}" class="rounded-circle" style="width:50px;height:50px">
-                                    @else 
-                                        <img src="https://cdn0.iconfinder.com/data/icons/users-android-l-lollipop-icon-pack/24/user-512.png" class="rounded-circle" style="width:50px;height:50px">
-                                    @endif
-								</td>
-								<td>{{$member->created_at}}</td>
-								<td>{{$member->updated_at}}</td>
-								<td>
-									<a href="/admin-edit-member/{{$member->id}}" class="btn btn-warning" >แก้ไขสถานะ</button>
-								</td>
-							</tr>
-						@endforeach
-					</tbody>
-				</table>
-				{{$members->links()}}
-			</div>
+					@endforeach
+				</tbody>
+			</table>
+			{{$members->links()}}
 		</div>
 	</div>
 	@elseif($isBooks)
 	<div class="card">
 		<div class="card-header">
+			<span style="font-size:20px">
 			@if($isSearch)
-				คุณได้ค้นหา {{$search}}, พบ {{$numOfBook}}
+				คุณได้ค้นหา <a href="javascript:void(0)">{{$search}}</a>, พบ <a href="javascript:void(0)">{{$numOfBook}}</a>
 			@else
 				ทั้งหมด <a href="javascript:void(0)">{{$numOfBook}}</a> เล่ม
 			@endif
+			</span>
 			<form action="/admin-search/books" method="GET" class="float-right" style="width: 50%" autocomplete="off">
 				{{ csrf_field() }}
 				<div class="input-group">
@@ -282,6 +314,11 @@
 			</form>
 		</div>
 		<div class="card-body">
+			@if(session()->has('createdBook'))
+				<div class="alert alert-success text-center">
+					{{session()->get('createdBook')}}
+				</div>
+			@endif
 			<div id="accordion" role="tablist">
 				@foreach($bookTypes as $type)
 				<div class="card">
@@ -319,12 +356,14 @@
 	@elseif($isAuthors)
 	<div class="card">
 		<div class="card-header">
+			<span style="font-size:20px">
 			@if($isSearch)
-			คุณได้ค้นหา {{$search}}, พบ {{$authors->total()}}
+			คุณได้ค้นหา <a href="javascript:void(0)">{{$search}}</a>, พบ <a href="javascript:void(0)">{{$authors->total()}}</a>
 			@else
 			<span>ผู้แต่ง</span>,
 			ทั้งหมด <a href="javascript:void(0)">{{$authors->total()}}</a>
 			@endif
+			</span>
 			<form action="/admin-search/authors" method="GET" class="float-right" style="width: 50%" autocomplete="off">
 				{{ csrf_field() }}
 				<div class="input-group">
@@ -336,7 +375,16 @@
 			</form>
 		</div>
 		<div class="card-body">
-			<a href="/admin-regis-author" class="btn btn-info">เพิ่มผู้แต่ง</a>
+			@if(session()->has('createdAuthor'))
+				<div class="alert alert-success text-center">
+					{{session()->get('createdAuthor')}}
+				</div>
+			@elseif(session()->has('updatedAuthor'))
+				<div class="alert alert-success text-center">
+					{{session()->get('updatedAuthor')}}
+				</div>
+			@endif
+			<a href="/admin-regis-author" class="btn btn-info"><h5>เพิ่มผู้แต่ง</h5></a>
 			<table class="table table-striped" style="margin-top:10px">
 				<thead>
 					<tr>
@@ -369,10 +417,17 @@
 	@elseif($isNews)
 		<div class="card">
 			<div class="card-header">
-				ข่าวสาร, ทั้งหมด {{$infos->total()}}
+			<span style="font-size:20px">
+				ข่าวสาร, ทั้งหมด <a href="javascript:void(0)">{{$infos->total()}}</a>
+			</span>
 			</div>
 			<div class="card-body">
-				<a href="/admin-create-news" class="btn btn-info">เพิ่มข่าวสาร</a>
+				@if(session()->has('createdNews'))
+					<div class="alert alert-success text-center">
+						{{session()->get('createdNews')}}
+					</div>
+				@endif
+				<a href="/admin-create-news" class="btn btn-info"><h5>เพิ่มข่าวสาร</h5></a>
 				<table class="table table-striped" style="margin-top:10px">
 					<thead>
 						<tr>
@@ -422,7 +477,7 @@
 		</div>
 	@endif
 	@if(session()->has('status'))
-		<div class="alert alert-success text-center"><h2>เข้าสู่ระบบสำเร็จ</h2></div>	
+		<div class="alert alert-success text-center">เข้าสู่ระบบสำเร็จ</div>	
 	@endif
 </div>
 @endsection @section('javascript') @if($isUploadBooks)

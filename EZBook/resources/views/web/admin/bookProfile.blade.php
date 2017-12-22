@@ -1,18 +1,30 @@
 @extends('web.templates.app') @section('title', 'BookProfile') @section('header')
-<nav class="navbar navbar-light bg-light justify-content-between">
-	<span>
-		<a href="/admin-dashboard" class="navbar-brand">EZBooks Admin</a>
-	</span>
-	<span>
-		<a href="/admin-logout" class="btn btn-primary">Logout</a>
-	</span>
-</nav>
+@include('web.components.headerSecond')
 @endsection @section('content')
 <div class="card" style="margin-top:20px;margin-bottom:60px;">
 	<div class="card-header">
-		หนังสือ: {{$book->name}}
+		<span style="font-size:20px">
+			หนังสือ: <a href="javascript:void(0)">{{$book->name}}</a>
+		</span>
 	</div>
 	<div class="card-body">
+		@if ($errors->any())
+			<div class="alert alert-danger">
+				<ul>
+					@foreach ($errors->all() as $error)
+						<li>{{ $error }}</li>
+					@endforeach
+				</ul>
+			</div>
+		@elseif(session()->has('updatedBook'))
+			<div class="alert alert-success text-center">
+				{{session()->get('updatedBook')}}
+			</div>
+		@elseif(session()->has('deletedComment'))
+			<div class="alert alert-success text-center">
+				{{session()->get('deletedComment')}}
+			</div>
+		@endif
 		<div class="row">
 			<div class="col-md-9 text-center">
 				<div class="row">
@@ -32,7 +44,7 @@
 					</div>
 					<div class="col-md-7 text-center">
 						<p>คะแนน: {{$book->score}}</p>
-						<img class="border border-secondary rounded" src="{{$book->url_cover_image}}" alt="cover image" style="width:250px;height:300px"
+						<img class="border border-secondary rounded" src="{{$book->url_cover_image}}" alt="cover image" style="width:300px;height:400px"
 						/>
 					</div>
 				</div>
@@ -89,8 +101,32 @@
                                         @endif
                                         {{$comment->message}}
                                     </span>
-                                    <span class="badge badge-primary badge-pill">{{$comment->created_at}}</span>
+									<span>
+                                    	<span class="badge badge-primary badge-pill">{{$comment->created_at}}</span>
+										<button data-toggle="modal" data-target="#deleteComment" style="color:red"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+									</span>
                                 </li>
+								<div class="modal fade" id="deleteComment" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+								<div class="modal-dialog" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title" id="exampleModalLabel">คุณแน่ใจแล้วใช่ไหมที่จะลบ</h5>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<form action="/admin-delete-comment/book/{{$book->id}}" method="post">
+											{{ csrf_field() }}
+											{{ method_field('DELETE') }}
+											<input type="hidden" name="commentId" value="{{$comment->id}}">
+											<div class="modal-footer">
+												<button type="submit" class="btn btn-primary">ลบ</button>
+												<button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
+											</div>
+										</form>
+										</div>
+									</div>
+								</div>
                             @endforeach
                         </ul>
                     </div>
@@ -140,7 +176,10 @@
 						  <label for="detail">แก้ไขรายละเอียด:</label>
 						<textarea class="form-control" id="detail" name="detail" rows="3">{{$book->detail}}</textarea>
 					</div>
-					<button type="submit" class="btn btn-primary">บันทึก</button>
+					<div class="text-center">
+						<button type="submit" class="btn btn-primary">บันทึก</button>
+						<button type="submit" class="btn btn-warning">ล้าง</button>
+					</div>
 				</form>
 			</div>
 		</div>

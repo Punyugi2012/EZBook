@@ -5,10 +5,19 @@
 @endsection
 @section('content')
     <div class="border" style="padding: 50px; margin-top: 30px">
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <div class="row">
             <div class="col-md-6" style="border-right:1px solid grey">
-                <h1 class="text-center">เพิ่ม สำนักพิมพ์</h1>
-                <form action="/admin-create-publisher" method="POST">
+                <h1 class="text-center">เพิ่มสำนักพิมพ์/นักเขียน</h1>
+                <form action="/admin-create-publisher" method="POST" autocomplete="off">
                     {{ csrf_field() }}
                     <div class="form-group">
                         <label for="name">ชื่อ:</label>
