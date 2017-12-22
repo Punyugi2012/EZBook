@@ -16,6 +16,8 @@
                 <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                     <a class="nav-link {{$hasQuery?'':'active'}}" id="tab-profile" data-toggle="pill" href="#profile" role="tab" aria-selected="true">ข้อมูลส่วนตัว</a>
                     <a class="nav-link" id="tab-edit-profile" data-toggle="pill" href="#edit-profile" role="tab" aria-selected="false">แก้ไขข้อมูลส่วนตัว</a>
+                    <a class="nav-link" id="tab-account" data-toggle="pill" href="#account" role="tab" aria-selected="false">บัญชี</a>
+                    <a class="nav-link" id="tab-edit_account" data-toggle="pill" href="#edit_account" role="tab" aria-selected="false">แก้ไขบัญชี</a>
                     <a class="nav-link {{$hasQuery?'active':''}}" id="tab-history" data-toggle="pill" href="#history" role="tab" aria-selected="false">ประวัติการซื้อ</a>
                 </div>
             </div>
@@ -134,6 +136,97 @@
                                     </tbody>
                                 </table>
                                 {{$purchases->links()}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="account" role="tabpanel">
+                        <div class="card">
+                            <div class="card-body">
+                                <h1 class="text-center">การผูกบัตรเครดิต</h1>
+                                <div class="alert alert-warning text-center">
+                                    คุณยังไม่ได้ผูกบัตรเครดิตกับระบบ กด<button data-toggle="modal" data-target="#bind">ผูกบัตรเครดิต</button>เพื่อผูกบัครเครดิตกับระบบ
+                                </div>
+                                <p>เลขที่บัญชี:</p>
+                                <p>วันหมดอายุ:</p>
+                                <p>CVV:</p>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="bind" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">การผูกบัตรเครดิต</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <form>
+                                    <div class="modal-body">
+                                        <div class="text-center">
+                                        <img src="https://dharmamerchantservices.com/wp-content/uploads/2017/06/visa.jpg" alt="visa" style="width:100px;height:50px">
+                                        <img src="https://xl-id.com/media/1149/mastercard.png" alt="mastercard" style="width:50px;height:50px">
+                                        <img src="http://www.global.jcb/en/common/images/svg/jcb_emblem_logo.svg" alt="jcb" style="width:50px;height:50px">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="account_number">เลขบัตร:</label>
+                                            <input type="text" name="account_number" id="account_number" class="form-control" placeholder="เลขที่บัตร" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="expired_date">วันหมดอายุ:</label>
+                                            <input type="month" name="expired_date" id="expired_date" class="form-control" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="cvv">CVV:</label>
+                                            <input type="text" name="cvv" id="cvv" class="form-control" placeholder="CVV" required>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary">บันทึก</button>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">ยกเลิก</button>
+                                    </div>
+                                </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="edit_account" role="tabpanel">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-8" style="border-right:1px solid grey">
+                                        <h1 class="text-center">
+                                            แก้ไขการผูกบัตรเครดิต
+                                            <div>
+                                                <img src="https://dharmamerchantservices.com/wp-content/uploads/2017/06/visa.jpg" alt="visa" style="width:100px;height:50px">
+                                                <img src="https://xl-id.com/media/1149/mastercard.png" alt="mastercard" style="width:50px;height:50px">
+                                                <img src="http://www.global.jcb/en/common/images/svg/jcb_emblem_logo.svg" alt="jcb" style="width:50px;height:50px">
+                                            </div>
+                                        </h1>
+                                        <form>
+                                            <div class="form-group">
+                                                <label for="account_number">เลขบัตร:</label>
+                                                <input type="text" name="account_number" id="account_number" class="form-control" placeholder="เลขที่บัตร" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="expired_date">วันหมดอายุ:</label>
+                                                <input type="month" name="expired_date" id="expired_date" class="form-control" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="cvv">CVV:</label>
+                                                <input type="text" name="cvv" id="cvv" class="form-control" placeholder="CVV" required>
+                                            </div>
+                                            <div class="text-center">
+                                                <button type="submit" class="btn btn-primary">บันทึก</button>
+                                                <button type="resert" class="btn btn-warning">ล้าง</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="col-md-4">
+
+                                    </div>
+
+                                </div>
+                              
                             </div>
                         </div>
                     </div>

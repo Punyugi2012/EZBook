@@ -32,44 +32,48 @@ class UserController extends Controller
                 $bookOne = $book;
             }
         }
-
         $maxTwo = 0;
         $bookTwo = null;
         foreach($books as $book) {
-            $num = Purchase::where('book_id', $book->id)->count('id');
-            if($num > $maxTwo && $num != $maxOne) {
-                $maxTwo = $num;
-                $bookTwo = $book;
-            }
+            if($book->id != $bookOne->id) {
+                $num = Purchase::where('book_id', $book->id)->count('id');
+                if($num > $maxTwo) {
+                    $maxTwo = $num;
+                    $bookTwo = $book;
+                }
+            }   
         }
-
         $maxThree = 0;
         $bookThree = null;
         foreach($books as $book) {
-            $num = Purchase::where('book_id', $book->id)->count('id');
-            if($num > $maxThree && $num != $maxOne && $num != $maxTwo) {
-                $maxThree = $num;
-                $bookThree = $book;
+            if($book->id != $bookOne->id && $book->id != $bookTwo) {
+                $num = Purchase::where('book_id', $book->id)->count('id');
+                if($num > $maxThree) {
+                    $maxThree = $num;
+                    $bookThree = $book;
+                }
             }
         }
-
         $maxFour= 0;
         $bookFour = null;
         foreach($books as $book) {
-            $num = Purchase::where('book_id', $book->id)->count('id');
-            if($num > $maxFour && $num != $maxOne && $num != $maxTwo && $num != $maxThree) {
-                $maxFour = $num;
-                $bookFour = $book;
+            if($book->id != $bookOne->id && $book->id != $bookTwo && $book->id != $bookThree->id) {
+                $num = Purchase::where('book_id', $book->id)->count('id');
+                if($num > $maxFour) {
+                    $maxFour = $num;
+                    $bookFour = $book;
+                }
             }
         }
-
         $maxFive= 0;
         $bookFive = null;
         foreach($books as $book) {
-            $num = Purchase::where('book_id', $book->id)->count('id');
-            if($num > $maxFive && $num != $maxOne && $num != $maxTwo && $num != $maxThree && $num != $maxFour) {
-                $maxFive = $num;
-                $bookFive = $book;
+            if($book->id != $bookOne->id && $book->id != $bookTwo && $book->id != $bookThree->id && $book->id != $bookFour->id) {
+                $num = Purchase::where('book_id', $book->id)->count('id');
+                if($num > $maxFive) {
+                    $maxFive = $num;
+                    $bookFive = $book;
+                }
             }
         }
         return [
@@ -168,8 +172,11 @@ class UserController extends Controller
             'username' => 'required',
             'password' => 'required',
         ]);
-        $user = User::where('username', $request->input('username'))->where('password', $request->input('password'))->where('type', 'user')->first();
-        if($user) {
+        $user = User::where('username', $request->input('username'))
+        ->where('password', $request->input('password'))
+        ->where('type', 'user')
+        ->first();
+        if($user && $user->member->status == 'able') {
             session()->put('user', $user);
             return redirect('/');
         }
@@ -499,7 +506,7 @@ class UserController extends Controller
         ->where('username', $request->input('username'))
         ->where('type', 'user')
         ->first();
-        if($user) {
+        if($user && $user->member->status == 'able') {
             Mail::to($email)->send(new SendPassword($user));
             return redirect('/send-password-success');
         }
