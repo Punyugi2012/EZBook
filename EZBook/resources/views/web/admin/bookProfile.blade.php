@@ -44,7 +44,7 @@
 					</div>
 					<div class="col-md-7 text-center">
 						<p>คะแนน: {{$book->score}}</p>
-						<img class="border border-secondary rounded" src="{{$book->url_cover_image}}" alt="cover image" style="width:300px;height:400px"
+						<img class="border border-secondary rounded" src="{{$book->url_cover_image}}" alt="cover image" style="width:250px;height:300px"
 						/>
 					</div>
 				</div>
@@ -71,7 +71,7 @@
 				</p>
 				<p>วันที่ตีพิมพ์: {{$book->date_publish}}</p>
 				<p>สถานะ:
-					<span class="{{$book->status == 'able' ? 'text-success' : 'text-danger'}}">{{$book->status == 'able' ? 'วางขาย' : 'ยังไม่วางขาย'}}</span>
+					<span class="{{$book->status == 'able' ? 'text-success' : 'text-danger'}}">{{$book->status == 'able' ? 'วางขาย' : 'ไม่วางขาย'}}</span>
 				</p>
 			</div>
 		</div>

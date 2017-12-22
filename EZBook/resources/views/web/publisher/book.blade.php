@@ -1,18 +1,13 @@
 @extends('web.templates.app') 
 @section('title', 'BookProfile') 
 @section('header')
-<nav class="navbar navbar-light bg-light justify-content-between">
-	<span>
-		<a href="/publisher-dashboard" class="navbar-brand">EZBooks Publisher</a>
-	</span>
-	<span>
-		<a href="/publisher-logout" class="btn btn-primary">Logout</a>
-	</span>
-</nav>
+@include('web.components.headerThird')
 @endsection @section('content')
 <div class="card" style="margin-top:20px;margin-bottom:60px;">
 	<div class="card-header">
-		หนังสือ: {{$book->name}}
+		<span style="font-size:20px">
+		หนังสือ: <a href="javascript:void(0)">{{$book->name}}</a>
+		</span>
 	</div>
 	<div class="card-body">
 		<div class="row">
@@ -50,7 +45,7 @@
 				<p>ราคา: {{$book->price == 0 ? 'ฟรี' : $book->price.' บาท'}}</p>
 				<p>ส่วนลด: {{$book->discount_percent}} %</p>
 				<p>ราคาสุทธิ: {{$book->price - ($book->price * ($book->discount_percent / 100))}} บาท</p>
-				<p>ประเภท: {{$book->type}}</p>
+				<p>ประเภท: {{$book->bookType->name}}</p>
 				<p>ขนาดไฟล์: {{$book->file_size}}</p>
 				<p>จำนวนหน้า: {{$book->num_page}} หน้า</p>
 				<p>จำนวนผู้อ่าน: {{$book->num_read}}</p>
