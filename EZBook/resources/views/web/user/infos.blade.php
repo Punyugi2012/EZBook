@@ -1,14 +1,21 @@
 @extends('web.templates.app')
-@section('title', 'Infos')
+@section('title', 'ข่าวสาร')
 @section('header')
     @include('web.components.header')
 @endsection
 @section('content')
     <div class="card" style="margin-top:100px">
         <div class="card-header">
-            ข่าวสาร ทั้งหมด
+            <span style="font-size:20px">
+                ข่าวสาร ทั้งหมด, <a href="javascript:void(0)">{{$infos->total()}}</a>
+            </span>
         </div>
         <div class="card-body">
+            @if (count($infos) == 0)
+            <div class="alert alert-warning text-center">
+                ไม่พบข่าวสาร
+            </div>
+            @endif
             <div class="row">
              @foreach($infos as $info)
                 <div class="col-md-12 text-center">
@@ -17,8 +24,10 @@
             @endforeach
             </div>
         </div>
-        <div class="card-footer">
+        <div>
             {{$infos->links()}}
         </div>
+    </div>
+    <div style="margin-bottom:300px">
     </div>
 @endsection

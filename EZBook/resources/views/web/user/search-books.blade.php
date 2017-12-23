@@ -1,12 +1,12 @@
 @extends('web.templates.app')
-@section('title', 'SearchBooks')
+@section('title', 'ค้นหาหนังสือ')
 @section('header')
     @include('web.components.header')
 @endseciton
 @section('content')
-    <div class="row">
+    <div class="row" style="margin-top:100px">
         <div class="col-md-6">
-            <div class="card" style="margin-top:100px">
+            <div class="card">
                 <div class="card-body">
                     <form>
                         {{ csrf_field() }}
@@ -31,9 +31,16 @@
     </div>
     <div class="card" style="margin-top:20px">
         <div class="card-header">
-            ได้ค้นหา {{$search}}, พบ {{$found}} เล่ม
+            <span style="font-size:20px">
+                คุณได้ค้นหา <a href="javascript:void(0)">{{$search}}</a>, พบ <a href="javascript:void(0)">{{$books->total()}}</a> เล่ม
+            </span>
         </div>
         <div class="card-body">
+            @if (count($books) == 0)
+            <div class="alert alert-warning text-center">
+                ไม่พบหนังสือ
+            </div>
+            @endif
             <div class="row">
                 @foreach($books as $book)
                     <div class="col-md-3 text-center">
@@ -42,15 +49,21 @@
                         </a>
                         <p>{{$book->name}}</p>
                         @if($book->price == 0)
-                            <p>ราคา: ฟรี</p>
-                        @else 
-                            <p>ราคา <span style="text-decoration: line-through;">{{$book->price}}</span> <sub>ลด {{$book->discount_percent}}%</sub> {{$book->price - ($book->price * $book->discount_percent / 100)}} บาท</p>
+                            <p>ราคา: <span class="badge badge-success">ฟรี</span></p>
+                        @elseif($book->discount_percent == 0) 
+                            <p>ราคา: {{$book->price}}
+                        @else
+                            <p>ราคา:
+                                <span style="text-decoration: line-through;">{{$book->price}}</span> 
+                                <sub>ลด {{$book->discount_percent}}%</sub> <span class="badge badge-primary">{{$book->price - ($book->price * $book->discount_percent / 100)}}</span> บาท
+                            </p>
                         @endif
+                        <p><span class="badge badge-info">จำนวนคนอ่าน: {{$book->num_read}}</span></p>
                     </div>
                 @endforeach
             </div>
         </div>
-        <div class="card-footer">
+        <div>
             {{$books->links()}}
         </div>
     </div>

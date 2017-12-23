@@ -1,6 +1,9 @@
-@extends('web.templates.app') @section('title', 'Dashboard') @section('header')
+@extends('web.templates.app') 
+@section('title', 'Dashboard') 
+@section('header')
 	@include('web.components.headerSecond')
-@endsection @section('content')
+@endsection 
+@section('content')
 <style>
 	.nav li {
 		margin-left: 5px;
@@ -91,8 +94,8 @@
 						</td>
 						<td class="bg-success">{{$publisher->username}}</td>
 						<td class="bg-success">{{$publisher->password}}</td>
-						<td>{{$publisher->created_at}}</td>
-						<td>{{$publisher->updated_at}}</td>
+						<td>{{formatDateThai($publisher->created_at)}}</td>
+						<td>{{formatDateThai($publisher->updated_at)}}</td>
 						<td>
 							<a href="/admin-edit-publisher/{{$publisher->id}}" class="btn btn-warning">แก้ไข</a>
 							<a href="/admin-books/publisher/{{$publisher->id}}" class="btn btn-info">ดูหนังสือ</a>
@@ -288,8 +291,8 @@
 									<img src="https://cdn0.iconfinder.com/data/icons/users-android-l-lollipop-icon-pack/24/user-512.png" class="rounded-circle" style="width:50px;height:50px">
 								@endif
 							</td>
-							<td>{{$member->created_at}}</td>
-							<td>{{$member->updated_at}}</td>
+							<td>{{formatDateThai($member->created_at)}}</td>
+							<td>{{formatDateThai($member->updated_at)}}</td>
 							<td>
 								<a href="/admin-edit-member/{{$member->id}}" class="btn btn-warning" >แก้ไขสถานะ</button>
 							</td>
@@ -409,8 +412,8 @@
 						<td>{{$author->name}}</td>
 						<td>{{$author->email}}</td>
 						<td>{{$author->phone}}</td>
-						<td>{{$author->created_at}}</td>
-						<td>{{$author->updated_at}}</td>
+						<td>{{formatDateThai($author->created_at)}}</td>
+						<td>{{formatDateThai($author->updated_at)}}</td>
 						<td>
 							<a href="/admin-edit-author/{{$author->id}}" class="btn btn-warning">แก้ไข</a>
 							<a href="/admin-books/author/{{$author->id}}" class="btn btn-info">ดูหนังสือ</a>
@@ -486,6 +489,8 @@
 	@if(session()->has('status'))
 		<div class="alert alert-success text-center">เข้าสู่ระบบสำเร็จ</div>	
 	@endif
+</div>
+<div style="margin-bottom:400px">
 </div>
 @endsection @section('javascript') @if($isUploadBooks)
 <script type="text/javascript">

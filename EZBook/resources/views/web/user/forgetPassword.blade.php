@@ -6,19 +6,31 @@
 @section('content')
     <div class="card" style="margin-top:100px">
         <div class="card-body">
-            <h1>ลืมรหัสผ่าน</h1>
-            <form action="/send-email" method="post" autocomplete="off">  
-                {{ csrf_field() }}
-                <div class="form-group">
-                    <label for="username">Username:</label>
-                    <input type="text" name="username" id="username" class="form-control" placeholder="username">
+            <div class="row">
+                <div class="col-md-6" style="border-right:1px solid grey">
+                    <h1 class="text-center">ลืมรหัสผ่าน</h1>
+                    <form action="/send-email" method="post" autocomplete="off">  
+                        {{ csrf_field() }}
+                        <div class="form-group">
+                            <label for="username">Username:</label>
+                            <input type="text" name="username" id="username" class="form-control" placeholder="username">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">อีเมลล์:</label>
+                            <input type="email" name="email" id="email" class="form-control" placeholder="อีเมลล์">
+                        </div>
+                        <div class="text-center">
+                        <button type="submit" class="btn btn-success">ยืนยัน</button>
+                        </div>
+                    </form>
                 </div>
-                <div class="form-group">
-                    <label for="email">อีเมลล์:</label>
-                    <input type="email" name="email" id="email" class="form-control" placeholder="อีเมลล์">
+                <div class="col-md-6">
+                    <p><span style="color:red">*</span>กรุณากรอกข้อมูลให้ครบถ้วน</p>
+                    <p><span style="color:red">*</span>กรุณาตรวจสอบความถูกต้องก่อนกดยืนยัน</p>
                 </div>
-                <button type="submit" class="btn btn-success">ยืนยัน</button>
-            </form>
+            </div>
         </div>
+    </div>
+    <div style="margin-bottom:300px">
     </div>
 @endsection

@@ -1,5 +1,5 @@
 @extends('web.templates.app') 
-@section('title', 'Book') 
+@section('title', 'หนังสือ') 
 @section('header') 
     @include('web.components.header') 
 @endsection
@@ -15,14 +15,14 @@
 						@endif @foreach($book->bookImages as $image)
 						<div>
 							<a href="{{$image->url_image}}" target="_blank">
-								<img src="{{$image->url_image}}" alt="image" style="width:100px;height:100px" />
+								<img class="img-thumbnail" src="{{$image->url_image}}" alt="image" style="width:100px;height:100px"/>
 							</a>
 						</div>
 						<br> @endforeach
 					</div>
 					<div class="col-md-7">
 						<p>คะแนน: {{$book->score}}</p>
-						<img class="border border-secondary rounded" src="{{$book->url_cover_image}}" alt="cover image" style="width:250px;height:300px"
+						<img class="border border-secondary rounded img-thumbnail" src="{{$book->url_cover_image}}" alt="cover image" style="width:250px;height:300px"
 						/>
 						<div style="margin-top:20px;margin-bottom:20px">
 
@@ -224,6 +224,8 @@
 		</div>
 	</div>
 
+</div>
+<div style="margin-bottom:300px">
 </div>
 
 @endsection

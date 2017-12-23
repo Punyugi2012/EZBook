@@ -1,6 +1,6 @@
-<nav class="navbar navbar-light bg-light justify-content-between fixed-top" style="background-color:#C0C0C0!important">
+<nav class="navbar navbar-light bg-light justify-content-between fixed-top" style="background-color:#808080!important">
 	<span>
-		<a class="navbar-brand" href="/"><h2><i class="fa fa-book" aria-hidden="true"></i> EZBooks</h2></a>
+		<a class="navbar-brand" href="/" style="color:white"><h2><i class="fa fa-book" aria-hidden="true"></i> EZBooks</h2></a>
 	</span>
 	<span>
 		<form action="/user-search-book" method="get"style="display:inline" autocomplete="off">

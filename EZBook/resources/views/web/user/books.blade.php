@@ -7,9 +7,16 @@
 <div style="margin-top:100px">
     <div class="card">
         <div class="card-header">
-            หนังสือประเภท: {{$type->name}}
+            <span style="font-size:20px">
+                หนังสือประเภท: <a href="javascript:void(0)">{{$type->name}}</a>, พบ <a href="javascript:void(0)">{{$books->total()}}</a>
+            </span>
         </div>
         <div class="card-body">
+            @if (count($books) == 0)
+            <div class="alert alert-warning text-center">
+                ไม่พบหนังสือประเภท {{$type->name}}
+            </div>
+            @endif
             <div class="row">
                 @foreach($books as $book)
                     <div class="col-md-3 text-center">
@@ -26,9 +33,11 @@
                 @endforeach
             </div>
         </div>
-        <div class="card-footer">
+        <div>
             {{$books->links()}}
         </div>
     </div>
+</div>
+<div style="margin-bottom:300px">
 </div>
 @endsection

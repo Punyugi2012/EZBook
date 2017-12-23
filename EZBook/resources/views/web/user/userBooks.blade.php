@@ -2,11 +2,13 @@
 @section('title', 'UserBooks')
 @section('header')
     @include('web.components.header')
-@endseciton
+@endsection
 @section('content')
 <div class="card" style="margin-top:100px">
     <div class="card-header">
-        หนังสือที่ได้ซื้อ, ทั้งหมด {{$purchases->total()}} เล่ม
+        <span style="font-size:20px">
+        หนังสือที่ได้ซื้อ, ทั้งหมด <a href="javascript:void(0)">{{$purchases->total()}}</a> เล่ม
+        </span>
     </div>
     <div class="card-body">
         <div class="row">
@@ -20,8 +22,10 @@
         @endforeach
         </div>
     </div>
-    <div class="card-footer">
-        {{$purchases->links()}}
     <div>
+        {{$purchases->links()}}
+    </div>
+</div>
+<div style="margin-bottom:300px">
 </div>
 @endsection

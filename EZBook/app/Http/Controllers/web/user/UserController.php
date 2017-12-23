@@ -238,21 +238,17 @@ class UserController extends Controller
     public function search(Request $request) {
         $bookTypes = BookType::get();
         $allPublishers = Publisher::get();
-        $found = 0;
         if($request->input('search-type')) {
             $books = Book::where('name', $request->input('search'))
             ->where('book_type_id', $request->input('search-type'))
             ->paginate(10);
-            $found =  Book::where('name', $request->input('search'))->where('book_type_id', $request->input('search-type'))->count('id');
         }
         else {
             $books = Book::where('name', $request->input('search'))->paginate(10);
-            $found = Book::where('name', $request->input('search'))->count('id');
         }
         return view('web.user.search-books', [
             'bookTypes'=>$bookTypes,
             'books'=>$books,
-            'found'=>$found,
             'search'=>$request->input('search'),
         ]);
     }
@@ -496,7 +492,7 @@ class UserController extends Controller
             ]);
             $book->num_read += 1;
             $book->save();
-            return redirect('user-purchaseSuccess');
+            return redirect('/user-purchaseSuccess/book/'.$bookId);
         }
         else {
             return view('web.user.pleaseBind', [
@@ -504,10 +500,12 @@ class UserController extends Controller
             ]);
         }
     }
-    public function onPurchaseSuccess() {
+    public function onPurchaseSuccess($bookId) {
         $bookTypes = BookType::get();
+        $book = Book::find($bookId);
         return view('web.user.purchaseSuccess', [
-            'bookTypes'=>$bookTypes
+            'bookTypes'=>$bookTypes,
+            'book'=>$book
         ]);
     }
     public function bind(Request $request) {

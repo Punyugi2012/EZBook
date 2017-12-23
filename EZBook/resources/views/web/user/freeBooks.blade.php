@@ -6,9 +6,16 @@
 @section('content')
     <div class="card" style="margin-top:100px">
         <div class="card-header">
-            หนังสือฟรีทั้งหมด
+        <span style="font-size:20px">
+            หนังสือฟรีทั้งหมด, <a href="javascript:void(0)">{{$books->total()}}</a>
+        </span>
         </div>
         <div class="card-body">
+            @if (count($books) == 0)
+            <div class="alert alert-warning text-center">
+                ไม่พบหนังสือฟรี
+            </div>
+            @endif
             <div class="row">
              @foreach($books as $book)
                 <div class="col-md-3 text-center">
@@ -16,11 +23,8 @@
                         <img class="rounded border border-secondary" src="{{$book->url_cover_image}}" alt="cover image" style="width:120px;height:150px">
                     </a>
                     <p>{{$book->name}}</p>
-                    @if($book->price == 0)
-                        <p>ราคา: ฟรี</p>
-                    @else 
-                        <p>ราคา <span style="text-decoration: line-through;">{{$book->price}}</span> <sub>ลด {{$book->discount_percent}}%</sub> {{$book->price - ($book->price * $book->discount_percent / 100)}} บาท</p>
-                    @endif
+                    <p>ราคา: <span class="badge badge-success">ฟรี</span></p>
+                    <p><span class="badge badge-info">จำนวนคนอ่าน: {{$book->num_read}}</span></p>
                 </div>
             @endforeach
             </div>
@@ -28,5 +32,7 @@
         <div>
             {{$books->links()}}
         </div>
+    </div>
+    <div style="margin-bottom:300px">
     </div>
 @endsection

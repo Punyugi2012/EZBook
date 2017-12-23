@@ -1,14 +1,21 @@
 @extends('web.templates.app')
-@section('title', 'NewBooks')
+@section('title', 'หนังสือใหม่')
 @section('header')
     @include('web.components.header')
 @endsection
 @section('content')
     <div class="card" style="margin-top:100px">
         <div class="card-header">
-            หนังสือใหม่ทั้งหมด
+            <span style="font-size:20px">
+            หนังสือใหม่ ทั้งหมด, <a href="javascript:void(0)">{{$books->total()}}</a>
+            </span>
         </div>
         <div class="card-body">
+            @if (count($books) == 0)
+            <div class="alert alert-warning text-center">
+                ไม่พบหนังสือมาใหม่
+            </div>
+            @endif
             <div class="row">
              @foreach($books as $book)
                 <div class="col-md-3 text-center">
@@ -17,10 +24,16 @@
                     </a>
                     <p>{{$book->name}}</p>
                     @if($book->price == 0)
-                        <p>ราคา: ฟรี</p>
-                    @else 
-                        <p>ราคา <span style="text-decoration: line-through;">{{$book->price}}</span> <sub>ลด {{$book->discount_percent}}%</sub> {{$book->price - ($book->price * $book->discount_percent / 100)}} บาท</p>
+                        <p>ราคา: <span class="badge badge-success">ฟรี</span></p>
+                    @elseif($book->discount_percent == 0) 
+                        <p>ราคา: {{$book->price}}
+                    @else
+                        <p>ราคา:
+                            <span style="text-decoration: line-through;">{{$book->price}}</span> 
+                            <sub>ลด {{$book->discount_percent}}%</sub> <span class="badge badge-primary">{{$book->price - ($book->price * $book->discount_percent / 100)}}</span> บาท
+                        </p>
                     @endif
+                    <p><span class="badge badge-info">จำนวนคนอ่าน: {{$book->num_read}}</span></p>
                 </div>
             @endforeach
             </div>
@@ -29,5 +42,6 @@
             {{$books->links()}}
         </div>
     </div>
- 
+    <div style="margin-bottom:300px">
+    </div>
 @endsection
