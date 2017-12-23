@@ -2,7 +2,7 @@
 @section('title', 'Books')
 @section('header')
     @include('web.components.header')
-@endseciton
+@endsection
 @section('content')
 <div style="margin-top:100px">
     <div class="card">

@@ -207,26 +207,32 @@
                                                 <img src="http://www.global.jcb/en/common/images/svg/jcb_emblem_logo.svg" alt="jcb" style="width:50px;height:50px">
                                             </div>
                                         </h1>
-                                        <form action="/user-edit-bind/{{session()->get('user')->member->account->id}}" method="POST" autocomplete="off">
-                                            {{ csrf_field() }}
-                                            {{method_field('PUT')}}
-                                            <div class="form-group">
-                                                <label for="edit_account_number">เลขบัตร:</label>
-                                                <input type="text" name="edit_account_number" id="edit_account_number" class="form-control" value="{{session()->get('user')->member->account ? session()->get('user')->member->account->account_number : ''}}" placeholder="เลขที่บัญชี" required>
+                                        @if (session()->get('user')->member->account)
+                                            <form action="/user-edit-bind/{{session()->get('user')->member->account->id}}" method="POST" autocomplete="off">
+                                                {{ csrf_field() }}
+                                                {{method_field('PUT')}}
+                                                <div class="form-group">
+                                                    <label for="edit_account_number">เลขบัตร:</label>
+                                                    <input type="text" name="edit_account_number" id="edit_account_number" class="form-control" value="{{session()->get('user')->member->account->account_number}}" placeholder="เลขที่บัญชี" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="edit_expired_date">วันหมดอายุ:</label>
+                                                    <input type="month" name="edit_expired_date" id="edit_expired_date" class="form-control" value="{{session()->get('user')->member->account->expired_date}}" placeholder="วันหมดอายุ" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="edit_cvv">CVV:</label>
+                                                    <input type="text" name="edit_cvv" id="edit_cvv" class="form-control" value="{{session()->get('user')->member->account->cvv}}" placeholder="CVV"  required>
+                                                </div>
+                                                <div class="text-center">
+                                                    <button type="submit" class="btn btn-primary">บันทึก</button>
+                                                    <button type="reset" class="btn btn-warning">ล้าง</button>
+                                                </div>
+                                            </form>
+                                        @else
+                                            <div class="alert alert-warning text-center">
+                                                คุณยังไม่ได้ผูกบัตรเครดิตกับระบบ กดที่เมนูบัญชีเพื่อผูกบัตรเครดิตกับระบบ
                                             </div>
-                                            <div class="form-group">
-                                                <label for="edit_expired_date">วันหมดอายุ:</label>
-                                                <input type="month" name="edit_expired_date" id="edit_expired_date" class="form-control" value="{{session()->get('user')->member->account ? session()->get('user')->member->account->expired_date : ''}}" placeholder="วันหมดอายุ" required>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="edit_cvv">CVV:</label>
-                                                <input type="text" name="edit_cvv" id="edit_cvv" class="form-control" value="{{session()->get('user')->member->account ? session()->get('user')->member->account->cvv : ''}}" placeholder="CVV"  required>
-                                            </div>
-                                            <div class="text-center">
-                                                <button type="submit" class="btn btn-primary">บันทึก</button>
-                                                <button type="reset" class="btn btn-warning">ล้าง</button>
-                                            </div>
-                                        </form>
+                                        @endif
                                     </div>
                                     <div class="col-md-4">
                                         <p><span style="color:red">*</span>กรุณาตรวจสอบข้อมูลก่อนกดบันทึก</p>

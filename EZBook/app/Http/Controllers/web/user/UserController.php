@@ -23,67 +23,69 @@ use App\Account;
 class UserController extends Controller
 {
     private function getTopBooks() {
-        $books = Book::get();
-        $maxOne = 0;
-        $bookOne = null;
-        foreach($books as $book) {
-            $num = Purchase::where('book_id', $book->id)->count('id');
-            if($num > $maxOne) {
-                $maxOne = $num;
-                $bookOne = $book;
-            }
-        }
-        $maxTwo = 0;
-        $bookTwo = null;
-        foreach($books as $book) {
-            if($book->id != $bookOne->id) {
+        if(Purchase::count('id')) {
+            $books = Book::get();
+            $maxOne = 0;
+            $bookOne = null;
+            foreach($books as $book) {
                 $num = Purchase::where('book_id', $book->id)->count('id');
-                if($num > $maxTwo) {
-                    $maxTwo = $num;
-                    $bookTwo = $book;
-                }
-            }   
-        }
-        $maxThree = 0;
-        $bookThree = null;
-        foreach($books as $book) {
-            if($book->id != $bookOne->id && $book->id != $bookTwo) {
-                $num = Purchase::where('book_id', $book->id)->count('id');
-                if($num > $maxThree) {
-                    $maxThree = $num;
-                    $bookThree = $book;
+                if($num > $maxOne) {
+                    $maxOne = $num;
+                    $bookOne = $book;
                 }
             }
-        }
-        $maxFour= 0;
-        $bookFour = null;
-        foreach($books as $book) {
-            if($book->id != $bookOne->id && $book->id != $bookTwo && $book->id != $bookThree->id) {
-                $num = Purchase::where('book_id', $book->id)->count('id');
-                if($num > $maxFour) {
-                    $maxFour = $num;
-                    $bookFour = $book;
+            $maxTwo = 0;
+            $bookTwo = null;
+            foreach($books as $book) {
+                if($book->id != $bookOne->id) {
+                    $num = Purchase::where('book_id', $book->id)->count('id');
+                    if($num > $maxTwo) {
+                        $maxTwo = $num;
+                        $bookTwo = $book;
+                    }
+                }   
+            }
+            $maxThree = 0;
+            $bookThree = null;
+            foreach($books as $book) {
+                if($book->id != $bookOne->id && $book->id != $bookTwo) {
+                    $num = Purchase::where('book_id', $book->id)->count('id');
+                    if($num > $maxThree) {
+                        $maxThree = $num;
+                        $bookThree = $book;
+                    }
                 }
             }
-        }
-        $maxFive= 0;
-        $bookFive = null;
-        foreach($books as $book) {
-            if($book->id != $bookOne->id && $book->id != $bookTwo && $book->id != $bookThree->id && $book->id != $bookFour->id) {
-                $num = Purchase::where('book_id', $book->id)->count('id');
-                if($num > $maxFive) {
-                    $maxFive = $num;
-                    $bookFive = $book;
+            $maxFour= 0;
+            $bookFour = null;
+            foreach($books as $book) {
+                if($book->id != $bookOne->id && $book->id != $bookTwo && $book->id != $bookThree->id) {
+                    $num = Purchase::where('book_id', $book->id)->count('id');
+                    if($num > $maxFour) {
+                        $maxFour = $num;
+                        $bookFour = $book;
+                    }
                 }
             }
+            $maxFive= 0;
+            $bookFive = null;
+            foreach($books as $book) {
+                if($book->id != $bookOne->id && $book->id != $bookTwo && $book->id != $bookThree->id && $book->id != $bookFour->id) {
+                    $num = Purchase::where('book_id', $book->id)->count('id');
+                    if($num > $maxFive) {
+                        $maxFive = $num;
+                        $bookFive = $book;
+                    }
+                }
+            }
+            return [
+                    'bookOne'=>$bookOne, 
+                    'bookTwo'=>$bookTwo, 
+                    'bookThree'=>$bookThree, 
+                    'bookFour'=>$bookFour, 
+                    'bookFive'=>$bookFive
+                ];
         }
-        return [
-                'bookOne'=>$bookOne, 
-                'bookTwo'=>$bookTwo, 
-                'bookThree'=>$bookThree, 
-                'bookFour'=>$bookFour, 
-                'bookFive'=>$bookFive
-            ];
     }
     public function index() {
         $bookTypes = BookType::get();
@@ -523,17 +525,47 @@ class UserController extends Controller
     }
     public function buyBook($bookId) {
         $book = Book::find($bookId);
-        Purchase::create([
-            'date_purchase'=>Carbon::now(),
-            'price'=>$book->price,
-            'member_id'=>session()->get('user')->member->id,
-            'book_id'=>$bookId
-        ]);
+        $bookTypes = BookType::get();
+        if($book->price == 0) {
+            Purchase::create([
+                'date_purchase'=>Carbon::now(),
+                'price'=>$book->price,
+                'member_id'=>session()->get('user')->member->id,
+                'book_id'=>$bookId
+            ]);
+        }
+        else {
+            return view('web.user.comfirmPurchase', [
+                'bookTypes'=>$bookTypes,
+                'book'=>$book
+            ]);
+        }
         return redirect('/book/'.$bookId);
-        // $bookTypes = BookType::get();
-        // return view('web.user.sendPassword', [
-        //     'bookTypes'=>$bookTypes
-        // ]);
+    }
+    public function confirmPurchase($bookId) {
+        $book = Book::find($bookId);
+        $bookTypes = BookType::get();
+        if(session()->get('user')->member->account) {
+            $price = $book->price - ($book->price * ($book->discount_percent / 100));
+            Purchase::create([
+                'date_purchase'=>Carbon::now(),
+                'price'=>$price,
+                'member_id'=>session()->get('user')->member->id,
+                'book_id'=>$bookId
+            ]);
+            return redirect('user-purchaseSuccess');
+        }
+        else {
+            return view('web.user.pleaseBind', [
+                'bookTypes'=>$bookTypes
+            ]);
+        }
+    }
+    public function onPurchaseSuccess() {
+        $bookTypes = BookType::get();
+        return view('web.user.purchaseSuccess', [
+            'bookTypes'=>$bookTypes
+        ]);
     }
     public function bind(Request $request) {
         $validatedData = $request->validate([

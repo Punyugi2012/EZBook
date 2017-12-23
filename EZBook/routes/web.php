@@ -91,3 +91,5 @@ Route::get('/send-password-success', 'web\user\UserController@sendSuccess');
 Route::get('/user-buy/book/{bookId}', 'web\user\UserController@buyBook')->middleware('user-isLogin');
 Route::post('/user-bind', 'web\user\UserController@bind')->middleware('user-isLogin');
 Route::put('/user-edit-bind/{bindId}', 'web\user\UserController@editBind')->middleware('user-isLogin');
+Route::get('/user-comfirm-purchase/book/{bookId}', 'web\user\UserController@confirmPurchase')->middleware('user-isLogin');
+Route::get('/user-purchaseSuccess', 'web\user\UserController@onPurchaseSuccess')->middleware('user-isLogin');
