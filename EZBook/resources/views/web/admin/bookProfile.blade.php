@@ -73,6 +73,8 @@
 				<p>สถานะ:
 					<span class="{{$book->status == 'able' ? 'text-success' : 'text-danger'}}">{{$book->status == 'able' ? 'วางขาย' : 'ไม่วางขาย'}}</span>
 				</p>
+				<p>created_at: {{formatDateThai($book->created_at)}}</p>
+				<p>updated:  {{formatDateThai($book->updated_at)}}</p>
 			</div>
 		</div>
 		<div class="row">
@@ -184,5 +186,7 @@
 			</div>
 		</div>
 	</div>
+</div>
+<div style="margin-bottom:400px">
 </div>
 @endsection

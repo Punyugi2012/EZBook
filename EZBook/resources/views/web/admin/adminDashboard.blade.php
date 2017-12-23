@@ -444,6 +444,7 @@
 							<th>หัวข้อ</th>
 							<th>รายละเอียด</th>
 							<th>created_at</th>
+							<th>updated_at</th>
 							<th>เครื่องมือ</th>
 						</tr>
 					</thead>
@@ -452,7 +453,8 @@
 							<tr>
 								<th>{{$info->title}}</th>
 								<th>{{$info->description}}</th>
-								<th>{{$info->created_at}}</th>
+								<th>{{formatDateThai($info->created_at)}}</th>
+								<th>{{formatDateThai($info->updated_at)}}</th>
 								<th>
 									<a href="/admin-edit-news/{{$info->id}}" class="btn btn-warning">แก้ไข</a>
 									<button class="btn btn-danger" data-toggle="modal" data-target="#deleteNews">ลบ</button>
