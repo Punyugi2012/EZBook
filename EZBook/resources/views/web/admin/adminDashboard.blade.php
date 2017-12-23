@@ -89,8 +89,8 @@
 							<span class="text-danger">หมดสัญญา</span>
 							@endif
 						</td>
-						<td>{{$publisher->username}}</td>
-						<td>{{$publisher->password}}</td>
+						<td class="bg-success">{{$publisher->username}}</td>
+						<td class="bg-success">{{$publisher->password}}</td>
 						<td>{{$publisher->created_at}}</td>
 						<td>{{$publisher->updated_at}}</td>
 						<td>
@@ -123,7 +123,7 @@
 			@endif
 			<div class="row">
 				<div class="col-md-7" style="border-right:1px solid grey">
-					<form action="/admin-create-book" enctype="multipart/form-data" method="POST">
+					<form action="/admin-create-book" enctype="multipart/form-data" method="POST" autocomplete="off">
 						{{ csrf_field() }}
 						<div class="form-group">
 							<label for="publisher">สำนักพิมพ์:</label>
@@ -216,6 +216,7 @@
 				</div>
 				<div class="col-md-5">
 					<p><span style="color:red">*</span>กรุณากรอกข้อมูลให้ครบถ้วน</p>
+					<p><span style="color:red">*</span>ตรวจสอบความถูกต้องก่อนกดเพิ่ม</p>
 				</div>
 			</div>
 		</div>
@@ -273,7 +274,13 @@
 							<td>{{$member->address}}</td>
 							<td>{{$member->age}}</td>
 							<td>{{$member->birthday}}</td>
-							<td>{{$member->status == 'able' ? 'ใช้งาน' : 'ไม่ใช้งาน'}}</td>
+							<td>
+								@if ($member->status == 'able')
+									<span class="text-success">ใช้งาน</span>
+								@else
+									<span class="text-danger">ไม่ใช้งาน</span>
+								@endif
+							</td>
 							<td>
 								@if($member->url_image != "/storage/")
 									<img src="{{$member->url_image}}" class="rounded-circle" style="width:50px;height:50px">

@@ -1,4 +1,4 @@
-<nav class="navbar navbar-light bg-light justify-content-between fixed-top">
+<nav class="navbar navbar-light bg-light justify-content-between fixed-top" style="background-color:#C0C0C0!important">
 	<span>
 		<a class="navbar-brand" href="/"><h2><i class="fa fa-book" aria-hidden="true"></i> EZBooks</h2></a>
 	</span>

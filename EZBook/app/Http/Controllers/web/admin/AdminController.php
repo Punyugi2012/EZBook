@@ -29,6 +29,7 @@ class AdminController extends Controller
             session()->flash('status', 'เข้าสู่ระบบสำเร็จ');
             return redirect('/admin-dashboard');
         }
+        session()->flash('status', 'เข้าสู่ระบบไม่สำเร็จ กรุณาตรวจสอบ username, password');
         return redirect('/admin-login');
     }
     public function onDashboard() {
@@ -43,6 +44,7 @@ class AdminController extends Controller
     }
     public function logout() {
         session()->forget('admin');
+        session()->flash('admin-logout', 'ออกจากระบบสำเร็จ');
         return redirect('admin-login');
     }
     public function onPublishers() {

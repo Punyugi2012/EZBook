@@ -2,7 +2,17 @@
 @section('title', 'Login')
     @include('web.components.header')
 @section('content')
-     <div class="border" style="padding: 50px; margin-top: 100px">
+<div class="card" style="margin-top:100px;padding:50px;box-shadow:0px 5px 5px 5px grey">
+    <div class="card-body">
+        @if (session()->has('publisher-login'))
+            <div class="alert alert-danger text-center">
+                {{session()->get('publisher-login')}}
+            </div>
+        @elseif(session()->has('publisher-logout'))
+            <div class="alert alert-success text-center">
+                {{session()->get('publisher-logout')}}
+            </div>
+        @endif
         <div class="row">
             <div class="col-md-6" style="border-right:1px solid grey">
                 <div class="row">
@@ -36,4 +46,5 @@
             </div>
         </div>
     </div>
+</div>
 @endsection

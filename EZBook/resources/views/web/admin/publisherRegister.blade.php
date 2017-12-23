@@ -42,7 +42,8 @@
                 </form>
             </div>
             <div class="col-md-6">
-                <p><span style="color:red">*</span> กรุณากรอกข้อมูลให้ครบถ้วน</p>
+                <p><span style="color:red">*</span>กรุณากรอกข้อมูลให้ครบถ้วน</p>
+                <p><span style="color:red">*</span>ตรวจสอบความถูกต้องก่อนกดเพิ่ม</p>
             </div>
         </div>
     </div>

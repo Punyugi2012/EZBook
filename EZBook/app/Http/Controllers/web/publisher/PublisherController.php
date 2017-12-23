@@ -19,12 +19,15 @@ class PublisherController extends Controller
         $user = User::where('username', $request->input('username'))->where('password', $request->input('password'))->where('type', 'publisher')->first();
         if($user) {
             session()->put('publisher', $user);
+            session()->flash('publisher-login', 'เข้าสู่ระบบสำเร็จ');
             return redirect('/publisher-dashboard');
         }
+        session()->flash('publisher-login', 'เข้าสู่ระบบไม่สำเร็จ กรุณาตรวจสอบ username, password');
         return redirect('/publisher-login');
     }
     public function onLogout() {
         session()->forget('publisher');
+        session()->flash('publisher-logout', 'ออกจากระบบสำเร็จ');
         return redirect('publisher-login');
     }
     public function onDashboard() {
@@ -39,10 +42,8 @@ class PublisherController extends Controller
         $max = 0;
         $topBook = null;
         foreach($books as $book) {
-            $count = 0;
-            $count = Purchase::where('book_id', $book->id)->count('id');
-            if($count > $max) {
-                $max = $count;
+            if($book->num_read > $max) {
+                $max = $book->num_read;
                 $topBook = $book;
             }
         }

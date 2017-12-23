@@ -16,7 +16,7 @@
         @endif
         <div class="row">
             <div class="col-md-6" style="border-right: 1px solid grey">
-                <h1 class="text-center">เพิ่ม ผู้แต่ง</h1>
+                <h1 class="text-center">เพิ่มผู้แต่ง</h1>
                 <form action="/admin-create-author" method="POST" autocomplete="off">
                     {{ csrf_field() }}
                     <div class="form-group">
@@ -39,6 +39,7 @@
             </div>
             <div class="col-md-6">
                 <p><span style="color:red">*</span>กรุณากรอกข้อมูลให้ครบถ้วน</p>
+                <p><span style="color:red">*</span>ตรวจสอบความถูกต้องก่อนกดเพิ่ม</p>
             </div>
         </div>
     </div>

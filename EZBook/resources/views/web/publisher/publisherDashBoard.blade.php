@@ -21,13 +21,18 @@
 			<a class="nav-link btn btn-info {{$isHistory ? 'active' : ''}}" href="/publisher-history"><h5>ประวัติการขาย</h5></a>
 		</li>
 	</ul>
+	@if (session()->has('publisher-login'))
+		<div class="alert alert-success text-center" style="margin-top:10px">
+			{{session()->get('publisher-login')}}
+		</div>
+	@endif
 	<div style="margin-bottom:60px;margin-top:10px">
 		@if($isDashboard)
 		<div class="card" style="margin-top:20px">
 			<div class="card-body">
 				<h3 class="card-title">ยอดการขายรวม</h3>
 				<p class="card-text"><a href="javascript:void(0)">{{$total}}</a> บาท</p>
-				<h3 class="card-title">หนังสือที่มีคนที่อ่านมากที่สุด</h3>
+				<h3 class="card-title">หนังสือที่คนอ่านมากที่สุด</h3>
 				@if($topBook)
 					<div class="text-center">
 						<a href="/publisher-book/{{$topBook->id}}">
@@ -107,13 +112,13 @@
 		<div class="card">
 			<div class="card-body">
 				<h3 class="card-title">ชื่อสำนักพิมพ์/นักเขียน</h3>
-				<p class="card-text">{{session()->get('publisher')->publisher->name}}</p>
+				<p class="card-text" style="margin-left:20px">{{session()->get('publisher')->publisher->name}}</p>
 				<h3 class="card-title">ที่อยู่</h3>
-				<p class="card-text">{{session()->get('publisher')->publisher->address}}</p>
+				<p class="card-text" style="margin-left:20px">{{session()->get('publisher')->publisher->address}}</p>
 				<h3 class="card-title">เบอร์โทรศัพท์</h3>
-				<p class="card-text">{{session()->get('publisher')->publisher->phone}}</p>
+				<p class="card-text" style="margin-left:20px">{{session()->get('publisher')->publisher->phone}}</p>
 				<h3 class="card-title">สถานะ</h3>
-				<p class="card-text"><span class="{{session()->get('publisher')->publisher->status == 'able' ? 'text-success' : 'text-danger'}}">{{session()->get('publisher')->publisher->status == 'able' ? 'สัญญายังไม่หมด' : 'หมดสัญญาแล้ว'}}</span></p>
+				<p class="card-text" style="margin-left:20px"><span class="{{session()->get('publisher')->publisher->status == 'able' ? 'text-success' : 'text-danger'}}">{{session()->get('publisher')->publisher->status == 'able' ? 'สัญญายังไม่หมด' : 'หมดสัญญาแล้ว'}}</span></p>
 			</div>
 		</div>
 		@elseif($isHistory)

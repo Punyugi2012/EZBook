@@ -20,22 +20,25 @@
 		</div>
 	</div>
 	<div class="card-body">
+		<p>ที่อยู่: {{$publisher->address}}</p>
+		<p>อีเมลล์: {{$publisher->user->email}}</p>
+		<p>เบอร์โทรศัพท์: {{$publisher->phone}}</p>
 		<div class="row">
-			@foreach($books as $book)
-			<div class="col-md-3 text-center">
-				<a href="/book/{{$book->id}}">
-					<img class="border border-secondary rounded" src="{{$book->url_cover_image}}" alt="cover image" style="width:150px;height:200px"
-					/>
-				</a>
-				<p style="margin-top:10px">ชื่อหนังสือ: {{$book->name}}</p>
-				<p>ราคา: {{$book->price == 0 ? 'ฟรี' : $book->price.' บาท'}}</p>
-				<p>%ส่วนลด: {{$book->discount_percent}} %</p>
-				<p>ราคาสุทธิ: {{$book->price - ($book->price * ($book->discount_percent / 100))}} บาท</p>
-				<p>สถานะ:
-					<span class="{{$book->status == 'able' ? 'text-success' : 'text-danger'}}">{{$book->status == 'able' ? 'วางขายอยู่' : 'ยังไม่วางขาย'}}</span>
-				</p>
-			</div>
-			@endforeach
+			@for ($i = count($books) - 1; $i >= 0; $i--)
+				<div class="col-md-3 text-center">
+					<a href="/book/{{$books[$i]->id}}">
+						<img class="border border-secondary rounded" src="{{$books[$i]->url_cover_image}}" alt="cover image" style="width:150px;height:200px"
+						/>
+					</a>
+					<p style="margin-top:10px">ชื่อหนังสือ: {{$books[$i]->name}}</p>
+					<p>ราคา: {{$books[$i]->price == 0 ? 'ฟรี' : $books[$i]->price.' บาท'}}</p>
+					<p>%ส่วนลด: {{$books[$i]->discount_percent}} %</p>
+					<p>ราคาสุทธิ: {{$books[$i]->price - ($books[$i]->price * ($books[$i]->discount_percent / 100))}} บาท</p>
+					<p>สถานะ:
+						<span class="{{$books[$i]->status == 'able' ? 'text-success' : 'text-danger'}}">{{$books[$i]->status == 'able' ? 'วางขายอยู่' : 'ยังไม่วางขาย'}}</span>
+					</p>
+				</div>
+			@endfor
 		</div>
 	</div>
 </div>
