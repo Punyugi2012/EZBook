@@ -1,5 +1,5 @@
 @extends('web.templates.app')
-@section('title', 'UserBooks')
+@section('title', 'หนังสือของคุณ')
 @section('header')
     @include('web.components.header')
 @endsection
@@ -7,7 +7,7 @@
 <div class="card" style="margin-top:100px">
     <div class="card-header">
         <span style="font-size:20px">
-        หนังสือที่ได้ซื้อ, ทั้งหมด <a href="javascript:void(0)">{{$purchases->total()}}</a> เล่ม
+        หนังสือของคุณ, ทั้งหมด <a href="javascript:void(0)">{{$purchases->total()}}</a> เล่ม
         </span>
     </div>
     <div class="card-body">

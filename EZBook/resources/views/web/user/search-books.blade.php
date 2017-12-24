@@ -58,6 +58,7 @@
                                 <sub>ลด {{$book->discount_percent}}%</sub> <span class="badge badge-primary">{{$book->price - ($book->price * $book->discount_percent / 100)}}</span> บาท
                             </p>
                         @endif
+                        <p>คะแนน: {{$book->score}}</p>
                         <p><span class="badge badge-info">จำนวนคนอ่าน: {{$book->num_read}}</span></p>
                     </div>
                 @endforeach
@@ -67,5 +68,6 @@
             {{$books->links()}}
         </div>
     </div>
-
+    <div style="margin-bottom:300px">
+    </div>
 @endsection

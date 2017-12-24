@@ -1,5 +1,5 @@
 @extends('web.templates.app')
-@section('title', 'Register')
+@section('title', 'การสมัครสมาชิก')
 @section('header')
     @include('web.components.header')
 @endsection
@@ -12,26 +12,26 @@
                     <form action="/user-register" method="post" enctype="multipart/form-data" autocomplete="off">
                         {{ csrf_field() }}
                             <div class="form-group">
-                            <label for="id_card">เลขที่บัตรประชาชน:</label>
+                            <label for="id_card"><span style="color:red">*</span>เลขที่บัตรประชาชน:</label>
                             <input type="text" class="form-control" name="id_card" id="id_card" placeholder="เลขที่บัตรประชาชน" required>
                         </div>
                         <div class="form-group">
-                            <label for="name">ชื่อ:</label>
+                            <label for="name"><span style="color:red">*</span>ชื่อ:</label>
                             <input type="text" class="form-control" name="name" id="name" placeholder="ชื่อ" required>
                         </div>
                         <div class="form-group">
-                            <label for="surname">นามสกุล:</label>
+                            <label for="surname"><span style="color:red">*</span>นามสกุล:</label>
                             <input type="text" class="form-control" name="surname" id="surname" placeholder="นามสกุล" required>
                         </div>
                         <div class="form-group">
-                            <label for="phone">เบอร์โทรศัพท์:</label>
+                            <label for="phone"><span style="color:red">*</span>เบอร์โทรศัพท์:</label>
                             <input type="number" class="form-control" name="phone" id="phone" placeholder="เบอร์โทรศัพท์" required>
                         </div>
                         <div class="form-group">
-                            <label for="address">ที่อยุ่:</label>
+                            <label for="address"><span style="color:red">*</span>ที่อยุ่:</label>
                             <input type="text" class="form-control" name="address" id="address" placeholder="จังหวัด/อำเภอ/ตำบล/บ้านเลขที่/หมู่" required>
                         </div>
-                        เพศ:
+                        <span style="color:red">*</span>เพศ:
                         <div class="form-group">
                             <div class="form-check d-inline">
                             <label class="form-check-label">
@@ -47,7 +47,7 @@
                             </div>
                         </div>
                         <div class"form-group">
-                            <label for="birthday">วันเกิด:</label>
+                            <label for="birthday"><span style="color:red">*</span>วันเกิด:</label>
                             <input type="date" name="birthday" id="birthday" class="form-control" required>
                         </div>
                         <div class="form-group" style="margin-top:10px">
@@ -57,15 +57,15 @@
                             <input type="file" class="form-control" name="image" id="image">
                         </div>
                         <div class="form-group">
-                            <label for="username">username:</label>
+                            <label for="username"><span style="color:red">*</span>username:</label>
                             <input type="text" class="form-control" name="username" id="username" placeholder="username" required>
                         </div>
                         <div class="form-group">
-                            <label for="email">email:</label>
+                            <label for="email"><span style="color:red">*</span>email:</label>
                             <input type="email" class="form-control" name="email" id="email" placeholder="อีเมลล์" required>
                         </div>
                         <div class="form-group">
-                            <label for="password">password:</label>
+                            <label for="password"><span style="color:red">*</span>password:</label>
                             <input type="password" class="form-control" name="password" id="password" placeholder="password" required>
                         </div>
                         <div class="text-center">

@@ -19,7 +19,7 @@
             <div class="row">
              @foreach($infos as $info)
                 <div class="col-md-12 text-center">
-                    <a href="/info/{{$info->id}}">{{$info->created_at}} <span style="margin-left:50px">{{$info->title}}</span></a>
+                    <a href="/info/{{$info->id}}">{{formatDateThai($info->created_at)}} <span style="margin-left:50px">{{$info->title}}</span></a>
                 </div>
             @endforeach
             </div>

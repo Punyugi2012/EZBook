@@ -1,4 +1,4 @@
-@extends('web.templates.app') @section('title', 'PublisherBooks') @section('header') @include('web.components.header') @endsection
+@extends('web.templates.app') @section('title', 'หนังสือสำนักพิมพ์') @section('header') @include('web.components.header') @endsection
 @section('content')
 <div class="card" style="margin-top:100px;margin-bottom:60px;">
 	<div class="card-header">
@@ -48,6 +48,7 @@
 							<sub>ลด {{$books[$i]->discount_percent}}%</sub> <span class="badge badge-primary">{{$books[$i]->price - ($books[$i]->price * $books[$i]->discount_percent / 100)}}</span> บาท
 						</p>
 					@endif
+					<p>คะแนน: {{$books[$i]->score}}</p>
 					<p><span class="badge badge-info">จำนวนคนอ่าน: {{$books[$i]->num_read}}</span></p>
 				</div>
 			@endfor

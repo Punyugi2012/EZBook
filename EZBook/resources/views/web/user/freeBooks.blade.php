@@ -1,5 +1,5 @@
 @extends('web.templates.app')
-@section('title', 'FreeBooks')
+@section('title', 'หนังสือฟรี')
 @section('header')
     @include('web.components.header')
 @endsection
@@ -24,6 +24,7 @@
                     </a>
                     <p>{{$book->name}}</p>
                     <p>ราคา: <span class="badge badge-success">ฟรี</span></p>
+                    <p>คะแนน: {{$book->score}}</p>
                     <p><span class="badge badge-info">จำนวนคนอ่าน: {{$book->num_read}}</span></p>
                 </div>
             @endforeach

@@ -11,16 +11,21 @@
         }
     </style>
     <div style="margin-top:100px">
+        @if (session()->has('status'))
+            <div class="alert alert-success text-center">
+                {{session()->get('status')}}
+            </div>
+        @endif
         <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner" style="height:350px">
                 <div class="carousel-item">
-                    <img class="d-block w-100 rounded img-thumbnail" src="https://hilight.kapook.com/img_cms2/other1/bookexpo2011.jpg" alt="Third slide">
+                    <img class="d-block w-100 rounded img-thumbnail" src="https://f.ptcdn.info/359/041/000/o4t54lbyw3lTJdzZ1S2-o.jpg" alt="Third slide">
                 </div>
                 <div class="carousel-item">
-                    <img class="d-block w-100 rounded  img-thumbnail" src="http://www.libraryhub.in.th/wp-content/uploads/2009/10/bookexpo.jpg" alt="Third slide">
+                    <img class="d-block w-100 rounded  img-thumbnail" src="https://www.parentsone.com/wp-content/uploads/2017/08/12aug-09.jpg" alt="Third slide">
                 </div>
                 <div class="carousel-item active">
-                    <img class="d-block w-100 rounded img-thumbnail" src="http://www.baanlaesuan.com/wp-content/uploads/2016/10/14666086_1315246585176089_4983327205539273554_n.jpg" alt="Third slide">
+                    <img class="d-block w-100 rounded img-thumbnail" src="https://zipimg.azureedge.net/blog/2017/08/DSCF7593.jpg" alt="Third slide">
                 </div>
             </div>
             <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
@@ -74,6 +79,7 @@
                                             <sub>ลด {{$book->discount_percent}}%</sub> <span class="badge badge-primary">{{$book->price - ($book->price * $book->discount_percent / 100)}}</span> บาท
                                         </p>
                                     @endif
+                                    <p>คะแนน: {{$book->score}}</p>
                                     <p><span class="badge badge-info">จำนวนคนอ่าน: {{$book->num_read}}</span></p>
                                 </div>
                             @endforeach
@@ -108,6 +114,7 @@
                                             <sub>ลด {{$book->discount_percent}}%</sub> <span class="badge badge-primary">{{$book->price - ($book->price * $book->discount_percent / 100)}}</span> บาท
                                         </p>
                                     @endif
+                                    <p>คะแนน: {{$book->score}}</p>
                                     <p><span class="badge badge-info">จำนวนคนอ่าน: {{$book->num_read}}</span></p>
                                 </div>
                             @endforeach
@@ -133,6 +140,7 @@
                                     </a>
                                     <p>{{$book->name}}</p>
                                     <p><span class="badge badge-success">ฟรี</span></p>
+                                    <p>คะแนน: {{$book->score}}</p>
                                     <p><span class="badge badge-info">จำนวนคนอ่าน: {{$book->num_read}}</span></p>
                                 </div>
                             @endforeach
@@ -158,6 +166,7 @@
                                 </a>
                                 <p>{{$book->name}}</p>
                                 <p>ราคา <span style="text-decoration: line-through;">{{$book->price}}</span> <sub>ลด {{$book->discount_percent}}%</sub> <span class="badge badge-primary">{{$book->price - ($book->price * $book->discount_percent / 100)}}</span> บาท</p>
+                                <p>คะแนน: {{$book->score}}</p>
                                 <p><span class="badge badge-info">จำนวนคนอ่าน: {{$book->num_read}}</span></p>
                             </div>
                         @endforeach
@@ -196,6 +205,7 @@
                                     <sub>ลด {{$book->discount_percent}}%</sub>  <span class="badge badge-primary">{{$book->price - ($book->price * $book->discount_percent / 100)}}</span> บาท
                                 </p>
                             @endif
+                            <p>คะแนน: {{$book->score}}</p>
                             <p><span class="badge badge-info">จำนวนคนอ่าน: {{$book->num_read}}</span></p>
                         </div>
                     @endforeach
@@ -237,7 +247,7 @@
                 <div class="row">
                     @foreach($infos as $info)
                         <div class="col-md-12">
-                            <a href="/info/{{$info->id}}">{{$info->created_at}} <span style="margin-left:50px">{{$info->title}}</span></a>
+                            <a href="/info/{{$info->id}}">{{formatDateThai($info->created_at)}} <span style="margin-left:50px">{{$info->title}}</span></a>
                         </div>
                     @endforeach
                 </div>
@@ -246,6 +256,8 @@
                 <a href="/infos" class="float-right"><span class="badge badge-light">ข่าวสารเพิ่มเติม</span></a>
             </div>
         </div>
+    </div>
+    <div style="margin-bottom:300px">
     </div>
 @endsection
 @section('javascript')

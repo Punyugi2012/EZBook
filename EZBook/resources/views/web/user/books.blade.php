@@ -1,5 +1,5 @@
 @extends('web.templates.app')
-@section('title', 'Books')
+@section('title', 'หนังสือ')
 @section('header')
     @include('web.components.header')
 @endsection
@@ -25,10 +25,17 @@
                         </a>
                         <p>{{$book->name}}</p>
                         @if($book->price == 0)
-                            <p>ราคา: ฟรี</p>
-                        @else 
-                            <p>ราคา <span style="text-decoration: line-through;">{{$book->price}}</span> <sub>ลด {{$book->discount_percent}}%</sub> {{$book->price - ($book->price * $book->discount_percent / 100)}} บาท</p>
+                        <p>ราคา: <span class="badge badge-success">ฟรี</span></p>
+                        @elseif($book->discount_percent == 0) 
+                            <p>ราคา: {{$book->price}}
+                        @else
+                            <p>ราคา:
+                                <span style="text-decoration: line-through;">{{$book->price}}</span> 
+                                <sub>ลด {{$book->discount_percent}}%</sub> <span class="badge badge-primary">{{$book->price - ($book->price * $book->discount_percent / 100)}}</span> บาท
+                            </p>
                         @endif
+                        <p>คะแนน: {{$book->score}}</p>
+                        <p><span class="badge badge-info">จำนวนคนอ่าน: {{$book->num_read}}</span></p>
                     </div>
                 @endforeach
             </div>

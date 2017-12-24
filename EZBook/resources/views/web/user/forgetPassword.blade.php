@@ -1,5 +1,5 @@
 @extends('web.templates.app') 
-@section('title', 'ForgetPassword') 
+@section('title', 'ลืมรหัสผ่าน') 
 @section('header') 
     @include('web.components.header') 
 @endsection
@@ -12,11 +12,11 @@
                     <form action="/send-email" method="post" autocomplete="off">  
                         {{ csrf_field() }}
                         <div class="form-group">
-                            <label for="username">Username:</label>
+                            <label for="username"><span style="color:red">*</span>Username:</label>
                             <input type="text" name="username" id="username" class="form-control" placeholder="username">
                         </div>
                         <div class="form-group">
-                            <label for="email">อีเมลล์:</label>
+                            <label for="email"><span style="color:red">*</span>อีเมลล์:</label>
                             <input type="email" name="email" id="email" class="form-control" placeholder="อีเมลล์">
                         </div>
                         <div class="text-center">

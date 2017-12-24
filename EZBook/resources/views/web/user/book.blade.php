@@ -196,11 +196,12 @@
 						<li class="list-group-item d-flex justify-content-between align-items-center">
 							<span>
 								@if($comment->member->url_image != "/storage/")
-								<img src="{{$comment->member->url_image}}" class="rounded-circle" style="width:50px;height:50px" title="{{$comment->member->name}}"> @else
+								<img src="{{$comment->member->url_image}}" class="rounded-circle" style="width:50px;height:50px"> @else
 								<img src="https://cdn0.iconfinder.com/data/icons/users-android-l-lollipop-icon-pack/24/user-512.png" class="rounded-circle"
-								 style="width:50px;height:50px" title="{{$comment->member->name}}"> @endif {{$comment->message}}
+                                 style="width:50px;height:50px" title="{{$comment->member->name}}"> @endif {{$comment->message}}
+                                 <p>{{$comment->member->name}} {{$comment->member->surname}}</p>
 							</span>
-							<span class="badge badge-primary badge-pill">{{$comment->created_at}}</span>
+							<span class="badge badge-primary badge-pill">{{$comment->created_at->diffForHumans()}}</span>
 						</li>
 						@endforeach
 					</ul>

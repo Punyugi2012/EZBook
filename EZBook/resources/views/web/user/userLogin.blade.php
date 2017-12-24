@@ -1,8 +1,21 @@
 @extends('web.templates.app')
-@section('title', 'Login')
+@section('title', 'เข้าสู่ระบบ')
     @include('web.components.header')
 @section('content')
-<div class="card" style="margin-top:100px;padding:50px;box-shadow:0px 5px 5px 5px grey">
+<div class="card" style="margin-top:100px;padding:50px;box-shadow:0px 2px 3px 0px grey">
+    @if (session()->has('status'))
+        <div class="alert alert-danger text-center">
+            {{session()->get('status')}}
+        </div>
+    @elseif(session()->has('registered'))
+        <div class="alert alert-success text-center">
+            {{session()->get('registered')}}
+        </div>
+    @elseif(session()->has('user-logout'))
+        <div class="alert alert-success text-center">
+            {{session()->get('user-logout')}}
+        </div>
+    @endif
      <div class="card-body">
         <div class="row">
             <div class="col-md-6" style="border-right:1px solid grey">
@@ -39,5 +52,7 @@
             </div>
         </div>
     </div>
+</div>
+<div style="margin-bottom:300px">
 </div>
 @endsection

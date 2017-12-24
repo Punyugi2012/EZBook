@@ -119,10 +119,12 @@ class UserController extends Controller
         ->where('type', 'user')
         ->first();
         if($user && $user->member->status == 'able') {
+            session()->flash('status', 'เข้าสู่ระบบสำเร็จ');
             session()->put('user', $user);
             return redirect('/');
         }
         else {
+            session()->flash('status', 'เข้าสู่ระบบไม่สำเร็จ กรุณาตรวจสอบ username, password');
             return redirect('/user-login');
         }
     }
@@ -140,7 +142,7 @@ class UserController extends Controller
             'name' => 'required',
             'surname' => 'required',
             'address' => 'required',
-            'phone' => 'required|regex:/(0)[0-9]{9}/',
+            'phone' => 'required|regex:/(0)[0-9]{9}/|min:10|max:10',
             'gender' => 'required',
             'birthday' => 'required',
             'username'=>'required|unique:users',
@@ -171,6 +173,7 @@ class UserController extends Controller
             'url_image'=>Storage::url($urlImage),
             'user_id'=>User::latest('id')->first()->id
         ]);
+        session()->flash('registered', 'สมัครสมาชิกสำเร็จ');
         return redirect('/user-login');
     }
     public function onProfile(Request $request) {
@@ -200,15 +203,10 @@ class UserController extends Controller
             'name' => 'required',
             'surname' => 'required',
             'address' => 'required',
-            'phone' => 'required|regex:/(0)[0-9]{9}/',
+            'phone' => 'required|regex:/(0)[0-9]{9}/|min:10|max:10',
             'gender' => 'required',
             'birthday' => 'required',
         ]);
-        $urlImage = null;
-        if($request->hasFile('image')) {
-            $image = md5(uniqid(rand(), true)).'.'.$request->file('image')->getClientOriginalName();
-            $urlImage = $request->file('image')->storeAs('public/file/user-image', $image);
-        }
         Member::find($userId)->update([
             'id_card'=>$request->input('id_card'),
             'name'=>$request->input('name'),
@@ -217,10 +215,9 @@ class UserController extends Controller
             'address'=>$request->input('address'),
             'gender'=>$request->input('gender'),
             'birthday'=>$request->input('birthday'),
-            'image'=>$urlImage,
-            'url_image'=>Storage::url($urlImage),
         ]);
         session()->get('user')->member = Member::find($userId);
+        session()->flash('updatedUser', 'แก้ไขข้อมูลส่วนตัวสำเร็จ');
         return redirect('user-profile');
     }
     public function books($typeId) {
@@ -521,6 +518,7 @@ class UserController extends Controller
             'member_id'=>session()->get('user')->member->id
         ]);
         session()->get('user')->member->account = Account::latest('id')->first();
+        session()->flash('createdAccount', 'ผูกบัตรเครดิตกับระบบสำเร็จ');
         return redirect('/user-profile');
     }
     public function editBind(Request $request, $bindId) {
@@ -535,6 +533,7 @@ class UserController extends Controller
             'cvv'=>$request->input('edit_cvv'),
         ]);
         session()->get('user')->member->account = Account::find($bindId);
+        session()->flash('updatedAccount', 'แก้ไขการผูกบัตรเครดิตสำเร็จ');
         return redirect('/user-profile');
     }
 }
