@@ -507,7 +507,7 @@ class UserController extends Controller
     }
     public function bind(Request $request) {
         $validatedData = $request->validate([
-            'account_number'=>'required|min:10|max:12|unique:accounts',
+            'account_number'=>'required|min:10|max:16|unique:accounts',
             'expired_date'=>'required',
             'cvv'=>'required|min:3|max:4'
         ]);
