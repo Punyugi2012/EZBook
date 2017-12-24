@@ -1,4 +1,4 @@
-@extends('web.templates.app') @section('title', 'books') @section('header')
+@extends('web.templates.app') @section('title', 'หนังสือของสำนักพิมพ์') @section('header')
 	@include('web.components.headerSecond')
 @endsection @section('content')
 <div class="card" style="margin-top:20px;margin-bottom:60px;">
@@ -20,6 +20,11 @@
 		</div>
 	</div>
 	<div class="card-body">
+		@if (count($books) == 0)
+			<div class="alert alert-warning text-center">
+				ไม่พบหนังสือ
+			</div>
+		@endif
 		<div class="row">
 			@foreach($books as $book)
 			<div class="col-md-3 text-center">
@@ -28,15 +33,25 @@
 					/>
 				</a>
 				<p style="margin-top:10px">ชื่อหนังสือ: {{$book->name}}</p>
-				<p>คะแนน: {{$book->score}}</p>
-				<p>ราคา: {{$book->price == 0 ? 'ฟรี' : $book->price.' บาท'}}</p>
-				<p>ราคาสุทธิ: {{$book->price - ($book->price * ($book->discount_percent / 100))}} บาท</p>
+				@if($book->price == 0)
+					<p>ราคา: <span class="badge badge-success">ฟรี</span></p>
+				@elseif($book->discount_percent == 0) 
+					<p>ราคา: {{$book->price}}
+				@else
+					<p>ราคา:
+						<span style="text-decoration: line-through;">{{$book->price}}</span> 
+						<sub>ลด {{$book->discount_percent}}%</sub> <span class="badge badge-primary">{{$book->price - ($book->price * $book->discount_percent / 100)}}</span> บาท
+					</p>
+				@endif
+				<p><span class="badge badge-info">จำนวนคนอ่าน: {{$book->num_read}}</span></p>
 				<p>สถานะ:
-					<span class="{{$book->status == 'able' ? 'text-success' : 'text-danger'}}">{{$book->status == 'able' ? 'วางขายอยู่' : 'ยังไม่วางขาย'}}</span>
+					<span class="{{$book->status == 'able' ? 'text-success' : 'text-danger'}}">{{$book->status == 'able' ? 'วางขาย' : 'ไม่วางขาย'}}</span>
 				</p>
 			</div>
 			@endforeach
 		</div>
 	</div>
+</div>
+<div style="margin-bottom:300px">
 </div>
 @endsection

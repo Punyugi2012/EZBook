@@ -1,6 +1,11 @@
-@extends('web.templates.app') @section('title', 'EditPublisher') @section('header')
+@extends('web.templates.app') @section('title', 'แก้ไขสำนักพิมพ์') @section('header')
 @include('web.components.headerSecond')
 @endsection @section('content')
+<style>
+	span {
+		color:red;
+	}
+</style>
 <div class="border" style="padding: 50px; margin-top: 30px">
 	 @if ($errors->any())
 		<div class="alert alert-danger">
@@ -18,15 +23,15 @@
 				{{ csrf_field() }}
 				{{ method_field('PUT') }}
 				<div class="form-group">
-					<label for="name">ชื่อ:</label>
+					<label for="name"><span>*</span>ชื่อ:</label>
 					<input type="text" class="form-control" name="name" id="name" value="{{$publisher->name}}" placeholder="name" required>
 				</div>
 				<div class="form-group">
-					<label for="address">ที่อยู่:</label>
+					<label for="address"><span>*</span>ที่อยู่:</label>
 					<input type="text" class="form-control" name="address" id="address" value="{{$publisher->address}}" placeholder="จังหวัด/อำเภอ/ตำบล" required>
 				</div>
 				<div class="form-group">
-					<label for="phone">เบอร์โทรศัพท์:</label>
+					<label for="phone"><span>*</span>เบอร์โทรศัพท์:</label>
 					<input type="number" class="form-control" name="phone" id="phone" value="{{$publisher->phone}}" placeholder="phone" required>
 				</div>
 				<div class="form-check form-check-inline">
@@ -46,7 +51,7 @@
 			</form>
 		</div>
 		<div class="col-md-6">
-			<p><span style="color:red">*</span>กรุณาตรวจสอบความถูกต้องก่อนกดบันทึก</p>
+			<p><span>*</span>กรุณาตรวจสอบความถูกต้องก่อนกดบันทึก</p>
 		</div>
 	</div>
 </div>

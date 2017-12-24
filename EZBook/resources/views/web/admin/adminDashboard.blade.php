@@ -1,5 +1,5 @@
 @extends('web.templates.app') 
-@section('title', 'Dashboard') 
+@section('title', 'แดชบอร์ด แอดมิน') 
 @section('header')
 	@include('web.components.headerSecond')
 @endsection 
@@ -73,8 +73,8 @@
 						<th>สถานะ</th>
 						<th>Username</th>
 						<th>Password</th>
-						<th>created_at</th>
-						<th>updated_at</th>
+						<th>เพิ่มเมื่อ</th>
+						<th>แก้ไขเมื่อ</th>
 						<th>เครื่องมือ</th>
 					</tr>
 				</thead>
@@ -92,8 +92,8 @@
 							<span class="text-danger">หมดสัญญา</span>
 							@endif
 						</td>
-						<td class="bg-success">{{$publisher->username}}</td>
-						<td class="bg-success">{{$publisher->password}}</td>
+						<td class="bg-info">{{$publisher->username}}</td>
+						<td class="bg-info">{{$publisher->password}}</td>
 						<td>{{formatDateThai($publisher->created_at)}}</td>
 						<td>{{formatDateThai($publisher->updated_at)}}</td>
 						<td>
@@ -129,7 +129,7 @@
 					<form action="/admin-create-book" enctype="multipart/form-data" method="POST" autocomplete="off">
 						{{ csrf_field() }}
 						<div class="form-group">
-							<label for="publisher">สำนักพิมพ์:</label>
+							<label for="publisher"><span style="color:red">*</span>สำนักพิมพ์:</label>
 							<select class="form-control" id="publisher" name="publisher" required>
 								<option value="">เลือกสำนักพิมพ์</option>
 								@foreach($publishers as $publisher) @if($publisher->status == 'able')
@@ -138,7 +138,7 @@
 							</select>
 						</div>
 						<div class="form-group">
-							<label for="type">ประเภทหนังสือ:</label>
+							<label for="type"><span style="color:red">*</span>ประเภทหนังสือ:</label>
 							<select class="form-control" id="type" name="type" required>
 								<option value="">เลือกประเภทหนังสือ</option>
 								@foreach($bookTypes as $type)
@@ -147,11 +147,11 @@
 							</select>
 						</div>
 						<div class="form-group">
-							<label for="name">ชื่อหนังสือ:</label>
+							<label for="name"><span style="color:red">*</span>ชื่อหนังสือ:</label>
 							<input type="text" class="form-control" name="name" id="name" placeholder="ชื่อหนังสือ" required>
 						</div>
 						<div class="form-group">
-							<label for="detail">รายละเอียด:</label>
+							<label for="detail"><span style="color:red">*</span>รายละเอียด:</label>
 							<textarea class="form-control" id="detail" name="detail" rows="3" placeholder="รายละเอียด"></textarea>
 						</div>
 						เลือกผู้แต่ง:
@@ -166,39 +166,39 @@
 						</div>
 						<br>
 						<div class="form-group">
-							<label for="detail">ราคา:</label>
+							<label for="detail"><span style="color:red">*</span>ราคา:</label>
 							<input type="number" class="form-control" name="price" id="price" value="0" placeholder="ราคา" required>
 						</div>
 						<div class="form-group">
-							<label for="discount">% ส่วนลด:</label>
+							<label for="discount"><span style="color:red">*</span>% ส่วนลด:</label>
 							<input type="number" class="form-control" name="discount" id="discount" value="0" placeholder="%ส่วนลด" required>
 						</div>
 						<div class="form-group">
-							<label for="file_size">ขนาดไฟล์:</label>
+							<label for="file_size"><span style="color:red">*</span>ขนาดไฟล์:</label>
 							<input type="text" class="form-control" name="file_size" id="file_size" placeholder="ขนาดไฟล์" required>
 						</div>
 						<div class="form-group">
-							<label for="num_page">จำนวนหน้า:</label>
+							<label for="num_page"><span style="color:red">*</span>จำนวนหน้า:</label>
 							<input type="number" class="form-control" name="num_page" id="num_page" placeholder="จำนวนหน้า" required>
 						</div>
 						<div class="form-group">
-							<label for="publish">วันที่ตีพิมพ์:</label>
+							<label for="publish"><span style="color:red">*</span>วันที่ตีพิมพ์:</label>
 							<input type="date" class="form-control" name="publish" id="publish" required>
 						</div>
 						<div class="form-group">
-							<img id="blah" src="#" alt="your cover image" style="max-width:200px;max-height:200px" />
+							<img id="blah" src="#" alt="cover image" style="max-width:200px;max-height:200px" />
 							<br>
-							<label for="cover_image">รูปปก:</label>
+							<label for="cover_image"><span style="color:red">*</span>รูปปก:</label>
 							<input type="file" class="form-control" name="cover_image" id="cover_image" required>
 						</div>
 						<div class="form-group">
-							your images
+							images
 							<div class="gallery"></div>
 							<label for="images">รูป:</label>
 							<input type="file" class="form-control" multiple name="images[]" id="images">
 						</div>
 						<div class="form-group">
-							<label for="file">file:</label>
+							<label for="file"><span style="color:red">*</span>ไฟล์:</label>
 							<input type="file" class="form-control" id="file" name="file" accept=".pdf" required>
 						</div>
 						<div class="form-check form-check-inline">
@@ -261,9 +261,10 @@
 						<th>อายุ</th>
 						<th>วันเกิด</th>
 						<th>สถานะ</th>
+						<th>สถานะบัญชี</th>
 						<th>รูปประจำตัว</th>
-						<th>created_at</th>
-						<th>updated_at</th>
+						<th>เพิ่มเมื่อ</th>
+						<th>แก้ไขเมื่อ</th>
 						<th>เครื่องมือ</th>
 					</tr>
 				</thead>
@@ -276,12 +277,19 @@
 							<td>{{$member->email}}</td>
 							<td>{{$member->address}}</td>
 							<td>{{$member->age}}</td>
-							<td>{{$member->birthday}}</td>
+							<td>{{formatDateThai($member->birthday)}}</td>
 							<td>
 								@if ($member->status == 'able')
 									<span class="text-success">ใช้งาน</span>
 								@else
 									<span class="text-danger">ไม่ใช้งาน</span>
+								@endif
+							</td>
+							<td>
+								@if ($member->account)
+									<span class="text-success">ผูกบัญชีแล้ว</span>
+								@else
+									<span class="text-danger">ยังไม่ผูกบัญชี</span>
 								@endif
 							</td>
 							<td>
@@ -347,11 +355,18 @@
 										/>
 									</a>
 									<p style="margin-top:10px">ชื่อหนังสือ: {{$book->name}}</p>
-									<p>ราคา: {{$book->price == 0 ? 'ฟรี' : $book->price.' บาท'}}</p>
-									<p>%ส่วนลด: {{$book->discount_percent}} %</p>
-									<p>ราคาสุทธิ: {{$book->price - ($book->price * ($book->discount_percent / 100))}} บาท</p>
+									@if($book->price == 0)
+									<p>ราคา: <span class="badge badge-success">ฟรี</span></p>
+									@elseif($book->discount_percent == 0) 
+										<p>ราคา: {{$book->price}}
+									@else
+										<p>ราคา:
+											<span style="text-decoration: line-through;">{{$book->price}}</span> 
+											<sub>ลด {{$book->discount_percent}}%</sub> <span class="badge badge-primary">{{$book->price - ($book->price * $book->discount_percent / 100)}}</span> บาท
+										</p>
+									@endif
 									<p>สถานะ:
-										<span class="{{$book->status == 'able' ? 'text-success' : 'text-danger'}}">{{$book->status == 'able' ? 'วางขายอยู่' : 'ยังไม่วางขาย'}}</span>
+										<span class="{{$book->status == 'able' ? 'text-success' : 'text-danger'}}">{{$book->status == 'able' ? 'วางขาย' : 'ไม่วางขาย'}}</span>
 									</p>
 								</div>
 								@endforeach
@@ -401,8 +416,8 @@
 						<th>ชื่อ</th>
 						<th>อีเมลล์</th>
 						<th>เบอร์โทรศัพท์</th>
-						<th>created_at</th>
-						<th>updated_at</th>
+						<th>เพิ่มเมื่อ</th>
+						<th>แก้ไขเมื่อ</th>
 						<th>เครื่องมือ</th>
 					</tr>
 				</thead>
@@ -436,6 +451,10 @@
 					<div class="alert alert-success text-center">
 						{{session()->get('createdNews')}}
 					</div>
+				@elseif(session()->has('updatedNews'))
+					<div class="alert alert-success text-center">
+						{{session()->get('updatedNews')}}
+					</div>
 				@endif
 				<a href="/admin-create-news" class="btn btn-info"><h5>เพิ่มข่าวสาร</h5></a>
 				<table class="table table-striped" style="margin-top:10px">
@@ -443,8 +462,8 @@
 						<tr>
 							<th>หัวข้อ</th>
 							<th>รายละเอียด</th>
-							<th>created_at</th>
-							<th>updated_at</th>
+							<th>เพิ่มเมื่อ</th>
+							<th>แก้ไขเมื่อ</th>
 							<th>เครื่องมือ</th>
 						</tr>
 					</thead>

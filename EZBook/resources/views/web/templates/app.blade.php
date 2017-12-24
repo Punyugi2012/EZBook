@@ -11,11 +11,13 @@
     <link href="https://fonts.googleapis.com/css?family=Prompt" rel="stylesheet">
     <style>
         .container-fluid {
-            height:100%;
+            height:100%!important;
         }
         body {
 		    font-family: 'Prompt', sans-serif;
             background-color: #F2F6F9;
+            margin:0px;
+            padding:0px;
         }
     </style>
 </head>

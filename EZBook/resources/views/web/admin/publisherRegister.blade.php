@@ -1,9 +1,14 @@
 @extends('web.templates.app')
-@section('title', 'PublisherRegister')
+@section('title', 'เพิ่มสำนักพิมพ์')
 @section('header')
     @include('web.components.headerSecond')
 @endsection
 @section('content')
+    <style>
+        span {
+            color:red;
+        }
+    </style>
     <div class="border" style="padding: 50px; margin-top: 30px">
         @if ($errors->any())
             <div class="alert alert-danger">
@@ -20,19 +25,19 @@
                 <form action="/admin-create-publisher" method="POST" autocomplete="off">
                     {{ csrf_field() }}
                     <div class="form-group">
-                        <label for="name">ชื่อ:</label>
+                        <label for="name"><span>*</span>ชื่อ:</label>
                         <input type="text" class="form-control" name="name" id="name" placeholder="ชื่อสำนักพิมพ์" required>
                     </div>
                     <div class="form-group">
-                        <label for="address">ที่อยู่:</label>
+                        <label for="address"><span>*</span>ที่อยู่:</label>
                         <input type="text" class="form-control" name="address" id="address" placeholder="จังหวัด/อำเภอ/ตำบล/บ้านเลขที่/หมู่" required>
                     </div>
                     <div class="form-group">
-                        <label for="phone">เบอร์โทรศัพท์:</label>
+                        <label for="phone"><span>*</span>เบอร์โทรศัพท์:</label>
                         <input type="number" class="form-control" name="phone" id="phone" placeholder="เบอร์โทรศัพท์" required>
                     </div>
                     <div class="form-group">
-                        <label for="email">อีเมลล์:</label>
+                        <label for="email"><span>*</span>อีเมลล์:</label>
                         <input type="email" class="form-control" name="email" id="email" placeholder="อีเมลล์" required>
                     </div>
                     <div class="text-center">
@@ -42,9 +47,11 @@
                 </form>
             </div>
             <div class="col-md-6">
-                <p><span style="color:red">*</span>กรุณากรอกข้อมูลให้ครบถ้วน</p>
-                <p><span style="color:red">*</span>ตรวจสอบความถูกต้องก่อนกดเพิ่ม</p>
+                <p><span>*</span>กรุณากรอกข้อมูลให้ครบถ้วน</p>
+                <p><span>*</span>ตรวจสอบความถูกต้องก่อนกดเพิ่ม</p>
             </div>
         </div>
+    </div>
+    <div style="margin-bottom:300px">
     </div>
 @endsection

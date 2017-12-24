@@ -1,5 +1,5 @@
 @extends('web.templates.app')
-@section('title', 'EditNews')
+@section('title', 'แก้ไขสมาชิก')
 @section('header')
     @include('web.components.headerSecond')
 @endsection
@@ -41,5 +41,7 @@
                 <p><span style="color:red">*</span>กรุณาตรวจสอบความถูกต้องก่อนกดบันทึก</p>
             </div>
         </div>
+    </div>
+    <div style="margin-bottom:300px">
     </div>
 @endsection

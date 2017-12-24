@@ -495,6 +495,7 @@ class AdminController extends Controller
             'title'=>$request->input('title'),
             'description'=>$request->input('description')
         ]);
+        session()->flash('updatedNews', 'แก้ไขข่าวสารสำเร็จ');
         return redirect('/admin-news');
     }
     public function deleteNews(Request $request) {

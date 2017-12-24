@@ -1,4 +1,4 @@
-@extends('web.templates.app') @section('title', 'BookProfile') @section('header')
+@extends('web.templates.app') @section('title', 'หนังสือ') @section('header')
 @include('web.components.headerSecond')
 @endsection @section('content')
 <div class="card" style="margin-top:20px;margin-bottom:60px;">
@@ -73,8 +73,8 @@
 				<p>สถานะ:
 					<span class="{{$book->status == 'able' ? 'text-success' : 'text-danger'}}">{{$book->status == 'able' ? 'วางขาย' : 'ไม่วางขาย'}}</span>
 				</p>
-				<p>created_at: {{formatDateThai($book->created_at)}}</p>
-				<p>updated:  {{formatDateThai($book->updated_at)}}</p>
+				<p>เพิ่มเมื่อ: {{formatDateThai($book->created_at)}}</p>
+				<p>แก้ไขเมื่อ:  {{formatDateThai($book->updated_at)}}</p>
 			</div>
 		</div>
 		<div class="row">
@@ -137,7 +137,7 @@
 		</div>
 		<div class="row" style="margin-top:30px">
 			<div class="col-md-12">
-				<form action="/admin-update-book/{{$book->id}}" method="POST">
+				<form action="/admin-update-book/{{$book->id}}" method="POST" autocomplete="off">
 					{{ csrf_field() }}
             		{{ method_field('PUT') }}
 					แก้ไขการแนะนำ:

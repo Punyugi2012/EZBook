@@ -10,5 +10,10 @@ function formatDateThai($strDate)
     $strSeconds= date("s",strtotime($strDate));
     $strMonthCut = Array("","ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.","ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค.");
     $strMonthThai=$strMonthCut[$strMonth];
-    return "$strDay $strMonthThai $strYear $strHour:$strMinute";
+    if($strHour == "0") {
+        return "$strDay $strMonthThai $strYear";
+    }
+    else {
+        return "$strDay $strMonthThai $strYear $strHour:$strMinute";
+    }
 }
