@@ -1,8 +1,8 @@
 @extends('web.templates.app')
-@section('title', 'Login')
+@section('title', 'สำนักพิมพ์/นักเขียน เข้าสู่ระบบ')
     @include('web.components.header')
 @section('content')
-<div class="card" style="margin-top:100px;padding:50px;box-shadow:0px 5px 5px 5px grey">
+<div class="card" style="margin-top:100px;padding:50px;box-shadow:0px 2px 3px 0px grey">
     <div class="card-body">
         @if (session()->has('publisher-login'))
             <div class="alert alert-danger text-center">
@@ -46,5 +46,7 @@
             </div>
         </div>
     </div>
+</div>
+<div style="margin-bottom:300px">
 </div>
 @endsection

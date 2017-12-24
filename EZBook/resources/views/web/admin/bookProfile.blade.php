@@ -69,7 +69,7 @@
 					สำนักพิมพ์:
 					<a href="javascript:void(0)">{{$book->publisher->name}}</a>
 				</p>
-				<p>วันที่ตีพิมพ์: {{$book->date_publish}}</p>
+				<p>วันที่ตีพิมพ์: {{formatDateThai($book->date_publish)}}</p>
 				<p>สถานะ:
 					<span class="{{$book->status == 'able' ? 'text-success' : 'text-danger'}}">{{$book->status == 'able' ? 'วางขาย' : 'ไม่วางขาย'}}</span>
 				</p>

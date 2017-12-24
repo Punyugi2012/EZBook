@@ -43,7 +43,7 @@
                 <p>เร็วๆนี้</p>
             </div>    
         </div>
-        {{--  <div class="row" style="padding:20px">
+        <div class="row" style="padding:20px">
             <div class="col-md-3">
                 <img class="rounded img-thumbnail" src="https://f.ptcdn.info/355/010/000/1380536996-1380153215-o.jpg" style="width:300px;height:300px">
             </div>
@@ -56,7 +56,7 @@
             <div class="col-md-3">
                     <img class="rounded img-thumbnail" src="http://3.bp.blogspot.com/-fyGpiCRGcKI/T_qIORIwqzI/AAAAAAAAAHQ/cn_ci5yocLI/s1600/DSCN7164.JPG" style="width:300px;height:300px">
                 </div>
-        </div>  --}}
+        </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>

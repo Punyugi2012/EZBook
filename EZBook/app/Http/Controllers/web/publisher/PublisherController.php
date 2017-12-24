@@ -38,22 +38,20 @@ class PublisherController extends Controller
                 $total += $purchase->price;
             }
         }
-        $books = Book::where('publisher_id', session()->get('publisher')->publisher->id)->get();
-        $max = 0;
-        $topBook = null;
-        foreach($books as $book) {
-            if($book->num_read > $max) {
-                $max = $book->num_read;
-                $topBook = $book;
-            }
-        }
+        $max = Book::where('publisher_id', session()->get('publisher')->publisher->id)->max('num_read');
+        $topBooks = Book::where('publisher_id', session()->get('publisher')->publisher->id)
+                ->where('num_read', $max)->get();
+        $maxScore = Book::where('publisher_id', session()->get('publisher')->publisher->id)->max('score');
+        $maxScoreBooks = Book::where('publisher_id', session()->get('publisher')->publisher->id)
+                ->where('score', $maxScore)->get();
         return view('web.publisher.publisherDashboard', [
             'isDashboard'=>true,
             'isBooks'=>false,
             'isProfile'=>false,
             'isHistory'=>false,
             'total'=>$total,
-            'topBook'=>$topBook
+            'topBooks'=>$topBooks,
+            'maxScoreBooks'=>$maxScoreBooks
         ]);
     }
     public function onBooks() {

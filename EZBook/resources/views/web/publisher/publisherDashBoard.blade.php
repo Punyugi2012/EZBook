@@ -1,4 +1,4 @@
-@extends('web.templates.app') @section('title', 'Dashboard') @section('header')
+@extends('web.templates.app') @section('title', 'แดชบอร์ด สำนักพิมพ์/นักเขียน') @section('header')
 @include('web.components.headerThird')
 @endsection @section('content')
 <style>
@@ -33,22 +33,59 @@
 				<h3 class="card-title">ยอดการขายรวม</h3>
 				<p class="card-text"><a href="javascript:void(0)">{{$total}}</a> บาท</p>
 				<h3 class="card-title">หนังสือที่คนอ่านมากที่สุด</h3>
-				@if($topBook)
-					<div class="text-center">
-						<a href="/publisher-book/{{$topBook->id}}">
-							<img class="border border-secondary rounded" src="{{$topBook->url_cover_image}}" alt="cover image" style="width:150px;height:200px"
+				<div class="row">
+					@foreach($topBooks as $book)
+					<div class="col-md-3 text-center">
+						<a href="/publisher-book/{{$book->id}}">
+							<img class="border border-secondary rounded" src="{{$book->url_cover_image}}" alt="cover image" style="width:150px;height:200px"
 							/>
 						</a>
-						<p style="margin-top:10px">ชื่อหนังสือ: {{$topBook->name}}</p>
-						<p>คะแนน: {{$topBook->score}}</p>
-						<p>ราคา: {{$topBook->price == 0 ? 'ฟรี' : $topBook->price.' บาท'}}</p>
-						<p>ราคาสุทธิ: {{$topBook->price - ($topBook->price * ($topBook->discount_percent / 100))}} บาท</p>
+						<p>คะแนน: {{$book->score}}<p>
+						<p style="margin-top:10px">ชื่อหนังสือ: {{$book->name}}</p>
+						@if($book->price == 0)
+							<p>ราคา: <span class="badge badge-success">ฟรี</span></p>
+						@elseif($book->discount_percent == 0) 
+							<p>ราคา: {{$book->price}}
+						@else
+							<p>ราคา:
+								<span style="text-decoration: line-through;">{{$book->price}}</span> 
+								<sub>ลด {{$book->discount_percent}}%</sub> <span class="badge badge-primary">{{$book->price - ($book->price * $book->discount_percent / 100)}}</span> บาท
+							</p>
+						@endif
+						<p><span class="badge badge-info">จำนวนคนอ่าน: {{$book->num_read}}</span></p>
 						<p>สถานะ:
-							<span class="{{$topBook->status == 'able' ? 'text-success' : 'text-danger'}}">{{$topBook->status == 'able' ? 'วางขาย' : 'ไม่วางขาย'}}</span>
+							<span class="{{$book->status == 'able' ? 'text-success' : 'text-danger'}}">{{$book->status == 'able' ? 'วางขาย' : 'ไม่วางขาย'}}</span>
 						</p>
-						<p>จำนวนคนอ่าน: {{$topBook->num_read}}</p>
 					</div>
-				@endif
+					@endforeach
+				</div>
+				<h3 class="card-title">หนังสือที่มีคะแนนสูงที่สุด</h3>
+				<div class="row">
+					@foreach($maxScoreBooks as $book)
+					<div class="col-md-3 text-center">
+						<a href="/publisher-book/{{$book->id}}">
+							<img class="border border-secondary rounded" src="{{$book->url_cover_image}}" alt="cover image" style="width:150px;height:200px"
+							/>
+						</a>
+						<p>คะแนน: {{$book->score}}<p>
+						<p style="margin-top:10px">ชื่อหนังสือ: {{$book->name}}</p>
+						@if($book->price == 0)
+							<p>ราคา: <span class="badge badge-success">ฟรี</span></p>
+						@elseif($book->discount_percent == 0) 
+							<p>ราคา: {{$book->price}}
+						@else
+							<p>ราคา:
+								<span style="text-decoration: line-through;">{{$book->price}}</span> 
+								<sub>ลด {{$book->discount_percent}}%</sub> <span class="badge badge-primary">{{$book->price - ($book->price * $book->discount_percent / 100)}}</span> บาท
+							</p>
+						@endif
+						<p><span class="badge badge-info">จำนวนคนอ่าน: {{$book->num_read}}</span></p>
+						<p>สถานะ:
+							<span class="{{$book->status == 'able' ? 'text-success' : 'text-danger'}}">{{$book->status == 'able' ? 'วางขาย' : 'ไม่วางขาย'}}</span>
+						</p>
+					</div>
+					@endforeach
+				</div>
 			</div>
 		</div>
 		@elseif($isBooks)
@@ -90,14 +127,22 @@
 											<img class="border border-secondary rounded" src="{{$book->url_cover_image}}" alt="cover image" style="width:150px;height:200px"
 											/>
 										</a>
+										<p>คะแนน: {{$book->score}}<p>
 										<p style="margin-top:10px">ชื่อหนังสือ: {{$book->name}}</p>
-										<p>คะแนน: {{$book->score}}</p>
-										<p>ราคา: {{$book->price == 0 ? 'ฟรี' : $book->price.' บาท'}}</p>
-										<p>ราคาสุทธิ: {{$book->price - ($book->price * ($book->discount_percent / 100))}} บาท</p>
+										@if($book->price == 0)
+											<p>ราคา: <span class="badge badge-success">ฟรี</span></p>
+										@elseif($book->discount_percent == 0) 
+											<p>ราคา: {{$book->price}}
+										@else
+											<p>ราคา:
+												<span style="text-decoration: line-through;">{{$book->price}}</span> 
+												<sub>ลด {{$book->discount_percent}}%</sub> <span class="badge badge-primary">{{$book->price - ($book->price * $book->discount_percent / 100)}}</span> บาท
+											</p>
+										@endif
+										<p><span class="badge badge-info">จำนวนคนอ่าน: {{$book->num_read}}</span></p>
 										<p>สถานะ:
-											<span class="{{$book->status == 'able' ? 'text-success' : 'text-danger'}}">{{$book->status == 'able' ? 'วางขายอยู่' : 'ยังไม่วางขาย'}}</span>
+											<span class="{{$book->status == 'able' ? 'text-success' : 'text-danger'}}">{{$book->status == 'able' ? 'วางขาย' : 'ไม่วางขาย'}}</span>
 										</p>
-										<p>จำนวนคนอ่าน: {{$book->num_read}}</p>
 									</div>
 									@endforeach
 								</div>
@@ -141,7 +186,7 @@
 					<tbody>
                         @foreach($purchases as $purchase)
                             <tr>
-								<td>{{$purchase->date_purchase}}</td>
+								<td>{{formatDateThai($purchase->date_purchase)}}</td>
                                 <td><a href="/publisher-book/{{$purchase->book->id}}">{{$purchase->book->name}}</a></td>
                                 <td>{{$purchase->price}} บาท</td>
                                 <td>{{$purchase->member->name}}</td>
@@ -154,5 +199,7 @@
 		</div>
 		@endif
 	</div>
+</div>
+<div style="margin-bottom:300px">
 </div>
 @endsection

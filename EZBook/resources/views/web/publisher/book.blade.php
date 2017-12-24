@@ -1,5 +1,5 @@
 @extends('web.templates.app') 
-@section('title', 'BookProfile') 
+@section('title', 'หนังสือ') 
 @section('header')
 @include('web.components.headerThird')
 @endsection @section('content')
@@ -56,14 +56,12 @@
 					@endforeach
 				</div>
 				<br>
-				<p>
-					สำนักพิมพ์:
-					<a href="javascript:void(0)">{{$book->publisher->name}}</a>
-				</p>
-				<p>วันที่ตีพิมพ์: {{$book->date_publish}}</p>
+				<p>วันที่ตีพิมพ์: {{formatDateThai($book->date_publish)}}</p>
 				<p>สถานะ:
-					<span class="{{$book->status == 'able' ? 'text-success' : 'text-danger'}}">{{$book->status == 'able' ? 'วางขาย' : 'ยังไม่วางขาย'}}</span>
+					<span class="{{$book->status == 'able' ? 'text-success' : 'text-danger'}}">{{$book->status == 'able' ? 'วางขาย' : 'ไม่วางขาย'}}</span>
 				</p>
+				<p>เพิ่มเมื่อ: {{formatDateThai($book->created_at)}}</p>
+				<p>แก้ไขเมื่อ:  {{formatDateThai($book->updated_at)}}</p>
 			</div>
 		</div>
 		<div class="row">
@@ -101,5 +99,7 @@
 			</div>
 		</div>
 	</div>
+</div>
+<div style="margin-bottom:300px">
 </div>
 @endsection
