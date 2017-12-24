@@ -90,7 +90,7 @@
                                         @endif
                                         {{$comment->message}}
                                     </span>
-                                    <span class="badge badge-primary badge-pill">{{$comment->created_at}}</span>
+                                    <span class="badge badge-primary badge-pill">{{$comment->created_at->diffForHumans()}}, {{formatDateThai($comment->created_at)}}</span>
                                 </li>
                             @endforeach
                         </ul>

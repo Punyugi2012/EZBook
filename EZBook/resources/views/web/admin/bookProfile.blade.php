@@ -104,7 +104,7 @@
                                         {{$comment->message}}
                                     </span>
 									<span>
-                                    	<span class="badge badge-primary badge-pill">{{$comment->created_at}}</span>
+                                    	<span class="badge badge-primary badge-pill">{{$comment->created_at->diffForHumans()}}, {{formatDateThai($comment->created_at)}}</span>
 										<button data-toggle="modal" data-target="#deleteComment" style="color:red"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
 									</span>
                                 </li>

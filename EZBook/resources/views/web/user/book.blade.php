@@ -201,7 +201,7 @@
                                  style="width:50px;height:50px" title="{{$comment->member->name}}"> @endif {{$comment->message}}
                                  <p>{{$comment->member->name}} {{$comment->member->surname}}</p>
 							</span>
-							<span class="badge badge-primary badge-pill">{{$comment->created_at->diffForHumans()}}</span>
+							<span class="badge badge-primary badge-pill">{{$comment->created_at->diffForHumans()}}, {{formatDateThai($comment->created_at)}}</span>
 						</li>
 						@endforeach
 					</ul>

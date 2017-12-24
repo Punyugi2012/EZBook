@@ -16,8 +16,10 @@ class PublisherController extends Controller
         return view('web.publisher.login', ['bookTypes'=>$bookTypes]);
     }
     public function checkLogin(Request $request) {
-        $user = User::where('username', $request->input('username'))->where('password', $request->input('password'))->where('type', 'publisher')->first();
-        if($user) {
+        $user = User::where('username', $request->input('username'))
+            ->where('password', $request->input('password'))
+            ->where('type', 'publisher')->first();
+        if($user && $user->publisher->status == 'able') {
             session()->put('publisher', $user);
             session()->flash('publisher-login', 'เข้าสู่ระบบสำเร็จ');
             return redirect('/publisher-dashboard');
