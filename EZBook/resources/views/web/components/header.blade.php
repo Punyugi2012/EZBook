@@ -43,8 +43,8 @@
 				</button>
 				<div class="dropdown-menu" aria-labelledby="dropdownMenu2" style="width:inherit!important">
 					<a class="dropdown-item" href="/user-login">ผู้ใช้</a>
-					<a class="dropdown-item" href="/admin-login">แอดมิน</a>
 					<a class="dropdown-item" href="/publisher-login">สำนักพิมพ์/นักเขียน</a>
+					<a class="dropdown-item" href="/admin-login">แอดมิน</a>
 				</div>
 			</div>
 		@endif

@@ -212,13 +212,13 @@
 							</label>
 						</div>
 						<div class="text-center">
-							<button type="submit" class="btn btn-success">เพิ่ม</button>
+							<button type="submit" class="btn btn-primary">เพิ่ม</button>
 							<button type="reset" class="btn btn-warning">ล้าง</button>
 						</div>
 					</form>
 				</div>
 				<div class="col-md-5">
-					<p><span style="color:red">*</span>กรุณากรอกข้อมูลให้ครบถ้วน</p>
+					<p><span style="color:red">*</span>กรุณากรอกข้อมูล ณ ช่องกรอก ที่มี "<span style="color:red">*</span>" นำหน้า</p>
 					<p><span style="color:red">*</span>ตรวจสอบความถูกต้องก่อนกดเพิ่ม</p>
 				</div>
 			</div>
@@ -287,9 +287,9 @@
 							</td>
 							<td>
 								@if ($member->account)
-									<span class="text-success">ผูกบัญชีแล้ว</span>
+									<span class="text-success">ผูกบัตรเครดิตแล้ว</span>
 								@else
-									<span class="text-danger">ยังไม่ผูกบัญชี</span>
+									<span class="text-danger">ยังไม่ผูกบัตรเครดิต</span>
 								@endif
 							</td>
 							<td>

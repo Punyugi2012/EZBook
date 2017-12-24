@@ -31,7 +31,7 @@
 					<input type="email" class="form-control" name="email" id="email" value="{{$author->email}}" placeholder="อีเมลล์">
 				</div>
 				<div class="form-group">
-					<label for="phone">บอร์โทรศัพท์:</label>
+					<label for="phone">เบอร์โทรศัพท์:</label>
 					<input type="number" class="form-control" name="phone" id="phone" value="{{$author->phone}}" placeholder="เบอร์โทรศัพท์">
 				</div>
 				<div class="text-center">

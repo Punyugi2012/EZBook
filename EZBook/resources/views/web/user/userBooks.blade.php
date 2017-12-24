@@ -11,6 +11,11 @@
         </span>
     </div>
     <div class="card-body">
+        @if (count($purchases) == 0)
+            <div class="alert alert-warning text-center">
+                ไม่พบหนังสือของคุณ
+            </div>
+        @endif
         <div class="row">
         @foreach($purchases as $purchase)
             <div class="col-md-3 text-center">

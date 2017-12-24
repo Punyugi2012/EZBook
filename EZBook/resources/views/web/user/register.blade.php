@@ -69,13 +69,13 @@
                             <input type="password" class="form-control" name="password" id="password" placeholder="password" required>
                         </div>
                         <div class="text-center">
-                            <button type="submit" class="btn btn-success">ยืนยัน</button>
+                            <button type="submit" class="btn btn-primary">ยืนยัน</button>
                             <button type="reset" class="btn btn-warning">ล้าง</button>
                         </div>
                     </form>
                 </div>
                 <div class="col-md-4">
-                    <p><span style="color:red">*</span>กรุณากรอกข้อมูลให้ครบถ้วน</p>
+                    <p><span style="color:red">*</span>กรุณากรอกข้อมูล ณ ช่องกรอก ที่มี "<span style="color:red">*</span>" นำหน้า</p>
                     <p><span style="color:red">*</span>กรุณาตรวจสอบความถูกต้องก่อนกดยืนยัน</p>
                 </div>
             </div>

@@ -129,7 +129,7 @@
                     <div class="card-body">
                         @if (count($books) == 0)
                         <div class="alert alert-warning text-center">
-                            ไม่ไม่หนังสือฟรี
+                            ไม่พบหนังสือฟรี
                         </div>
                         @endif
                         <div class="row">
