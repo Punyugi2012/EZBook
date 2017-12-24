@@ -8,7 +8,7 @@
         <div class="col-md-6">
             <div class="card">
                 <div class="card-body">
-                    <form>
+                    <form action="/user-search-book" method="get" autocomplete="off">
                         {{ csrf_field() }}
                         <div class="form-group">
                             <label for="search">ค้นหา:</label>
