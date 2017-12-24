@@ -27,12 +27,12 @@
 					<input type="text" class="form-control" name="name" id="name" value="{{$author->name}}" placeholder="ชื่อ" required>
 				</div>
 				<div class="form-group">
-					<label for="email"><span>*</span>อีเมลล์:</label>
-					<input type="email" class="form-control" name="email" id="email" value="{{$author->email}}" placeholder="อีเมลล์" required>
+					<label for="email">อีเมลล์:</label>
+					<input type="email" class="form-control" name="email" id="email" value="{{$author->email}}" placeholder="อีเมลล์">
 				</div>
 				<div class="form-group">
-					<label for="phone"><span>*</span>เบอร์โทรศัพท์:</label>
-					<input type="number" class="form-control" name="phone" id="phone" value="{{$author->phone}}" placeholder="เบอร์โทรศัพท์" required>
+					<label for="phone">บอร์โทรศัพท์:</label>
+					<input type="number" class="form-control" name="phone" id="phone" value="{{$author->phone}}" placeholder="เบอร์โทรศัพท์">
 				</div>
 				<div class="text-center">
 					<button type="submit" class="btn btn-primary">บันทึก</button>

@@ -25,16 +25,16 @@
                 <form action="/admin-create-author" method="POST" autocomplete="off">
                     {{ csrf_field() }}
                     <div class="form-group">
-                        <label for="name"><span>*</span>กชื่อ:</label>
+                        <label for="name"><span>*</span>ชื่อ:</label>
                         <input type="text" class="form-control" name="name" id="name" placeholder="ชื่อผู้แต่ง" required>
                     </div>
                     <div class="form-group">
-                        <label for="email"><span>*</span>อีเมลล์:</label>
-                        <input type="email" class="form-control" name="email" id="email" placeholder="อีเมลล์" required>
+                        <label for="email">อีเมลล์:</label>
+                        <input type="email" class="form-control" name="email" id="email" placeholder="อีเมลล์">
                     </div>
                     <div class="form-group">
-                        <label for="phone"><span>*</span>เบอร์โทรศัพท์:</label>
-                        <input type="number" class="form-control" name="phone" id="phone" placeholder="เบอร์โทรศัพท์" required>
+                        <label for="phone">เบอร์โทรศัพท์:</label>
+                        <input type="number" class="form-control" name="phone" id="phone" placeholder="เบอร์โทรศัพท์">
                     </div>
                     <div class="text-center">
                         <button type="submit" class="btn btn-primary">เพิ่ม</button>
@@ -43,7 +43,7 @@
                 </form>
             </div>
             <div class="col-md-6">
-                <p><span>*</span>กรุณากรอกข้อมูลให้ครบถ้วน</p>
+                <p><span>*</span>กรุณากรอกข้อมูล ณ ช่องกรอก ที่มี "<span>*</span>" นำหน้า</p>
                 <p><span>*</span>ตรวจสอบความถูกต้องก่อนกดเพิ่ม</p>
             </div>
         </div>

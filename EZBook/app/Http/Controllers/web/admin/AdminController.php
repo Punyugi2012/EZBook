@@ -155,7 +155,7 @@ class AdminController extends Controller
        $validatedData = $request->validate([
         'name' => 'required',
         'address' => 'required',
-        'phone' => 'required|regex:/(0)[0-9]{9}/',
+        'phone' => 'required|regex:/(0)[0-9]{9}/|min:10|max:10',
         'email' => 'required|unique:users'
        ]);
        $username = $this->generateRandomString();
@@ -198,7 +198,7 @@ class AdminController extends Controller
         $validatedData = $request->validate([
             'name' => 'required',
             'address' => 'required',
-            'phone' => 'required|regex:/(0)[0-9]{9}/',
+            'phone' => 'required|regex:/(0)[0-9]{9}/|min:10|max:10',
             'status' => 'required'
         ]);
         Publisher::find($publisherId)->update([
@@ -211,11 +211,25 @@ class AdminController extends Controller
         return redirect('admin-publishers');
     }
     public function createAuthor(Request $request) {
-        $validatedData = $request->validate([
-            'name' => 'required',
-            'email' => 'required|unique:authors',
-            'phone' => 'required|regex:/(0)[0-9]{9}/'
-        ]);
+        if($request->input('email') && $request->input('phone')) {
+            $validatedData = $request->validate([
+                'name' => 'required',
+                'email' => 'required|unique:authors',
+                'phone' => 'required|regex:/(0)[0-9]{9}/|min:10|max:10'
+            ]);
+        }
+        elseif($request->input('email')) {
+            $validatedData = $request->validate([
+                'name' => 'required',
+                'email' => 'required|unique:authors',
+            ]);
+        }
+        elseif($request->input('phone')) {
+            $validatedData = $request->validate([
+                'name' => 'required',
+                'phone' => 'required|regex:/(0)[0-9]{9}/|min:10|max:10'
+            ]);
+        }
         Author::create([
             'name'=>$request->input('name'), 
             'email'=>$request->input('email'), 
@@ -229,11 +243,25 @@ class AdminController extends Controller
         return view('web.admin.editAuthor', ['author'=>$author]);
     }
     public function updateAuthor(Request $request, $authorId) {
-        $validatedData = $request->validate([
-            'name' => 'required',
-            'email' => 'required',
-            'phone' => 'required|regex:/(0)[0-9]{9}/'
-        ]);
+        if($request->input('email') && $request->input('phone')) {
+            $validatedData = $request->validate([
+                'name' => 'required',
+                'email' => 'required|unique:authors',
+                'phone' => 'required|regex:/(0)[0-9]{9}/|min:10|max:10'
+            ]);
+        }
+        elseif($request->input('email')) {
+            $validatedData = $request->validate([
+                'name' => 'required',
+                'email' => 'required|unique:authors',
+            ]);
+        }
+        elseif($request->input('phone')) {
+            $validatedData = $request->validate([
+                'name' => 'required',
+                'phone' => 'required|regex:/(0)[0-9]{9}/|min:10|max:10'
+            ]);
+        }
         Author::find($authorId)->update([
             'name' => $request->input('name'),
             'email' => $request->input('email'),
