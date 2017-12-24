@@ -7,6 +7,7 @@
     <div class="card" style="margin-top:100px">
         <div class="card-body">
             <h1>การยืนยันการซื้อ</h1>
+            <p><span style="color:red">*</span>กรุณาตรวจสอบบัญชีก่อนทำการยืนยันการซื้อ</p>
             <table class="table" style="margin-top:20px">
                 <thead>
                     <tr>
