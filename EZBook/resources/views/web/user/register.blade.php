@@ -28,20 +28,20 @@
                             <input type="number" class="form-control" name="phone" id="phone" placeholder="เบอร์โทรศัพท์" required>
                         </div>
                         <div class="form-group">
-                            <label for="address"><span style="color:red">*</span>ที่อยุ่:</label>
-                            <input type="text" class="form-control" name="address" id="address" placeholder="จังหวัด/อำเภอ/ตำบล/บ้านเลขที่/หมู่" required>
+                            <label for="address"><span style="color:red">*</span>ที่อยู่:</label>
+                            <input type="text" class="form-control" name="address" id="address" placeholder="ที่อยู่" required>
                         </div>
                         <span style="color:red">*</span>เพศ:
                         <div class="form-group">
                             <div class="form-check d-inline">
                             <label class="form-check-label">
-                                <input class="form-check-input" type="radio" name="gender" id="gender" value="male" checked>
+                                <input class="form-check-input" type="radio" name="gender" value="male" checked>
                                 เพศชาย
                             </label>
                             </div>
                             <div class="form-check d-inline">
                             <label class="form-check-label">
-                                <input class="form-check-input" type="radio" name="gender" id="gender" value="female">
+                                <input class="form-check-input" type="radio" name="gender" value="female">
                                 เพศหญิง
                             </label>
                             </div>
@@ -51,9 +51,8 @@
                             <input type="date" name="birthday" id="birthday" class="form-control" required>
                         </div>
                         <div class="form-group" style="margin-top:10px">
-                            <img id="blah" alt="image" style="max-width:200px;max-height:200px" />
-                            <br>
-                            <label for="image">รูป:</label>
+                            <div class="image"></div>
+                            <label for="image">รูปประจำตัว:</label>
                             <input type="file" class="form-control" name="image" id="image">
                         </div>
                         <div class="form-group">
@@ -87,17 +86,18 @@
 @section('javascript')
     <script type="text/javascript">
         $(document).ready(function() {
-             function readURL(input) {
+             function readURL(input, placeToInsertImagePreview) {
+                console.log('hi');
                 if (input.files && input.files[0]) {
                     var reader = new FileReader();
                     reader.onload = function(e) {
-                        $('#blah').attr('src', e.target.result);
+                        $($.parseHTML('<img style="max-width:200px;max-height:200px">')).attr('src', event.target.result).appendTo(placeToInsertImagePreview);
                     }
                     reader.readAsDataURL(input.files[0]);
                 }
             }
             $("#image").on('change', function() {
-                readURL(this);
+                readURL(this, 'div.image');
             });   
         });
     </script>

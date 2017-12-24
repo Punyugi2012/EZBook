@@ -180,7 +180,7 @@
 					</div>
 					<div class="text-center">
 						<button type="submit" class="btn btn-primary">บันทึก</button>
-						<button type="submit" class="btn btn-warning">ล้าง</button>
+						<button type="reset" class="btn btn-warning">ล้าง</button>
 					</div>
 				</form>
 			</div>

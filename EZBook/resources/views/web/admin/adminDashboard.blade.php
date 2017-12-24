@@ -186,15 +186,13 @@
 							<input type="date" class="form-control" name="publish" id="publish" required>
 						</div>
 						<div class="form-group">
-							<img id="blah" src="#" alt="cover image" style="max-width:200px;max-height:200px" />
-							<br>
+							<div class="cover_image"></div>
 							<label for="cover_image"><span style="color:red">*</span>รูปปก:</label>
 							<input type="file" class="form-control" name="cover_image" id="cover_image" required>
 						</div>
 						<div class="form-group">
-							images
 							<div class="gallery"></div>
-							<label for="images">รูป:</label>
+							<label for="images">รูปภาพประกอบ:</label>
 							<input type="file" class="form-control" multiple name="images[]" id="images">
 						</div>
 						<div class="form-group">
@@ -425,8 +423,8 @@
 					@foreach($authors as $author)
 					<tr>
 						<td>{{$author->name}}</td>
-						<td>{{$author->email}}</td>
-						<td>{{$author->phone}}</td>
+						<td>{{$author->email??'-'}}</td>
+						<td>{{$author->phone??'-'}}</td>
 						<td>{{formatDateThai($author->created_at)}}</td>
 						<td>{{formatDateThai($author->updated_at)}}</td>
 						<td>
@@ -516,17 +514,18 @@
 @endsection @section('javascript') @if($isUploadBooks)
 <script type="text/javascript">
 	$(document).ready(function() {
-            function readURL(input) {
+            function readURL(input, placeToInsertImagePreview) {
                 if (input.files && input.files[0]) {
                     var reader = new FileReader();
                     reader.onload = function(e) {
-                        $('#blah').attr('src', e.target.result);
+						//$('#blah').attr('src', e.target.result);
+						$($.parseHTML('<img style="max-width:200px;max-height:200px">')).attr('src', event.target.result).appendTo(placeToInsertImagePreview);
                     }
                     reader.readAsDataURL(input.files[0]);
                 }
             }
             $("#cover_image").on('change', function() {
-                readURL(this);
+                readURL(this, 'div.cover_image');
             });   
             var imagesPreview = function(input, placeToInsertImagePreview) {
                 if (input.files) {

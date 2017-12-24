@@ -30,7 +30,7 @@
                     </div>
                     <div class="form-group">
                         <label for="address"><span>*</span>ที่อยู่:</label>
-                        <input type="text" class="form-control" name="address" id="address" placeholder="จังหวัด/อำเภอ/ตำบล/บ้านเลขที่/หมู่" required>
+                        <input type="text" class="form-control" name="address" id="address" placeholder="ที่อยู่" required>
                     </div>
                     <div class="form-group">
                         <label for="phone"><span>*</span>เบอร์โทรศัพท์:</label>
