@@ -81,7 +81,7 @@
 				<tbody>
 					@foreach($publishers as $publisher)
 					<tr>
-						<td>{{$publisher->name}}</td>
+						<td width="10%">{{$publisher->name}}</td>
 						<td>{{$publisher->address}}</td>
 						<td>{{$publisher->phone}}</td>
 						<td>{{$publisher->email}}</td>
@@ -269,8 +269,8 @@
 				<tbody>
 					@foreach($members as $member)
 						<tr>
-							<td>{{$member->name}}</td>
-							<td>{{$member->surname}}</td>
+							<td width="10%">{{$member->name}}</td>
+							<td width="10%">{{$member->surname}}</td>
 							<td>{{$member->phone}}</td>
 							<td>{{$member->email}}</td>
 							<td>{{$member->address}}</td>

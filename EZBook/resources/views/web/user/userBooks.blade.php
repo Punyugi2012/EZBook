@@ -7,7 +7,7 @@
 <div class="card" style="margin-top:100px">
     <div class="card-header">
         <span style="font-size:20px">
-        หนังสือของคุณ, ทั้งหมด <a href="javascript:void(0)">{{$purchases->total()}}</a> เล่ม
+        หนังสือของฉัน, ทั้งหมด <a href="javascript:void(0)">{{$purchases->total()}}</a> เล่ม
         </span>
     </div>
     <div class="card-body">
