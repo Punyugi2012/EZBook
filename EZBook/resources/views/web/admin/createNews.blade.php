@@ -39,6 +39,9 @@
                 </form>
             </div>
             <div class="col-md-6">
+                <div class="text-center">
+                    <img src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-9/512/Warning-icon.png" alt="warning" style="width:200px;height:200px">
+                </div>
                 <p><span>*</span>กรุณากรอกข้อมูลให้ครบถ้วน</p>
                 <p><span>*</span>ตรวจสอบความถูกต้องก่อนกดเพิ่ม</p>
             </div> 

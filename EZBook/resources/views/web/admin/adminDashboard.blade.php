@@ -216,6 +216,9 @@
 					</form>
 				</div>
 				<div class="col-md-5">
+					<div class="text-center">
+						<img src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-9/512/Warning-icon.png" alt="warning" style="width:200px;height:200px">
+					</div>
 					<p><span style="color:red">*</span>กรุณากรอกข้อมูล ณ ช่องกรอก ที่มี "<span style="color:red">*</span>" นำหน้า</p>
 					<p><span style="color:red">*</span>ตรวจสอบความถูกต้องก่อนกดเพิ่ม</p>
 				</div>
