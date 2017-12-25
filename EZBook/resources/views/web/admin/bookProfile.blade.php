@@ -101,7 +101,8 @@
                                         @else 
                                             <img src="https://cdn0.iconfinder.com/data/icons/users-android-l-lollipop-icon-pack/24/user-512.png" class="rounded-circle" style="width:50px;height:50px" title="{{$comment->member->name}}">
                                         @endif
-                                        {{$comment->message}}
+										{{$comment->message}}
+										<p>{{$comment->member->name}} {{$comment->member->surname}}</p>
                                     </span>
 									<span>
                                     	<span class="badge badge-primary badge-pill">{{$comment->created_at->diffForHumans()}}, {{formatDateThai($comment->created_at)}}</span>

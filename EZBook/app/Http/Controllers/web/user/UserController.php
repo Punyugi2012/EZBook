@@ -339,6 +339,7 @@ class UserController extends Controller
             'book_id'=>$bookId,
             'member_id'=>session()->get('user')->member->id
         ]);
+        session()->flash('commented', 'แสดงความคิดเห็นสำเร็จ');
         return redirect('/book/'.$bookId);
     }
     public function publisherBooks($publisherId, $type="all") {
@@ -422,6 +423,7 @@ class UserController extends Controller
             'member_id'=>session()->get('user')->member->id,
             'book_id'=>$bookId
         ]);
+        session()->flash('voted', 'โหวตสำเร็จ');
         return back();
     }
     public function editVote(Request $request, $bookId) {
@@ -431,6 +433,7 @@ class UserController extends Controller
         Vote::where('member_id', session()->get('user')->member->id)->where('book_id', $bookId)->first()->update([
             'score'=>$request->input('edit_vote')
         ]);
+        session()->flash('editVoted', 'แก้ไขการโหวตสำเร็จ');
         return back();
     }
     public function onForgetPassword() {

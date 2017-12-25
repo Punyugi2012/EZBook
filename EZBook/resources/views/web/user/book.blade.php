@@ -6,6 +6,19 @@
 @section('content')
 <div class="card" style="margin-top:100px">
 	<div class="card-body">
+        @if (session()->has('voted'))
+            <div class="alert alert-success text-center">
+                {{session()->get('voted')}}
+            </div>
+        @elseif(session()->has('editVoted')) 
+            <div class="alert alert-success text-center">
+                {{session()->get('editVoted')}}
+            </div>
+        @elseif(session()->has('commented')) 
+            <div class="alert alert-success text-center">
+                {{session()->get('commented')}}
+            </div>
+        @endif
 		<div class="row">
 			<div class="col-md-9 text-center">
 				<div class="row">
@@ -152,7 +165,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="cold-md-6" style="padding:20px">
+			<div class="col-md-3" style="padding:20px">
 				<p>ชื่อหนังสือ: {{$book->name}}</p>
 				<p>ราคา: {{$book->price == 0 ? 'ฟรี' : $book->price.' บาท'}}</p>
 				<p>ส่วนลด: {{$book->discount_percent}} %</p>

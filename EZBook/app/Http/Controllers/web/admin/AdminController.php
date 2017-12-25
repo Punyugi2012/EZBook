@@ -155,7 +155,7 @@ class AdminController extends Controller
        $validatedData = $request->validate([
         'name' => 'required',
         'address' => 'required',
-        'phone' => 'required|regex:/(0)[0-9]{9}/|min:10|max:10',
+        'phone' => 'required|min:9|max:10',
         'email' => 'required|unique:users'
        ]);
        $username = $this->generateRandomString();

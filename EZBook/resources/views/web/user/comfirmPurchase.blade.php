@@ -19,8 +19,8 @@
                     <tr>
                         <td>
                             <div class="row">
-                                <div class="col-md-3">
-                                    <img src="{{$book->url_cover_image}}" alt="cover_image" style="width:200px;height:200px">
+                                <div class="col-md-3" style="width:200px;height:200px">
+                                    <img src="{{$book->url_cover_image}}" alt="cover_image" style="max-width:200px;max-height:200px">
                                 </div>
                                 <div clas="col-md-3 text-left">
                                     <p>ชื่อหนังสือ: {{$book->name}}</p>
