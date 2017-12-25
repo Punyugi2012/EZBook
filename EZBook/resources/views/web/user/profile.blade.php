@@ -120,6 +120,9 @@
                                         </form>
                                     </div>
                                     <div class="col-md-4">
+                                        <div class="text-center">
+                                            <img src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-9/512/Warning-icon.png" alt="warning" style="width:200px;height:200px">
+                                        </div>
                                         <p><span style="color:red">*</span>กรุณาตรวจสอบความถูกต้องก่อนกดบันทึก</p>
                                     </div>
                                 </div>
@@ -279,6 +282,9 @@
                                         @endif
                                     </div>
                                     <div class="col-md-4">
+                                        <div class="text-center">
+                                            <img src="http://icons.iconarchive.com/icons/custom-icon-design/flatastic-9/512/Warning-icon.png" alt="warning" style="width:200px;height:200px">
+                                        </div>
                                         <p><span style="color:red">*</span>กรุณาตรวจสอบข้อมูลก่อนกดบันทึก</p>
                                     </div>
                                 </div>
