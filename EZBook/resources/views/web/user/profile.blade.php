@@ -174,7 +174,7 @@
                                     <p>แก้ไขเมื่อ {{formatDateThai(session()->get('user')->member->account->updated_at)}}</p>
                                 @else
                                     <div class="alert alert-warning text-center">
-                                        คุณยังไม่ได้ผูกบัตรเครดิตกับระบบ กด<button data-toggle="modal" data-target="#bind">ผูกบัตรเครดิต</button>เพื่อผูกบัตรเครดิตกับระบบ
+                                        ท่านยังไม่ได้ผูกบัตรเครดิตกับระบบ กด<button data-toggle="modal" data-target="#bind">ผูกบัตรเครดิต</button>เพื่อผูกบัตรเครดิตกับระบบ
                                     </div>
                                 @endif
                             </div>
@@ -274,7 +274,7 @@
                                             </form>
                                         @else
                                             <div class="alert alert-warning text-center">
-                                                คุณยังไม่ได้ผูกบัตรเครดิตกับระบบ กดที่เมนูบัญชีเพื่อผูกบัตรเครดิตกับระบบ
+                                                ท่านยังไม่ได้ผูกบัตรเครดิตกับระบบ กดที่เมนูบัญชีเพื่อผูกบัตรเครดิตกับระบบ
                                             </div>
                                         @endif
                                     </div>

@@ -32,7 +32,7 @@
     <div class="card" style="margin-top:20px">
         <div class="card-header">
             <span style="font-size:20px">
-                คุณได้ค้นหา <a href="javascript:void(0)">{{$search}}</a>, ประเภท <a href="javascript:void(0)">{{$type_search}}</a>, พบ <a href="javascript:void(0)">{{$books->total()}}</a> เล่ม
+                ท่านได้ค้นหา <a href="javascript:void(0)">{{$search}}</a>, ประเภท <a href="javascript:void(0)">{{$type_search}}</a>, พบ <a href="javascript:void(0)">{{$books->total()}}</a> เล่ม
             </span>
         </div>
         <div class="card-body">

@@ -93,7 +93,7 @@
 			<div class="card-header">
 				<span style="font-size:20px">
 				@if($isSearch)
-					คุณได้ค้นหา <a href="javascript:void(0)">{{$search}}</a>, พบ <a href="javascript:void(0)">{{$numOfBook}}</a> เล่ม
+					ท่่านได้ค้นหา <a href="javascript:void(0)">{{$search}}</a>, พบ <a href="javascript:void(0)">{{$numOfBook}}</a> เล่ม
 				@else
 					ทั้งหมด
 					<a href="javascript:void(0)">{{$numOfBook}}</a> เล่ม

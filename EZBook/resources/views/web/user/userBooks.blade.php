@@ -13,7 +13,7 @@
     <div class="card-body">
         @if (count($purchases) == 0)
             <div class="alert alert-warning text-center">
-                ไม่พบหนังสือของคุณ
+                ไม่พบหนังสือของท่าน
             </div>
         @endif
         <div class="row">

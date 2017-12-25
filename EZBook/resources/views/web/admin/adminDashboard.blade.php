@@ -37,7 +37,7 @@
 		<div class="card-header">
 			<span style="font-size:20px">
 			@if($isSearch)
-				คุณได้ค้นหา <a href="javascript:void(0)">{{$search}}</a>, พบ <a href="javascript:void(0)">{{$publishers->total()}}</a>
+				ท่านได้ค้นหา <a href="javascript:void(0)">{{$search}}</a>, พบ <a href="javascript:void(0)">{{$publishers->total()}}</a>
 			@else
 				<span>สำนักพิมพ์/นักเขียน</span>, ทั้งหมด <a href="javascript:void(0)">{{$publishers->total()}}</a>
 			@endif
@@ -227,7 +227,7 @@
 		<div class="card-header">
 			<span style="font-size:20px">
 			@if($isSearch)
-				คุณได้ค้นหา <a href="javascript:void(0)">{{$search}}</a>, พบ <a href="javascript:void(0)">{{$members->total()}}</a>
+				ท่านได้ค้นหา <a href="javascript:void(0)">{{$search}}</a>, พบ <a href="javascript:void(0)">{{$members->total()}}</a>
 			@else
 				<span>สมาชิก</span>, ทั้งหมด <a href="javascript:void(0)">{{$members->total()}}</a>
 			@endif
@@ -314,7 +314,7 @@
 		<div class="card-header">
 			<span style="font-size:20px">
 			@if($isSearch)
-				คุณได้ค้นหา <a href="javascript:void(0)">{{$search}}</a>, พบ <a href="javascript:void(0)">{{$numOfBook}}</a>
+				ท่านได้ค้นหา <a href="javascript:void(0)">{{$search}}</a>, พบ <a href="javascript:void(0)">{{$numOfBook}}</a>
 			@else
 				ทั้งหมด <a href="javascript:void(0)">{{$numOfBook}}</a> เล่ม
 			@endif
@@ -381,7 +381,7 @@
 		<div class="card-header">
 			<span style="font-size:20px">
 			@if($isSearch)
-			คุณได้ค้นหา <a href="javascript:void(0)">{{$search}}</a>, พบ <a href="javascript:void(0)">{{$authors->total()}}</a>
+			ท่านได้ค้นหา <a href="javascript:void(0)">{{$search}}</a>, พบ <a href="javascript:void(0)">{{$authors->total()}}</a>
 			@else
 			<span>ผู้แต่ง</span>,
 			ทั้งหมด <a href="javascript:void(0)">{{$authors->total()}}</a>
@@ -481,7 +481,7 @@
 								<div class="modal-dialog" role="document">
 									<div class="modal-content">
 									<div class="modal-header">
-										<h5 class="modal-title" id="exampleModalLabel">คุณแน่ใจแล้วใช่ไหมที่จะลบ</h5>
+										<h5 class="modal-title" id="exampleModalLabel">ท่านแน่ใจแล้วใช่ไหมที่จะลบ</h5>
 										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 										<span aria-hidden="true">&times;</span>
 										</button>

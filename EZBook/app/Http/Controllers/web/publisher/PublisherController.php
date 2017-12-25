@@ -24,7 +24,12 @@ class PublisherController extends Controller
             session()->flash('publisher-login', 'เข้าสู่ระบบสำเร็จ');
             return redirect('/publisher-dashboard');
         }
-        session()->flash('publisher-login', 'เข้าสู่ระบบไม่สำเร็จ กรุณาตรวจสอบ username, password');
+        elseif($user && $user->publisher->status == 'unable') {
+            session()->flash('publisher-login', 'username, password ของท่านไม่สามารถใช้งานได้');
+        }
+        else {
+            session()->flash('publisher-login', 'เข้าสู่ระบบไม่สำเร็จ กรุณาตรวจสอบ username, password');
+        }
         return redirect('/publisher-login');
     }
     public function onLogout() {

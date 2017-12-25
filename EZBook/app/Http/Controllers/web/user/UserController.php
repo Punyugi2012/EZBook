@@ -123,10 +123,13 @@ class UserController extends Controller
             session()->put('user', $user);
             return redirect('/');
         }
+        elseif($user && $user->member->status == 'unable') {
+            session()->flash('status', 'username, password ของท่านไม่สามารถใช้งานได้');
+        }
         else {
             session()->flash('status', 'เข้าสู่ระบบไม่สำเร็จ กรุณาตรวจสอบ username, password');
-            return redirect('/user-login');
         }
+        return redirect('/user-login');
     }
     public function logout() {
          session()->forget('user');
