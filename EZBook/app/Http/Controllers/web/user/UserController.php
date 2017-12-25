@@ -243,10 +243,15 @@ class UserController extends Controller
         else {
             $books = Book::where('name', $request->input('search'))->paginate(10);
         }
+        $type_search = 'ทั้งหมด';
+        if($request->input('search-type')) {
+            $type_search = BookType::find($request->input('search-type'))->name;
+        }
         return view('web.user.search-books', [
             'bookTypes'=>$bookTypes,
             'books'=>$books,
             'search'=>$request->input('search'),
+            'type_search'=>$type_search
         ]);
     }
     public function onNewBooks() {
